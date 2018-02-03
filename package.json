@@ -1,0 +1,11 @@
+{
+  "name": "amapp",
+  "version": "0.0.1",
+  "description": "Manage and facilitate AMAP commerce. -- To Be Update",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "R0ildan",
+  "license": "ISC"
+}
