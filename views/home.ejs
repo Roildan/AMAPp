@@ -1,9 +1,13 @@
 <% include partials/header %>
 
-<h1>Welcome to AMAPp !!</h1>
+<script type="text/javascript">
+    $("#home").addClass("active");
+    $("#basket").removeClass("active");
+    $("#bulk").removeClass("active");
+</script>
 
-<a href="/">Home</a>
-<a href="/basket">Basket</a>
-<a href="/bulk">Bulk</a>
+<div class="ui container">
+    <h1>Welcome to AMApp !!</h1>
+</div>
 
 <% include partials/footer %>

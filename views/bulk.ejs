@@ -1,9 +1,31 @@
 <% include partials/header %>
 
-<h1>Bulk Page</h1>
+<script type="text/javascript">
+    $("#bulk").addClass("active");
+    $("#basket").removeClass("active");
+    $("#home").removeClass("active");
+</script>
 
-<a href="/">Home</a>
-<a href="/basket">Basket</a>
-<a href="/bulk">Bulk</a>
+<div class="ui container">
+    <h1>Bulk Page</h1>
+
+    <div class="ui divided items">
+        <% products.forEach( function( product ) { %>
+            <div class="item">
+                <div class="image">
+                    <img src="<%= product.img %>">
+                </div>
+                <div class="content">
+                    <h2 class="header"><%= product.name %></h2>
+                    <div class="description">
+                        <p><%= product.desc %></p>
+                    </div>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+
+</div>
+
 
 <% include partials/footer %>
