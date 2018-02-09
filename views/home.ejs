@@ -1,11 +1,51 @@
-<% include partials/header %>
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <title>AMApp</title>
+
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"></link>
+        <link rel="stylesheet" href="/css/home.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/modernizr/2.8.3/modernizr.min.js" type="text/javascript" async></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.js"></script>
+    </head>
+
+    <body>
+        <div class="ui inverted segment">
+            <div class="ui inverted secondary pointing menu">
+                <a id="home" class="item" href="/">
+                    <i class="home icon"></i>Home
+                </a>
+                <a id="contracts" class="item" href="/contracts">
+                    <i class="leaf icon"></i>Contracts
+                </a>
+                <a id="bulk" class="item" href="/bulk">
+                    <i class="food icon"></i>Bulk
+                </a>
+                <% if( !currentUser ) { %>
+                    <a id="login" class="item right" href="/login">Login</a>
+                    <a id="register" class="item" href="/register">Sign Up</a>
+                <% } else { %>
+                    <a class="item right" href="#">Connected as <%= currentUser.username %></a>
+                    <a class="item" href="/logout">Logout</a>
+                <% } %>
+            </div>
+        </div>
 
 <script type="text/javascript">
     $("#home").addClass("active");
 </script>
 
-<div class="ui container">
-    <h1>Welcome to AMApp !!</h1>
-</div>
+<h1 id="landing-header">Welcome to AMApp !</h1>
+
+
+<ul class="slideshow">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+</ul>
 
 <% include partials/footer %>
