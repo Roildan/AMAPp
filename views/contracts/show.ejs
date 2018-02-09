@@ -1,0 +1,17 @@
+<% include ../partials/header %>
+
+<script type="text/javascript">
+    $("#contracts").addClass("active");
+    $("#home").removeClass("active");
+    $("#bulk").removeClass("active");
+</script>
+
+<div class="ui container">
+    <h1><%= contract.name %></h1>
+
+    <img src="<%= contract.image %>">
+    <p><%= contract.description %></p>
+
+</div>
+
+<% include ../partials/footer %>

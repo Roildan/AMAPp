@@ -1,16 +1,56 @@
-var express = require("express");
-var router = express.Router();
+var express = require("express"),
+    router = express.Router(),
+    passport = require("passport");
+
+var Product = require("../models/product"),
+    User = require("../models/user");
+
 
 router.get("/", function(req, res) {
     res.render("home");
 });
 
-router.get("/basket", function(req, res) {
-    res.render("basket");
+router.get("/bulk", function(req, res) {
+    Product.find({}, function(err, products) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            res.render("bulk", { products: products });
+        }
+    });
 });
 
-router.get("/bulk", function(req, res) {
-    res.render("bulk");
+router.get("/register", function(req, res) {
+    res.render("register");
+});
+
+router.post("/register", function(req, res) {
+    var newUser = new User({ username: req.body.username });
+    User.register(newUser, req.body.password, function(err, user) {
+        if (err) {
+            console.log(err);
+            return res.render("register");
+        }
+
+        passport.authenticate("local")(req, res, function() {
+            res.redirect("/");
+        });
+    });
+});
+
+router.get("/login", function(req, res) {
+    res.render("login");
+});
+
+router.post("/login", passport.authenticate("local", {
+    successRedirect: "/",
+    failureRedirect: "/login"
+}), function(req, res) {});
+
+router.get("/logout", function(req, res) {
+    req.logout();
+    res.redirect("/");
 });
 
 module.exports = router;

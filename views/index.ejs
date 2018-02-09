@@ -1,29 +1,27 @@
 <% include partials/header %>
 
 <script type="text/javascript">
-    $("#bulk").addClass("active");
+    $("#contracts").addClass("active");
 </script>
 
 <div class="ui container">
-    <h1>Bulk Page</h1>
+    <h1>Contracts</h1>
 
     <div class="ui divided items">
-        <% products.forEach( function( product ) { %>
+        <% contracts.forEach( function( contract ) { %>
             <div class="item">
                 <div class="image">
-                    <img src="<%= product.image %>">
+                    <img src="<%= contract.image %>">
                 </div>
                 <div class="content">
-                    <h2 class="header"><%= product.name %></h2>
+                    <h2 class="header"><%= contract.name %></h2>
                     <div class="description">
-                        <p><%= product.description %></p>
+                        <p><%= contract.description %></p>
                     </div>
                 </div>
             </div>
         <% }); %>
     </div>
-
 </div>
-
 
 <% include partials/footer %>

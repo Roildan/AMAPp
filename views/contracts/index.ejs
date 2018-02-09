@@ -1,0 +1,32 @@
+<% include ../partials/header %>
+
+<script type="text/javascript">
+    $("#contracts").addClass("active");
+    $("#home").removeClass("active");
+    $("#bulk").removeClass("active");
+</script>
+
+<div class="ui container">
+    <h1>Contracts</h1>
+    
+    <a href="/contracts/new">Add a new Contract</a>
+
+    <div class="ui divided items">
+        <% contracts.forEach( function( contract ) { %>
+            <div class="item">
+                <div class="image">
+                    <img src="<%= contract.image %>">
+                </div>
+                <div class="content">
+                    <h2 class="header"><%= contract.name %></h2>
+                    <div class="description">
+                        <p><%= contract.description %></p>
+                    </div>
+                    <a href="/contracts/<%= contract._id %>">Show More</a>
+                </div>
+            </div>
+        <% }); %>
+    </div>
+</div>
+
+<% include ../partials/footer %>
