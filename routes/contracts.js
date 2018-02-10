@@ -1,7 +1,7 @@
-var express = require("express"),
+const express = require("express"),
     router = express.Router();
 
-var Contract = require("../models/contract");
+const Contract = require("../models/contract");
 
 // INDEX ROUTE
 router.get("/", function(req, res) {

@@ -38,26 +38,26 @@ body {
 }
 
 .slideshow li:nth-child(1) {
-    background-image: url(https://pixabay.com/get/ee3cb10f2af61c22d9584518a33219c8b66ae3d018b913409df7c779/vegetables-790022_1920.jpg)
+    background-image: url(http://media.tourisme-cambresis.fr/legumes-jardin-bio-84553.jpg)
 }
 
 .slideshow li:nth-child(2) {
-    background-image: url(https://pixabay.com/get/ee30b30e2df71c22d9584518a33219c8b66ae3d018b913409df7c671/vegetables-752153_1920.jpg);
+    background-image: url(http://blog.oleomac.fr/wp-content/uploads/2015/03/jardin-potager.jpg);
     animation-delay: 10s;
 }
 
 .slideshow li:nth-child(3) {
-    background-image: url(https://pixabay.com/get/eb34b60620f0043ed1534705fb0938c9bd22ffd41cb0194394f8c671a0/vegetables-2179845_1920.jpg);
+    background-image: url(http://www.aquaportail.com/pictures1212/fruits-ou-legumes.jpg);
     animation-delay: 20s;
 }
 
 .slideshow li:nth-child(4) {
-    background-image: url(https://pixabay.com/get/eb3cb60820fd003ed1534705fb0938c9bd22ffd41cb0194394f8c670ae/vegetables-2977891_1920.jpg);
+    background-image: url(https://beautyhealthtips.in/remedies/wp-content/uploads/2016/11/Vegetables-and-their-health-and-nutritional-benefits.jpg);
     animation-delay: 30s;
 }
 
 .slideshow li:nth-child(5) {
-    background-image: url(https://pixabay.com/get/e830b90b21fd083ed1534705fb0938c9bd22ffd41cb0194394f8c97ba6/vegetables-1584999_1920.jpg);
+    background-image: url(http://sain-et-naturel.com/wp-content/uploads/2015/12/o-FRUITS-LEGUMES-facebook.jpg);
     animation-delay: 40s;
 }
 

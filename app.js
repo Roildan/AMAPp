@@ -1,7 +1,7 @@
 /////////////////
 ///   SETUP   ///
 /////////////////
-var express = require("express"),
+const express = require("express"),
     app = express(),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
@@ -50,7 +50,7 @@ app.use(function(req, res, next) {
 //////////////////
 ///   ROUTES   ///
 //////////////////
-var indexRoutes = require("./routes/index"),
+const indexRoutes = require("./routes/index"),
     contractRoutes = require("./routes/contracts");
 
 

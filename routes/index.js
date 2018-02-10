@@ -1,8 +1,8 @@
-var express = require("express"),
+const express = require("express"),
     router = express.Router(),
     passport = require("passport");
 
-var Product = require("../models/product"),
+const Product = require("../models/product"),
     User = require("../models/user");
 
 
@@ -26,7 +26,7 @@ router.get("/register", function(req, res) {
 });
 
 router.post("/register", function(req, res) {
-    var newUser = new User({ username: req.body.username });
+    const newUser = new User({ username: req.body.username });
     User.register(newUser, req.body.password, function(err, user) {
         if (err) {
             console.log(err);

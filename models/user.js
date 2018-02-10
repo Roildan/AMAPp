@@ -1,7 +1,7 @@
-var mongoose = require("mongoose"),
+const mongoose = require("mongoose"),
     passportLocalMongoose = require("passport-local-mongoose");
 
-var userSchema = new mongoose.Schema({
+const userSchema = new mongoose.Schema({
     username: String,
     password: String,
     isProducer: { type: Boolean, default: false },

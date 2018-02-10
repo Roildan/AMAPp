@@ -1,7 +1,7 @@
-var Contract = require("./models/contract"),
+const Contract = require("./models/contract"),
     Product = require("./models/product");
 
-var products = [{
+const products = [{
         name: "Carrot",
         image: "https://images.duckduckgo.com/iu/?u=https%3A%2F%2Ftse1.mm.bing.net%2Fth%3Fid%3DOIP.Z6S0wQ81H7iNGsH9CjqjFwHaE8%26pid%3D15.1&f=1",
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et dolore labore aspernatur itaque nobis dignissimos maxime praesentium, quam vero sit facilis, perspiciatis recusandae explicabo assumenda sed ipsam blanditiis doloribus saepe!"
@@ -33,7 +33,7 @@ var products = [{
     }
 ];
 
-var contracts = [{
+const contracts = [{
         name: "Seasonal Vegetable",
         image: "https://images.duckduckgo.com/iu/?u=https%3A%2F%2Ftse4.mm.bing.net%2Fth%3Fid%3DOIP.9o1PpVDg8QgTiCZWl4tDnAHaE7%26pid%3D15.1&f=1",
         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et dolore labore aspernatur itaque nobis dignissimos maxime praesentium, quam vero sit facilis, perspiciatis recusandae explicabo assumenda sed ipsam blanditiis doloribus saepe!"
