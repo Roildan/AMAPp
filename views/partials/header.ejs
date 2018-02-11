@@ -25,7 +25,14 @@
                     <a id="login" class="item right" href="/login">Login</a>
                     <a id="register" class="item" href="/register">Sign Up</a>
                 <% } else { %>
-                    <a class="item right" href="#">Connected as <%= currentUser.username %></a>
+                    <a class="item right" href="#">
+                        Connected as <%= currentUser.username %>
+                        <% if( currentUser.isAdmin ) { %>
+                            (admin)
+                        <% } else if( currentUser.isProducer ) { %>
+                            (producer)
+                        <% } %>
+                    </a>
                     <a class="item" href="/logout">Logout</a>
                 <% } %>
             </div>

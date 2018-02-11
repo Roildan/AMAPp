@@ -26,7 +26,17 @@ router.get("/register", function(req, res) {
 });
 
 router.post("/register", function(req, res) {
-    const newUser = new User({ username: req.body.username });
+    const newUser = new User({
+        username: req.body.username,
+        email: req.body.email
+    });
+    if (req.body.privilege === "admin") {
+        newUser.isAdmin = true;
+    }
+    else if (req.body.privilege === "producer") {
+        newUser.isProducer = true;
+    }
+
     User.register(newUser, req.body.password, function(err, user) {
         if (err) {
             console.log(err);

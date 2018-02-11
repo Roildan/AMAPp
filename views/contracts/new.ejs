@@ -7,9 +7,16 @@
 <div class="ui container">
     <h1>Add new contract</h1>
     
-    <a href="/contracts">Go back</a>
-
+    <form action="/contracts" method="POST">
+        <input type="text" name="contract[name]" placeholder="Name" required>
+        <input type="text" name="contract[image]" placeholder="Image URL" required>
+        <input type="text" name="contract[description]" placeholder="Description" required>
+        <input type="number" name="contract[price]" placeholder="Price" min="0.00" step="0.01" required>
+        <input type="number" name="contract[disponibility]" placeholder="Disponibility" min="0" step="1" required>
+        <input type="submit" value="Submit !">
+    </form>
     
+    <a href="/contracts">Go back</a>
 </div>
 
 <% include ../partials/footer %>

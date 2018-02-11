@@ -20,6 +20,27 @@ router.get("/new", function(req, res) {
     res.render("contracts/new");
 });
 
+// CREATE ROUTE
+router.post("/", function(req, res) {
+    var newContract = req.body.contract;
+    newContract.producer = {
+        id: req.user._id,
+        username: req.user.username
+    };
+    console.log("contract :" + newContract);
+
+    Contract.create(newContract, function(err, contract) {
+        if (err) {
+            console.log(err);
+        }
+        else {
+            console.log("Newly created contract :" + contract);
+        }
+    });
+
+    res.redirect("/contracts");
+});
+
 // SHOW ROUTE
 router.get("/:id", function(req, res) {
     Contract.findById(req.params.id, function(err, contract) {

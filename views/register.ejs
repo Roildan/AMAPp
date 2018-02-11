@@ -4,12 +4,16 @@
     $("#register").addClass("active");
 </script>
 
-<h1>Sign Up !</h1>
-
-<form action="/register" method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <input type="submit" value="Sign Up">
-</form>
+<div class="ui container">
+    <h1>Sign Up !</h1>
+    
+    <form action="/register" method="POST">
+        <input type="text" name="username" placeholder="Username" required>
+        <input type="text" name="email" placeholder="Email" required>
+        <input type="password" name="password" placeholder="Password" required>
+        <input type="text" name="privilege" placeholder="Admin or Producer code">
+        <input type="submit" value="Sign Up">
+    </form>
+</div>
 
 <% include partials/footer %>

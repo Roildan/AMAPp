@@ -4,12 +4,14 @@
     $("#login").addClass("active");
 </script>
 
-<h1>Login !</h1>
-
-<form action="/login" method="POST">
-    <input type="text" name="username" placeholder="username">
-    <input type="password" name="password" placeholder="password">
-    <input type="submit" value="Login">
-</form>
+<div class="ui container">
+    <h1>Login !</h1>
+    
+    <form action="/login" method="POST">
+        <input type="text" name="username" placeholder="username">
+        <input type="password" name="password" placeholder="password">
+        <input type="submit" value="Login">
+    </form>
+</div>
 
 <% include partials/footer %>

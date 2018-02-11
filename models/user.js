@@ -4,6 +4,7 @@ const mongoose = require("mongoose"),
 const userSchema = new mongoose.Schema({
     username: String,
     password: String,
+    email: String,
     isProducer: { type: Boolean, default: false },
     isAdmin: { type: Boolean, default: false }
 });
