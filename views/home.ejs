@@ -30,9 +30,9 @@
                     <a class="item right" href="#">
                         Connected as <%= currentUser.username %>
                         <% if( currentUser.isAdmin ) { %>
-                            (admin)
+                            (Admin)
                         <% } else if( currentUser.isProducer ) { %>
-                            (producer)
+                            (Producer)
                         <% } %>
                     </a>
                     <a class="item" href="/logout"><i class="remove user icon"></i>Logout</a>

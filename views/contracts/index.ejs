@@ -7,7 +7,9 @@
 <div class="ui container">
     <h1>Contracts</h1>
     
-    <a class="ui button" href="/contracts/new">Add a new Contract</a>
+    <% if( currentUser && ( currentUser.isAdmin || currentUser.isProducer )) { %>
+        <a class="ui button" href="/contracts/new">Add a New Contract</a>
+    <% } %>
 
     <div class="ui divided items">
         <% contracts.forEach( function( contract ) { %>
@@ -16,7 +18,7 @@
                     <img src="<%= contract.image %>">
                 </div>
                 <div class="content">
-                    <h2 class="header"><%= contract.name %> by <%= contract.producer.username %></h2>
+                    <h2 class="header"><%= contract.name %> <em>by <%= contract.producer.username %></em></h2>
                     <div class="description">
                         <p><%= contract.description %></p>
                     </div>

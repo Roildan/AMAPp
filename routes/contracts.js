@@ -1,7 +1,8 @@
 const express = require("express"),
     router = express.Router();
 
-const Contract = require("../models/contract");
+const Contract = require("../models/contract"),
+    middleware = require("../middleware")
 
 // INDEX ROUTE
 router.get("/", function(req, res) {
@@ -16,12 +17,12 @@ router.get("/", function(req, res) {
 });
 
 // NEW ROUTE
-router.get("/new", function(req, res) {
+router.get("/new", middleware.isLoggedIn, middleware.isProducer, function(req, res) {
     res.render("contracts/new");
 });
 
 // CREATE ROUTE
-router.post("/", function(req, res) {
+router.post("/", middleware.isLoggedIn, middleware.isProducer, function(req, res) {
     var newContract = req.body.contract;
     newContract.producer = {
         id: req.user._id,
