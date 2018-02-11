@@ -5,32 +5,32 @@
 </script>
 
 <div class="ui container">
-    <h1>Add New Contract</h1>
+    <h1>Edit <%= contract.name %></h1>
     
-    <form class="ui form" action="/contracts" method="POST">
+    <form class="ui form" action="/contracts/<%= contract._id %>?_method=PUT" method="POST">
         <div class="field">
             <label>Contract Name</label>
-            <input type="text" name="contract[name]" placeholder="Name" required>
+            <input type="text" name="contract[name]" value="<%= contract.name %>" required>
         </div>
         
         <div class="field">
             <label>Image URL</label>
-            <input type="text" name="contract[image]" placeholder="Image URL" required>
+            <input type="text" name="contract[image]" value="<%= contract.image %>" required>
         </div>
         
         <div class="field">
             <label>Price</label>
-            <input type="number" name="contract[price]" placeholder="Price" min="0.00" step="0.01" required>
+            <input type="number" name="contract[price]" value="<%= contract.price %>" min="0.00" step="0.01" required>
         </div>
         
         <div class="field">
             <label>Disponibility</label>
-            <input type="number" name="contract[disponibility]" placeholder="Disponibility" min="0" step="1" required>
+            <input type="number" name="contract[disponibility]" value="<%= contract.disponibility %>" min="0" step="1" required>
         </div>
         
         <div class="field">
             <label>Description</label>
-            <textarea rows="4" name="contract[description]" placeholder="Description" required></textarea>
+            <textarea rows="4" name="contract[description]" required><%= contract.description %></textarea>
         </div>
         
         <a class="ui button" href="/contracts"><i class="arrow left icon"></i>Go back</a>

@@ -1,3 +1,5 @@
+const Contract = require("../models/contract");
+
 module.exports = {
 
     isLoggedIn: function(req, res, next) {
@@ -19,5 +21,20 @@ module.exports = {
             return next();
         }
         res.redirect("back");
+    },
+
+    checkContractOwnership: function(req, res, next) {
+        Contract.findById(req.params.id, function(err, contract) {
+            if (err || !contract) {
+                console.log(err);
+                res.redirect("back");
+            }
+            else if (contract.producer.id.equals(req.user._id)) {
+                next();
+            }
+            else {
+                res.redirect("back");
+            }
+        });
     }
 };

@@ -9,6 +9,13 @@
 
     <img src="<%= contract.image %>">
     <p><%= contract.description %></p>
+    
+    <% if( currentUser && contract.producer.id.equals( currentUser._id ) ) { %>
+        <a class="ui button" href="/contracts/<%= contract._id %>/edit">Edit</a>
+        <form action="/contracts/<%= contract._id %>?_method=DELETE" method=POST>
+            <button class="ui button">Delete</button>
+        </form>
+    <% } %>
 
 </div>
 
