@@ -12,7 +12,11 @@ const contractSchema = new mongoose.Schema({
             ref: "User"
         },
         username: String
-    }
+    },
+    subscribedUsers: [{
+        type: mongoose.Schema.Types.ObjectId,
+        ref: "User"
+    }]
 });
 
 module.exports = mongoose.model("Contract", contractSchema);

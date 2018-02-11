@@ -24,8 +24,8 @@
                     <i class="food icon"></i>Bulk
                 </a>
                 <% if( !currentUser ) { %>
-                    <a id="login" class="item right" href="/login">Login</a>
-                    <a id="register" class="item" href="/register">Sign Up</a>
+                    <a id="login" class="item right" href="/login"><i class="user icon"></i>Login</a>
+                    <a id="register" class="item" href="/register"><i class="add user icon"></i>Sign Up</a>
                 <% } else { %>
                     <a class="item right" href="#">
                         Connected as <%= currentUser.username %>
@@ -35,7 +35,7 @@
                             (producer)
                         <% } %>
                     </a>
-                    <a class="item" href="/logout">Logout</a>
+                    <a class="item" href="/logout"><i class="remove user icon"></i>Logout</a>
                 <% } %>
             </div>
         </div>

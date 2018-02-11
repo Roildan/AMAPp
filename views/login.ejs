@@ -7,10 +7,18 @@
 <div class="ui container">
     <h1>Login !</h1>
     
-    <form action="/login" method="POST">
-        <input type="text" name="username" placeholder="username">
-        <input type="password" name="password" placeholder="password">
-        <input type="submit" value="Login">
+    <form class="ui form" action="/login" method="POST">
+        <div class="field">
+            <label>Username</label>
+            <input type="text" name="username" placeholder="Username" required>
+        </div>
+        
+        <div class="field">
+            <label>Username</label>
+            <input type="password" name="password" placeholder="password" required>
+        </div>
+        
+        <input class="ui button" type="submit" value="Login">
     </form>
 </div>
 
