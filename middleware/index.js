@@ -29,7 +29,7 @@ module.exports = {
                 console.log(err);
                 res.redirect("back");
             }
-            else if (contract.producer.id.equals(req.user._id)) {
+            else if (req.user.isAdmin || contract.producer.id.equals(req.user._id)) {
                 next();
             }
             else {
