@@ -6,13 +6,27 @@
 
 <div class="ui container">
     <h1><%= contract.name %></h1>
+    
+    <a class="ui button" href="/contracts"><i class="arrow left icon"></i>Go back</a>
 
-    <img src="<%= contract.image %>">
+    <img class="ui large centered rounded image" src="<%= contract.image %>">
+    <h2>Description :</h2>
     <p><%= contract.description %></p>
+    
+    <h2>Price :</h2>
+    <p><%= contract.price %>€ per delivery.</p>
+    
+    <h2>Disponibility :</h2>
+    <p><%= contract.disponibility %> still available.</p>
+    <!--<p>-->
+    <!--    <strong>Price : </strong><%= contract.price %>€ per delivery.-->
+    <!--    <br>-->
+    <!--    <strong>Disponibility : </strong><%= contract.disponibility %> still available.-->
+    <!--</p>-->
     
     <% if( currentUser && contract.producer.id.equals( currentUser._id ) ) { %>
         <a class="ui button" href="/contracts/<%= contract._id %>/edit">Edit</a>
-        <form action="/contracts/<%= contract._id %>?_method=DELETE" method=POST>
+        <form class="deleteForm" action="/contracts/<%= contract._id %>?_method=DELETE" method=POST>
             <button class="ui button">Delete</button>
         </form>
     <% } %>

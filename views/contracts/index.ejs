@@ -14,9 +14,9 @@
     <div class="ui divided items">
         <% contracts.forEach( function( contract ) { %>
             <div class="item">
-                <div class="image">
+                <a class="image" href="/contracts/<%= contract._id %>">
                     <img src="<%= contract.image %>">
-                </div>
+                </a>
                 <div class="content">
                     <h2 class="header"><%= contract.name %> <em>by <%= contract.producer.username %></em></h2>
                     <div class="description">
