@@ -1,4 +1,6 @@
-<% include ../partials/header %>
+<% include ../partials/headerDoctype %>
+    <link rel="stylesheet" href="/css/index.css"></link>
+<% include ../partials/headerNavbar %>
 
 <script type="text/javascript">
     $("#contracts").addClass("active");
@@ -20,7 +22,7 @@
                 <div class="content">
                     <h2 class="header"><%= contract.name %> <em>by <%= contract.producer.username %></em></h2>
                     <div class="description">
-                        <p><%= contract.description %></p>
+                        <p><%= contract.description.substring(0,400); %>...</p>
                     </div>
                     <a class="ui button" href="/contracts/<%= contract._id %>">Show More</a>
                 </div>

@@ -1,0 +1,30 @@
+</head>
+
+<body>
+    <div class="ui inverted segment">
+        <div class="ui inverted secondary pointing menu">
+            <a id="home" class="item" href="/">
+                <i class="home icon"></i>Home
+            </a>
+            <a id="contracts" class="item" href="/contracts">
+                <i class="leaf icon"></i>Contracts
+            </a>
+            <a id="bulk" class="item" href="/bulk">
+                <i class="food icon"></i>Bulk
+            </a>
+            <% if( !currentUser ) { %>
+                <a id="login" class="item right" href="/login"><i class="user icon"></i>Login</a>
+                <a id="register" class="item" href="/register"><i class="add user icon"></i>Sign Up</a>
+            <% } else { %>
+                <a class="item right" href="#">
+                    <%= currentUser.username %>
+                    <% if( currentUser.isAdmin ) { %>
+                        (Admin)
+                    <% } else if( currentUser.isProducer ) { %>
+                        (Producer)
+                    <% } %>
+                </a>
+                <a class="item" href="/logout"><i class="remove user icon"></i>Logout</a>
+            <% } %>
+        </div>
+    </div>

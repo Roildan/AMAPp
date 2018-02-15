@@ -62,5 +62,5 @@ app.use("/contracts", contractRoutes);
 ///   START SERVER   ///
 ////////////////////////
 app.listen(process.env.PORT, process.env.IP, function() {
-    console.log("AMAPp Server started on " + process.env.IP + ":" + process.env.PORT);
+    console.log("AMApp Server started on " + process.env.IP + ":" + process.env.PORT);
 });

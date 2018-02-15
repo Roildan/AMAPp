@@ -1,4 +1,6 @@
-<% include ../partials/header %>
+<% include ../partials/headerDoctype %>
+    <link rel="stylesheet" href="/css/index.css"></link>
+<% include ../partials/headerNavbar %>
 
 <script type="text/javascript">
     $("#contracts").addClass("active");
@@ -18,11 +20,6 @@
     
     <h2>Disponibility :</h2>
     <p><%= contract.disponibility %> still available.</p>
-    <!--<p>-->
-    <!--    <strong>Price : </strong><%= contract.price %>€ per delivery.-->
-    <!--    <br>-->
-    <!--    <strong>Disponibility : </strong><%= contract.disponibility %> still available.-->
-    <!--</p>-->
     
     <% if( currentUser && contract.producer.id.equals( currentUser._id ) ) { %>
         <a class="ui button" href="/contracts/<%= contract._id %>/edit">Edit</a>
