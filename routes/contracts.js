@@ -93,6 +93,37 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
     });
 });
 
+// SUBSCRIBING ROUTE
+router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
+    Contract.findById(req.params.id, function(err, contract) {
+        if (err) {
+            console.log(err);
+            res.redirect("back");
+        }
+        else {
+            // Check disponibility
+            if (contract.disponibility < contract.subscribedUsers.length) {
+                console.log("This contract have reach his maximum capacity");
+                return res.redirect("back");
+            }
+
+            // Check if not already subscribed
+            for (let i = 0; i < contract.subscribedUsers.length; i++) {
+                if (contract.subscribedUsers[i].equals(req.user._id)) {
+                    console.log("You are already subscribed to this contract");
+                    return res.redirect("back");
+                }
+            }
+
+            contract.subscribedUsers.push(req.user._id);
+            contract.save();
+            req.user.subscribedContracts.push(contract._id);
+            req.user.save();
+            res.redirect("/contracts/" + req.params.id);
+        }
+    });
+});
+
 
 
 module.exports = router;

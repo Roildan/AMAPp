@@ -2,7 +2,8 @@ const express = require("express"),
     router = express.Router(),
     passport = require("passport");
 
-const User = require("../models/user");
+const User = require("../models/user"),
+    middleWare = require("../middleware");
 
 
 router.get("/register", function(req, res) {
@@ -47,8 +48,18 @@ router.get("/logout", function(req, res) {
     res.redirect("/");
 });
 
-router.get("/profile", function(req, res) {
-    res.render("users/profile");
+router.get("/profile", middleWare.isLoggedIn, function(req, res) {
+    User
+        .findById(req.user._id)
+        .populate("subscribedContracts", ["name"])
+        .exec(function(err, user) {
+            if (err || !user) {
+                console.log(err);
+                return res.redirect("back");
+            }
+            res.render("users/profile", { user: user });
+        });
+
 });
 
 module.exports = router;
