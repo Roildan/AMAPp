@@ -1,0 +1,18 @@
+<% include ../partials/headerDoctype %>
+    <link rel="stylesheet" href="/css/index.css"></link>
+<% include ../partials/headerNavbar %>
+
+<script type="text/javascript">
+    $("#profile").addClass("active");
+</script>
+
+<div class="ui container">
+    <h1><%= currentUser.username %></h1>
+    
+    <h2>Email :</h2>
+    <p><%= currentUser.email %></p>
+
+
+</div>
+
+<% include ../partials/footer %>

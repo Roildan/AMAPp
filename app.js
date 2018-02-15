@@ -51,10 +51,12 @@ app.use(function(req, res, next) {
 ///   ROUTES   ///
 //////////////////
 const indexRoutes = require("./routes/index"),
+    userRoutes = require("./routes/users"),
     contractRoutes = require("./routes/contracts");
 
 
 app.use(indexRoutes);
+app.use(userRoutes);
 app.use("/contracts", contractRoutes);
 
 
