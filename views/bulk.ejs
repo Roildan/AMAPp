@@ -7,7 +7,7 @@
 </script>
 
 <div class="ui container">
-    <h1>Bulk Page</h1>
+    <h1 class="ui center aligned block header">Bulk Page</h1>
 
     <div class="ui divided items">
         <% products.forEach( function( product ) { %>
@@ -16,7 +16,7 @@
                     <img src="<%= product.image %>">
                 </div>
                 <div class="content">
-                    <h2 class="header"><%= product.name %></h2>
+                    <h2 class="ui medium header"><%= product.name %></h2>
                     <div class="description">
                         <p><%= product.description %></p>
                     </div>
