@@ -1,3 +1,13 @@
+.site {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
 .inlineForm {
     display: inline;
+}
+
+.mainContent {
+    flex: 1;
 }
