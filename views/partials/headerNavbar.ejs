@@ -16,6 +16,11 @@
                 <a id="login" class="item right" href="/login"><i class="user icon"></i>Login</a>
                 <a id="register" class="item" href="/register"><i class="add user icon"></i>Sign Up</a>
             <% } else { %>
+                <% if( currentUser.isAdmin ) { %>
+                    <a  id="management" class="item right" href="/management">
+                        <i class="users icon"></i>Management
+                    </a>
+                <% } %>
                 <a id="profile" class="item right" href="/profile">
                     <%= currentUser.username %>
                     <% if( currentUser.isAdmin ) { %>

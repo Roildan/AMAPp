@@ -69,4 +69,14 @@ router.get("/profile", middleWare.isLoggedIn, function(req, res) {
 
 });
 
+router.get("/management", middleWare.isLoggedIn, middleWare.isAdmin, function(req, res) {
+    User.find({}, function(err, users) {
+        if (err) {
+            console.log(err);
+            return res.redirect("back");
+        }
+        res.render("users/management", { users: users });
+    });
+});
+
 module.exports = router;

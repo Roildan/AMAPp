@@ -1,0 +1,17 @@
+<% include ../partials/headerDoctype %>
+    <link rel="stylesheet" href="/css/index.css"></link>
+<% include ../partials/headerNavbar %>
+
+<script type="text/javascript">
+    $("#management").addClass("active");
+</script>
+
+<div class="ui container">
+    <h1 class="ui center aligned block header">Management</h1>
+    
+    <% for (let i = 0; i < users.length; i++) { %>
+        <p><%= users[i].username %></p>
+    <% }; %>
+</div>
+
+<% include ../partials/footer %>
