@@ -49,7 +49,6 @@ router.get("/:id", function(req, res) {
             console.log(err);
             return res.redirect('/contracts');
         }
-
         res.render("contracts/show", { contract: contract });
     });
 });

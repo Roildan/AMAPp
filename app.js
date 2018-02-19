@@ -6,6 +6,7 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
     mongoose = require("mongoose"),
+    validator = require("express-validator"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
     User = require("./models/user");
@@ -22,6 +23,8 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 // Tells method-override what pattern in the url it should look for
 app.use(methodOverride("_method"));
+
+app.use(validator());
 
 
 //////////////////////////////////
