@@ -11,6 +11,13 @@ router.get("/register", function(req, res) {
 });
 
 router.post("/register", function(req, res) {
+    req.checkBody("email", "Enter a valid email address.").isEmail();
+    let inputErrors = req.validationErrors();
+    if (inputErrors) {
+        console.log(inputErrors);
+        return res.render("users/register");
+    }
+
     const newUser = new User({
         username: req.body.username,
         email: req.body.email

@@ -14,7 +14,9 @@
     
     <h2 class="ui medium header">Subscibed Contract(s) :</h2>
     <% user.subscribedContracts.forEach( function( contract ) { %>
-        <p><%= contract.name %></p>
+        <p><a href="/contracts/<%= contract._id %>">
+            <%= contract.name %>
+        </a></p>
     <% }); %>
 </div>
 
