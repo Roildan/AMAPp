@@ -36,9 +36,38 @@
     
     <main class=mainContent>
         <div class="ui container">
-            <div class="ui success message">
-                <div class="header">
-                    Your user registration was successful.
-                </div>
-                <p>You may now log-in with the username you have chosen</p>
-            </div>
+            <% if( flashMessages.success && flashMessages.success.length > 0 ) { %>
+                <% for( let i = 0; i < flashMessages.success.length; i++) { %>
+                    <% let success = flashMessages.success[i].split("\n"); %>
+                    <div class="ui success message" role="alert">
+                        <div class="header">
+                            <%= success[0] %>
+                        </div>
+                        <p><%= success[1] %></p>
+                    </div>
+                <% }; %>
+            <% } %>
+            
+            <% if( flashMessages.error && flashMessages.error.length > 0 ) { %>
+                <% for( let i = 0; i < flashMessages.error.length; i++) { %>
+                    <% let error = flashMessages.error[i].split("\n"); %>
+                    <div class="ui error message" role="alert">
+                        <div class="header">
+                            <%= error[0] %>
+                        </div>
+                        <p><%= error[1] %></p>
+                    </div>
+                <% }; %>
+            <% } %>
+            
+            <% if( flashMessages.info && flashMessages.info.length > 0 ) { %>
+                <% for( let i = 0; i < flashMessages.info.length; i++) { %>
+                    <% let info = flashMessages.info[i].split("\n"); %>
+                    <div class="ui info message" role="alert">
+                        <div class="header">
+                            <%= info[0] %>
+                        </div>
+                        <p><%= info[1] %></p>
+                    </div>
+                <% }; %>
+            <% } %>

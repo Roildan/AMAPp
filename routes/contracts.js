@@ -23,19 +23,25 @@ router.get("/new", middleWare.isLoggedIn, middleWare.isProducer, function(req, r
 
 // CREATE ROUTE
 router.post("/", middleWare.isLoggedIn, middleWare.isProducer, function(req, res) {
-    var newContract = req.body.contract;
+    const newContract = req.body.contract;
     newContract.producer = {
         id: req.user._id,
         username: req.user.username
     };
-    console.log("contract :" + newContract);
 
     Contract.create(newContract, function(err, contract) {
         if (err) {
             console.log(err);
+            req.flash(
+                "error",
+                "The contract have fail to be created\nAn error has occurred during creation, please contact an admin for more info"
+            );
         }
         else {
-            console.log("Newly created contract :" + contract);
+            req.flash(
+                "success",
+                "The contract have been successfully created !\nFeel free to modify or delete it at any time if needed"
+            );
         }
     });
 
@@ -47,6 +53,10 @@ router.get("/:id", function(req, res) {
     Contract.findById(req.params.id, function(err, contract) {
         if (err || !contract) {
             console.log(err);
+            req.flash(
+                "error",
+                "This contract cannot be found\nAn error has occurred finding this contract, please contact an admin for more info"
+            );
             return res.redirect('/contracts');
         }
         res.render("contracts/show", { contract: contract });
@@ -58,6 +68,10 @@ router.get("/:id/edit", middleWare.isLoggedIn, middleWare.checkContractOwnership
     Contract.findById(req.params.id, function(err, contract) {
         if (err) {
             console.log(err);
+            req.flash(
+                "error",
+                "This contract cannot be found\nAn error has occurred finding this contract, please contact an admin for more info"
+            );
             res.redirect("/contracts");
         }
         else {
@@ -71,9 +85,17 @@ router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, fun
     Contract.findByIdAndUpdate(req.params.id, req.body.contract, function(err, contract) {
         if (err) {
             console.log(err);
+            req.flash(
+                "error",
+                "The contract have fail to be updated\nAn error has occurred during update, please contact an admin for more info"
+            );
             res.redirect("/contracts");
         }
         else {
+            req.flash(
+                "success",
+                "The contract have been successfully updated !\nFeel free to remodify or delete it at any time if needed"
+            );
             res.redirect("/contracts/" + req.params.id);
         }
     });
@@ -84,9 +106,17 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
     Contract.findByIdAndRemove(req.params.id, function(err) {
         if (err) {
             console.log(err);
+            req.flash(
+                "error",
+                "The contract have fail to be deleted\nAn error has occurred during deletion, please contact an admin for more info"
+            );
             res.redirect("back");
         }
         else {
+            req.flash(
+                "success",
+                "The contract have been successfully deleted !\nFeel free to create a new one to suit your need"
+            );
             res.redirect("/contracts");
         }
     });
@@ -97,19 +127,29 @@ router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
     Contract.findById(req.params.id, function(err, contract) {
         if (err) {
             console.log(err);
+            req.flash(
+                "error",
+                "This contract cannot be found\nAn error has occurred finding this contract, please contact an admin for more info"
+            );
             res.redirect("back");
         }
         else {
             // Check disponibility
             if (contract.disponibility < contract.subscribedUsers.length) {
-                console.log("This contract have reach his maximum capacity");
+                req.flash(
+                    "error",
+                    "You cannot subscribe to this contract\nThis contract has reached his maximun capacity, the producer cannot provide more of it"
+                );
                 return res.redirect("back");
             }
 
             // Check if not already subscribed
             for (let i = 0; i < contract.subscribedUsers.length; i++) {
                 if (contract.subscribedUsers[i].equals(req.user._id)) {
-                    console.log("You are already subscribed to this contract");
+                    req.flash(
+                        "error",
+                        "You cannot subscribe to this contract\nYou are already subscribed to this contract"
+                    );
                     return res.redirect("back");
                 }
             }
@@ -118,6 +158,11 @@ router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
             contract.save();
             req.user.subscribedContracts.push(contract._id);
             req.user.save();
+
+            req.flash(
+                "success",
+                "Your subscription to this contract was successful !\nYou are now subscribed to " + contract.name
+            );
             res.redirect("/contracts/" + req.params.id);
         }
     });
