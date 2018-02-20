@@ -40,6 +40,7 @@
                 <% for( let i = 0; i < flashMessages.success.length; i++) { %>
                     <% let success = flashMessages.success[i].split("\n"); %>
                     <div class="ui success message" role="alert">
+                        <i class="close icon"></i>
                         <div class="header">
                             <%= success[0] %>
                         </div>
@@ -52,6 +53,7 @@
                 <% for( let i = 0; i < flashMessages.error.length; i++) { %>
                     <% let error = flashMessages.error[i].split("\n"); %>
                     <div class="ui error message" role="alert">
+                        <i class="close icon"></i>
                         <div class="header">
                             <%= error[0] %>
                         </div>
@@ -64,6 +66,7 @@
                 <% for( let i = 0; i < flashMessages.info.length; i++) { %>
                     <% let info = flashMessages.info[i].split("\n"); %>
                     <div class="ui info message" role="alert">
+                        <i class="close icon"></i>
                         <div class="header">
                             <%= info[0] %>
                         </div>
@@ -71,3 +74,12 @@
                     </div>
                 <% }; %>
             <% } %>
+            
+            <script>
+                $('.message .close')
+                .on('click', function() {
+                    $(this)
+                        .closest('.message')
+                        .transition('fade');
+                });
+            </script>
