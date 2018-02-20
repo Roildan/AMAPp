@@ -16,10 +16,12 @@
         <% } %>
     <% }; %>
     <% if (isSubscribed) { %>
-        <button class="ui right floated huge disabled button">Subscribed</button>
+        <form class="inlineForm" action="/contracts/<%= contract._id %>/unsubscribe?_method=PUT" method=POST>
+            <button class="ui right floated huge button">Unsubscribe</button>
+        </form>
     <% } else if (contract.disponibility > contract.subscribedUsers.length) { %>
         <form class="inlineForm" action="/contracts/<%= contract._id %>/subscribe?_method=PUT" method=POST>
-            <button class="ui right floated huge button">Subscribe !</button>
+            <button class="ui right floated huge button">Subscribe</button>
         </form>
     <% } %>
 <% } %>

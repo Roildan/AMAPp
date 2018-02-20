@@ -2,7 +2,8 @@ const express = require("express"),
     router = express.Router();
 
 const Contract = require("../models/contract"),
-    middleWare = require("../middleware")
+    User = require("../models/user"),
+    middleWare = require("../middleware");
 
 // INDEX ROUTE
 router.get("/", function(req, res) {
@@ -103,6 +104,21 @@ router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, fun
 
 // DESTROY ROUTE
 router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, function(req, res) {
+    let subscribedUsers = [];
+    Contract.findById(req.params.id, function(err, contract) {
+        if (err) {
+            console.log(err);
+            req.flash(
+                "error",
+                "The contract have fail to be deleted\nAn error has occurred during deletion, please contact an admin for more info"
+            );
+            res.redirect("back");
+        }
+        else {
+            subscribedUsers = contract.subscribedUsers;
+        }
+    });
+
     Contract.findByIdAndRemove(req.params.id, function(err) {
         if (err) {
             console.log(err);
@@ -113,6 +129,22 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
             res.redirect("back");
         }
         else {
+            for (let i = 0; i < subscribedUsers; i++) {
+                User.findById(subscribedUsers[i], function(err, user) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    else {
+                        for (let j = 0; j < user.subscribedContracts.length; j++) {
+                            if (user.subscribedContracts[i].equals(req.params.id)) {
+                                user.subscribedContracts.splice(i, 1);
+                                break;
+                            }
+                        }
+                        user.save();
+                    }
+                });
+            }
             req.flash(
                 "success",
                 "The contract have been successfully deleted !\nFeel free to create a new one to suit your need"
@@ -162,6 +194,43 @@ router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
             req.flash(
                 "success",
                 "Your subscription to this contract was successful !\nYou are now subscribed to " + contract.name
+            );
+            res.redirect("/contracts/" + req.params.id);
+        }
+    });
+});
+
+// UNSUBSCRIBING ROUTE
+router.put("/:id/unsubscribe", middleWare.isLoggedIn, function(req, res) {
+    Contract.findById(req.params.id, function(err, contract) {
+        if (err) {
+            console.log(err);
+            req.flash(
+                "error",
+                "This contract cannot be found\nAn error has occurred finding this contract, please contact an admin for more info"
+            );
+            res.redirect("back");
+        }
+        else {
+            for (let i = 0; i < contract.subscribedUsers.length; i++) {
+                if (contract.subscribedUsers[i].equals(req.user._id)) {
+                    contract.subscribedUsers.splice(i, 1);
+                    break;
+                }
+            }
+            contract.save();
+
+            for (let i = 0; i < req.user.subscribedContracts.length; i++) {
+                if (req.user.subscribedContracts[i].equals(contract.id)) {
+                    req.user.subscribedContracts.splice(i, 1);
+                    break;
+                }
+            }
+            req.user.save();
+
+            req.flash(
+                "success",
+                "Your unsubscription to this contract was successful !\nYou are no longer subscribed to " + contract.name
             );
             res.redirect("/contracts/" + req.params.id);
         }
