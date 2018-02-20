@@ -5,12 +5,10 @@
     $("#management").addClass("active");
 </script>
 
-<div class="ui container">
-    <h1 class="ui center aligned block header">Management</h1>
+<h1 class="ui center aligned block header">Management</h1>
     
-    <% for (let i = 0; i < users.length; i++) { %>
-        <p><%= users[i].username %></p>
-    <% }; %>
-</div>
+<% for (let i = 0; i < users.length; i++) { %>
+    <p><%= users[i].username %></p>
+<% }; %>
 
 <% include ../partials/footer %>

@@ -5,18 +5,16 @@
     $("#profile").addClass("active");
 </script>
 
-<div class="ui container">
-    <h1 class="ui center aligned block header"><%= currentUser.username %></h1>
+<h1 class="ui center aligned block header"><%= currentUser.username %></h1>
     
-    <h2 class="ui medium header">Email :</h2>
-    <p><%= currentUser.email %></p>
+<h2 class="ui medium header">Email :</h2>
+<p><%= currentUser.email %></p>
     
-    <h2 class="ui medium header">Subscibed Contract(s) :</h2>
-    <% user.subscribedContracts.forEach( function( contract ) { %>
-        <p><a href="/contracts/<%= contract._id %>">
-            <%= contract.name %>
-        </a></p>
-    <% }); %>
-</div>
+<h2 class="ui medium header">Subscibed Contract(s) :</h2>
+<% user.subscribedContracts.forEach( function( contract ) { %>
+    <p><a href="/contracts/<%= contract._id %>">
+        <%= contract.name %>
+    </a></p>
+<% }); %>
 
 <% include ../partials/footer %>

@@ -6,10 +6,12 @@ body {
     z-index: 1;
     position: relative;
     text-align: center;
-    padding-top: 30vh;
+    padding-top: 20vh;
     color: white;
     font-size: 4em;
 }
+
+
 
 .slideshow {
     position: fixed;

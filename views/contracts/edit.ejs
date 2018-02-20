@@ -5,39 +5,36 @@
     $("#contracts").addClass("active");
 </script>
 
-<div class="ui container">
-    <h1>Edit <%= contract.name %></h1>
+<h1>Edit <%= contract.name %></h1>
     
-    <form class="ui form" action="/contracts/<%= contract._id %>?_method=PUT" method="POST">
-        <div class="field">
-            <label>Contract Name</label>
-            <input type="text" name="contract[name]" value="<%= contract.name %>" required>
-        </div>
-        
-        <div class="field">
-            <label>Image URL</label>
-            <input type="text" name="contract[image]" value="<%= contract.image %>" required>
-        </div>
-        
-        <div class="field">
-            <label>Price</label>
-            <input type="number" name="contract[price]" value="<%= contract.price %>" min="0.00" step="0.01" required>
-        </div>
-        
-        <div class="field">
-            <label>Disponibility</label>
-            <input type="number" name="contract[disponibility]" value="<%= contract.disponibility %>" min="0" step="1" required>
-        </div>
-        
-        <div class="field">
-            <label>Description</label>
-            <textarea rows="4" name="contract[description]" required><%= contract.description %></textarea>
-        </div>
-        
-        <a class="ui button" href="/contracts"><i class="arrow left icon"></i>Go back</a>
-        <input class="ui button" type="submit" value="Submit !">
-    </form>
+<form class="ui form" action="/contracts/<%= contract._id %>?_method=PUT" method="POST">
+    <div class="field">
+        <label>Contract Name</label>
+        <input type="text" name="contract[name]" value="<%= contract.name %>" required>
+    </div>
     
-</div>
+    <div class="field">
+        <label>Image URL</label>
+        <input type="text" name="contract[image]" value="<%= contract.image %>" required>
+    </div>
+    
+    <div class="field">
+        <label>Price</label>
+        <input type="number" name="contract[price]" value="<%= contract.price %>" min="0.00" step="0.01" required>
+    </div>
+    
+    <div class="field">
+        <label>Disponibility</label>
+        <input type="number" name="contract[disponibility]" value="<%= contract.disponibility %>" min="0" step="1" required>
+    </div>
+    
+    <div class="field">
+        <label>Description</label>
+        <textarea rows="4" name="contract[description]" required><%= contract.description %></textarea>
+    </div>
+    
+    <a class="ui button" href="/contracts"><i class="arrow left icon"></i>Go back</a>
+    <input class="ui button" type="submit" value="Submit !">
+</form>
 
 <% include ../partials/footer %>

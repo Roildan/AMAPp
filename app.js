@@ -6,6 +6,7 @@ const express = require("express"),
     bodyParser = require("body-parser"),
     methodOverride = require("method-override"),
     mongoose = require("mongoose"),
+    flash = require("connect-flash"),
     validator = require("express-validator"),
     passport = require("passport"),
     LocalStrategy = require("passport-local"),
@@ -23,7 +24,7 @@ app.use(express.static(__dirname + "/public"));
 app.use(bodyParser.urlencoded({ extended: true }));
 // Tells method-override what pattern in the url it should look for
 app.use(methodOverride("_method"));
-
+app.use(flash());
 app.use(validator());
 
 
@@ -43,9 +44,14 @@ passport.use(new LocalStrategy(User.authenticate()));
 passport.serializeUser(User.serializeUser());
 passport.deserializeUser(User.deserializeUser());
 
-// MiddleWare for every routes to give acces to user data
+// MiddleWare for every routes to give acces to user data and flash messages
 app.use(function(req, res, next) {
     res.locals.currentUser = req.user;
+    res.locals.flashMessages = {
+        error: req.flash("error"),
+        success: req.flash("success"),
+        info: req.flash("info")
+    };
     next();
 });
 

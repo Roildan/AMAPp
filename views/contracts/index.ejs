@@ -5,33 +5,31 @@
     $("#contracts").addClass("active");
 </script>
 
-<div class="ui container">
-    <h1 class="ui center aligned block header">Contracts</h1>
+<h1 class="ui center aligned block header">Contracts</h1>
     
-    <% if( currentUser && ( currentUser.isAdmin || currentUser.isProducer )) { %>
-        <a class="ui button" href="/contracts/new">Add a New Contract</a>
-    <% } %>
+<% if( currentUser && ( currentUser.isAdmin || currentUser.isProducer )) { %>
+    <a class="ui button" href="/contracts/new">Add a New Contract</a>
+<% } %>
 
-    <div class="ui divided items">
-        <% contracts.forEach( function( contract ) { %>
-            <div class="item">
-                <a class="image" href="/contracts/<%= contract._id %>">
-                    <img src="<%= contract.image %>">
-                </a>
-                <div class="content">
-                    <h2 class="ui medium header">
-                        <a href="/contracts/<%= contract._id %>">
-                            <%= contract.name %> <em>by <%= contract.producer.username %></em>
-                        </a>
-                    </h2>
-                    <div class="description">
-                        <p><%= contract.description.substring(0,400); %>...</p>
-                    </div>
-                    <a class="ui button" href="/contracts/<%= contract._id %>">Show More</a>
+<div class="ui divided items">
+    <% contracts.forEach( function( contract ) { %>
+        <div class="item">
+            <a class="image" href="/contracts/<%= contract._id %>">
+                <img src="<%= contract.image %>">
+            </a>
+            <div class="content">
+                <h2 class="ui medium header">
+                    <a href="/contracts/<%= contract._id %>">
+                        <%= contract.name %> <em>by <%= contract.producer.username %></em>
+                    </a>
+                </h2>
+                <div class="description">
+                    <p><%= contract.description.substring(0,400); %>...</p>
                 </div>
+                <a class="ui button" href="/contracts/<%= contract._id %>">Show More</a>
             </div>
-        <% }); %>
-    </div>
+        </div>
+    <% }); %>
 </div>
 
 <% include ../partials/footer %>
