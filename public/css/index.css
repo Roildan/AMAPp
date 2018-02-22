@@ -8,6 +8,10 @@
     margin-bottom: 0;
 }
 
+#user {
+    color: rgba(255, 255, 255, .7);
+}
+
 .inlineForm {
     display: inline;
 }
