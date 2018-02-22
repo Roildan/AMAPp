@@ -1,14 +1,19 @@
+TODO :
 
-Features :
- * Basic User --> Can check and book for contracts and / or bulk (dependent of global stock)
- * Producer --> Basic User + Manage his own contracts and vegetable stock
- * Admin --> Producer + Acces all features and Database
+ * Menu with : --> /:username/... ?
+    - Profile       --> Edit profile
+    - Settings      --> Anonymous / Mail (mailgun ?)
+    - My Contract   --> Simplified table to overview subscribed contracts
+    - Planning      --> See Scheduled delivery
 
+ * Attendance Sheet --> Printable PDF
 
+ * Management :
+    - Table of users (Sorted by privilege)
+    - Table of contract (Sortable by producer)
 
-- Create basic structure for the app without database.
-   * No login, home + bulk + basket
+ * Google Map
 
-- Add some style with Semantic UI.
+ * Payement ?
 
-- Implement contracts, pause bulk for now.
+ * Bulk...

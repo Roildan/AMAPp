@@ -1,7 +1,7 @@
 </head>
 
 <body class="site">
-    <header class="ui inverted segment">
+    <header id="header" class="ui inverted segment">
         <div class="ui inverted secondary pointing menu">
             <a id="home" class="item" href="/">
                 <i class="home icon"></i>Home
@@ -17,11 +17,11 @@
                 <a id="register" class="item" href="/register"><i class="add user icon"></i>Sign Up</a>
             <% } else { %>
                 <% if( currentUser.isAdmin ) { %>
-                    <a  id="management" class="item right" href="/management">
+                    <a id="management" class="item right" href="/<%= currentUser.username %>/management">
                         <i class="users icon"></i>Management
                     </a>
                 <% } %>
-                <a id="profile" class="item right" href="/profile">
+                <a id="profile" class="item right" href="/<%= currentUser.username %>/profile">
                     <%= currentUser.username %>
                     <% if( currentUser.isAdmin ) { %>
                         (Admin)
@@ -29,7 +29,9 @@
                         (Producer)
                     <% } %>
                 </a>
-                <a class="item" href="/logout"><i class="remove user icon"></i>Logout</a>
+                <a class="item" href="/logout">
+                    <i class="remove user icon"></i>Logout
+                </a>
             <% } %>
         </div>
     </header>
@@ -76,8 +78,7 @@
             <% } %>
             
             <script>
-                $('.message .close')
-                .on('click', function() {
+                $('.message .close').on('click', function() {
                     $(this)
                         .closest('.message')
                         .transition('fade');

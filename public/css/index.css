@@ -4,6 +4,10 @@
     flex-direction: column;
 }
 
+#header {
+    margin-bottom: 0;
+}
+
 .inlineForm {
     display: inline;
 }

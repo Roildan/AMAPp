@@ -6,6 +6,10 @@ module.exports = {
         if (req.isAuthenticated()) {
             return next();
         }
+        req.flash(
+            "error",
+            "You need to be logged in to do that\nPlease, log in or register before trying again"
+        );
         res.redirect("/login");
     },
 
@@ -13,6 +17,10 @@ module.exports = {
         if (req.user.isProducer || req.user.isAdmin) {
             return next();
         }
+        req.flash(
+            "error",
+            "You're not authorized to do that\nPlease, log in with the appropriate authorizarion or contact an admin"
+        );
         res.redirect("back");
     },
 
@@ -20,6 +28,10 @@ module.exports = {
         if (req.user.isAdmin) {
             return next();
         }
+        req.flash(
+            "error",
+            "You're not authorized to do that\nPlease, log in with the appropriate authorization or contact an admin"
+        );
         res.redirect("back");
     },
 
@@ -27,14 +39,20 @@ module.exports = {
         Contract.findById(req.params.id, function(err, contract) {
             if (err || !contract) {
                 console.log(err);
+                req.flash(
+                    "error",
+                    "This contract cannot be found\nAn error has occurred finding this contract, please contact an admin for more info"
+                );
                 res.redirect("back");
             }
             else if (req.user.isAdmin || contract.producer.id.equals(req.user._id)) {
-                next();
+                return next();
             }
-            else {
-                res.redirect("back");
-            }
+            req.flash(
+                "error",
+                "You're not authorized to do that\nPlease, log in with the appropriate authorizarion or contact an admin"
+            );
+            res.redirect("back");
         });
     }
 };
