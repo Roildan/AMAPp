@@ -62,7 +62,15 @@
                         <div class="header">
                             <%= success[0] %>
                         </div>
-                        <p><%= success[1] %></p>
+                        <% if( success.length === 2 ) { %>
+                            <p><%= success[1] %></p>
+                        <% } else { %>
+                            <ul class="list">
+                                <% for( let j = 1; j < success.length; j++) { %>
+                                    <li><%= success[j] %></li>
+                                <% } %>
+                            </ul>
+                        <% } %>
                     </div>
                 <% }; %>
             <% } %>
@@ -75,7 +83,15 @@
                         <div class="header">
                             <%= error[0] %>
                         </div>
-                        <p><%= error[1] %></p>
+                        <% if( error.length === 2 ) { %>
+                            <p><%= error[1] %></p>
+                        <% } else { %>
+                            <ul class="list">
+                                <% for( let j = 1; j < error.length; j++) { %>
+                                    <li><%= error[j] %></li>
+                                <% } %>
+                            </ul>
+                        <% } %>
                     </div>
                 <% }; %>
             <% } %>
@@ -88,7 +104,15 @@
                         <div class="header">
                             <%= info[0] %>
                         </div>
-                        <p><%= info[1] %></p>
+                        <% if( info.length === 2 ) { %>
+                            <p><%= info[1] %></p>
+                        <% } else { %>
+                            <ul class="list">
+                                <% for( let j = 1; j < info.length; j++) { %>
+                                    <li><%= info[j] %></li>
+                                <% } %>
+                            </ul>
+                        <% } %>
                     </div>
                 <% }; %>
             <% } %>

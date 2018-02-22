@@ -10,13 +10,20 @@ router.get("/register", function(req, res) {
 });
 
 router.post("/register", function(req, res) {
+    req.checkBody("username", "Username must contain only alphanumeric characters").isAlpha();
+    req.checkBody("password", "Password must be at least 6 characters long").isLength({
+        min: 6,
+        max: 20
+    });
     req.checkBody("email", "Enter a valid email address").isEmail();
     let inputErrors = req.validationErrors();
     if (inputErrors) {
         let inputErrorsStr = "";
         for (let i = 0; i < inputErrors.length; i++) {
-            inputErrorsStr += inputErrors[i].msg + " ";
+            inputErrorsStr += inputErrors[i].msg + "\n";
         }
+        // Remove last '\n'
+        inputErrorsStr = inputErrorsStr.slice(0, -1);
         req.flash(
             "error",
             "Registration error\n" + inputErrorsStr
