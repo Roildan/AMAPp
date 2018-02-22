@@ -21,14 +21,30 @@
                         <i class="users icon"></i>Management
                     </a>
                 <% } %>
-                <a id="profile" class="item right" href="/<%= currentUser.username %>/profile">
+                <div class="ui dropdown item right">
                     <%= currentUser.username %>
                     <% if( currentUser.isAdmin ) { %>
                         (Admin)
                     <% } else if( currentUser.isProducer ) { %>
                         (Producer)
                     <% } %>
-                </a>
+                    <i class="dropdown icon"></i>
+                    <div class="menu">
+                        <a id="profile" class="item" href="/<%= currentUser.username %>/profile">
+                            Profile
+                        </a>
+                        <a class="item" href="#">
+                            Settings
+                        </a>
+                        <a class="item" href="#">
+                            My Contracts
+                        </a>
+                        <a class="item" href="#">
+                            Planning
+                        </a>
+                    </div>
+                </div>
+                
                 <a class="item" href="/logout">
                     <i class="remove user icon"></i>Logout
                 </a>
@@ -83,4 +99,6 @@
                         .closest('.message')
                         .transition('fade');
                 });
+                
+                $('.ui.dropdown').dropdown();
             </script>
