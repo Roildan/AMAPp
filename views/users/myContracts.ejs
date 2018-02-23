@@ -1,0 +1,19 @@
+<% include ../partials/headerDoctype %>
+<% include ../partials/headerNavbar %>
+
+<script type="text/javascript">
+    $("#myContracts").addClass("active");
+    $("#user").css("color", "#fff");
+</script>
+
+<h1 class="ui center aligned block header">My Contracts</h1>
+
+<h2 class="ui medium header">Subscibed Contract(s) :</h2>
+<% user.subscribedContracts.forEach( function( contract ) { %>
+    <p><a href="/contracts/<%= contract._id %>">
+        <%= contract.name %>
+    </a></p>
+<% }); %>
+
+
+<% include ../partials/footer %>

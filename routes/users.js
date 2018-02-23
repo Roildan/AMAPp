@@ -6,6 +6,14 @@ const User = require("../models/user"),
 
 
 router.get("/profile", middleWare.isLoggedIn, function(req, res) {
+    res.render("users/profile");
+});
+
+router.get("/settings", middleWare.isLoggedIn, function(req, res) {
+    res.render("users/settings");
+});
+
+router.get("/my_contracts", middleWare.isLoggedIn, function(req, res) {
     User
         .findById(req.user._id)
         .populate("subscribedContracts", ["name"])
@@ -18,9 +26,12 @@ router.get("/profile", middleWare.isLoggedIn, function(req, res) {
                 );
                 return res.redirect("back");
             }
-            res.render("users/profile", { user: user });
+            res.render("users/myContracts", { user: user });
         });
+});
 
+router.get("/planning", middleWare.isLoggedIn, function(req, res) {
+    res.render("users/planning");
 });
 
 router.get("/management", middleWare.isLoggedIn, middleWare.isAdmin, function(req, res) {
