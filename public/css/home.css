@@ -42,16 +42,16 @@ div[role="alert"] {
 }
 
 .slideshow li:nth-child(1) {
-    background-image: url(http://media.tourisme-cambresis.fr/legumes-jardin-bio-84553.jpg)
+    background-image: url(https://media.tourisme-cambresis.fr/legumes-jardin-bio-84553.jpg);
 }
 
 .slideshow li:nth-child(2) {
-    background-image: url(http://blog.oleomac.fr/wp-content/uploads/2015/03/jardin-potager.jpg);
+    background-image: url(https://blog.oleomac.fr/wp-content/uploads/2015/03/jardin-potager.jpg);
     animation-delay: 10s;
 }
 
 .slideshow li:nth-child(3) {
-    background-image: url(http://www.aquaportail.com/pictures1212/fruits-ou-legumes.jpg);
+    background-image: url(https://www.aquaportail.com/pictures1212/fruits-ou-legumes.jpg);
     animation-delay: 20s;
 }
 
@@ -61,7 +61,7 @@ div[role="alert"] {
 }
 
 .slideshow li:nth-child(5) {
-    background-image: url(http://sain-et-naturel.com/wp-content/uploads/2015/12/o-FRUITS-LEGUMES-facebook.jpg);
+    background-image: url(https://www.vitaminelocale.ch/uploads/dz/2/paniers-fruits-legumes-bio.jpg);
     animation-delay: 40s;
 }
 
