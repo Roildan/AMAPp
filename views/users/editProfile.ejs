@@ -1,0 +1,59 @@
+<% include ../partials/headerDoctype %>
+<% include ../partials/headerNavbar %>
+
+<script type="text/javascript">
+    $("#profile").addClass("active");
+    $("#user").css("color", "#fff");
+</script>
+
+<h1 class="ui center aligned block header">Edit Your Profile</h1>
+    
+<form class="ui form" action="/<%= currentUser.username %>/profile?_method=PUT" method="POST">
+    <h2 class="ui medium header">Email (required) :</h2>
+    <div class="field">
+        <label>Email</label>
+        <input type="text" name="email" value="<%= currentUser.email%>" required>
+    </div>
+    
+    <h2 class="ui medium header">Name :</h2>
+    <div class="field">
+        <label>First Name</label>
+        <input type="text" name="name[firstName]" value="<%= currentUser.name.firstName %>">
+    </div>
+    
+    <div class="field">
+        <label>Last Name</label>
+        <input type="text" name="name[lastName]" value="<%= currentUser.name.lastName %>">
+    </div>
+    
+    <h2 class="ui medium header">Contact Information :</h2>
+    <div class="field">
+        <label>Phone Number</label>
+        <input type="text" name="contact[phone]" value="<%= currentUser.contact.phone %>">
+    </div>
+    
+    <div class="field">
+        <label>Address 1</label>
+        <input type="text" name="contact[address1]" value="<%= currentUser.contact.address1 %>">
+    </div>
+    
+    <div class="field">
+        <label>Address 2</label>
+        <input type="text" name="contact[address2]" value="<%= currentUser.contact.address2 %>">
+    </div>
+    
+    <div class="field">
+        <label>Postal Code</label>
+        <input type="text" name="contact[postalCode]" value="<%= currentUser.contact.postalCode %>">
+    </div>
+    
+    <div class="field">
+        <label>City</label>
+        <input type="text" name="contact[city]" value="<%= currentUser.contact.city %>">
+    </div>
+    
+    <a class="ui button" href="/<%= currentUser.username %>/profile"><i class="arrow left icon"></i>Go back</a>
+    <input class="ui button" type="submit" value="Submit !">
+</form>
+
+<% include ../partials/footer %>

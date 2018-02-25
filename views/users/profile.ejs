@@ -7,8 +7,68 @@
 </script>
 
 <h1 class="ui center aligned block header">Profile</h1>
-    
+
+<!-- Main -->
 <h2 class="ui medium header">Email :</h2>
-<p><%= currentUser.email %></p>
+<div class="ui label">
+    <i class="mail icon"></i> Your email : 
+</div>
+<%= currentUser.email %>
+
+
+<!-- Personnal -->
+
+    <!-- Name -->
+<h2 class="ui medium header">Name :</h2>
+<p>
+    <div class="ui label">
+        <i class="user circle icon"></i> First name : 
+    </div>
+    <%= currentUser.name.firstName %>
+</p>
+<p>
+    <div class="ui label">
+        <i class="user circle icon"></i> Last name : 
+    </div>
+    <%= currentUser.name.lastName %>
+</p>
+
+
+    <!-- Contact -->
+<h2 class="ui medium header">Contact Information :</h2>
+<p>
+    <div class="ui label">
+        <i class="phone icon"></i> Phone Number : 
+    </div>
+    <%= currentUser.contact.phone %>
+</p>
+<p>
+    <div class="ui label">
+        <i class="address card icon"></i> Address 1 : 
+    </div>
+    <%= currentUser.contact.address1 %>
+</p>
+<% if( currentUser.contact.address2 && currentUser.contact.address2.length > 0 ) { %>
+    <p>
+        <div class="ui label">
+            <i class="address card icon"></i> Address 2 : 
+        </div>
+        <%= currentUser.contact.address2 %>
+    </p>
+<% } %>
+<p>
+    <div class="ui label">
+        <i class="address card icon"></i> Postal Code : 
+    </div>
+    <%= currentUser.contact.postalCode %>
+</p>
+<p>
+    <div class="ui label">
+        <i class="address card icon"></i> City : 
+    </div>
+    <%= currentUser.contact.city %>
+</p>
+
+<a class="ui right floated huge button" href="/<%= currentUser.username %>/profile/edit">Edit</a>
 
 <% include ../partials/footer %>
