@@ -12,10 +12,10 @@ const express = require("express"),
     LocalStrategy = require("passport-local"),
     User = require("./models/user");
 
-// require("./seedDB")();
+//require("./seedDB")();
 
 // Connection with DataBase
-mongoose.connect("mongodb://localhost/amapp_v1");
+mongoose.connect("mongodb://localhost/amapp_v3");
 // Set '.ejs' to the 'view' directory.
 app.set("view engine", "ejs");
 // Call for 'public' directory (CSS/Ressources).

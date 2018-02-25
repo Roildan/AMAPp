@@ -39,6 +39,10 @@ router.post("/", middleWare.isLoggedIn, middleWare.isProducer, function(req, res
             );
         }
         else {
+            // Add contract Id in created contract for the producer
+            req.user.contract.created.push(contract._id);
+            req.user.save();
+
             req.flash(
                 "success",
                 "The contract have been successfully created !\nFeel free to modify or delete it at any time if needed"
@@ -105,6 +109,7 @@ router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, fun
 // DESTROY ROUTE
 router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, function(req, res) {
     let subscribedUsers = [];
+    let producerId;
     Contract.findById(req.params.id, function(err, contract) {
         if (err) {
             console.log(err);
@@ -115,6 +120,7 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
             res.redirect("back");
         }
         else {
+            producerId = contract.producer.id;
             subscribedUsers = contract.subscribedUsers;
         }
     });
@@ -129,15 +135,16 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
             res.redirect("back");
         }
         else {
+            // Remove this contract for all subcribed users
             for (let i = 0; i < subscribedUsers; i++) {
                 User.findById(subscribedUsers[i], function(err, user) {
                     if (err) {
                         console.log(err);
                     }
                     else {
-                        for (let j = 0; j < user.subscribedContracts.length; j++) {
-                            if (user.subscribedContracts[i].equals(req.params.id)) {
-                                user.subscribedContracts.splice(i, 1);
+                        for (let j = 0; j < user.contract.subscribed.length; j++) {
+                            if (user.contract.subscribed[i].equals(req.params.id)) {
+                                user.contract.subscribed.splice(i, 1);
                                 break;
                             }
                         }
@@ -145,6 +152,23 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
                     }
                 });
             }
+
+            // Remove this contract in created contract for the producer
+            User.findById(producerId, function(err, producer) {
+                if (err) {
+                    console.log(err);
+                }
+                else {
+                    for (let i = 0; i < producer.contract.created; i++) {
+                        if (producer.contract.created[i].equals(producer)) {
+                            producer.contract.created.splice(i, 1);
+                            break;
+                        }
+                    }
+                    producer.save();
+                }
+            });
+
             req.flash(
                 "success",
                 "The contract have been successfully deleted !\nFeel free to create a new one to suit your need"
@@ -188,7 +212,7 @@ router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
 
             contract.subscribedUsers.push(req.user._id);
             contract.save();
-            req.user.subscribedContracts.push(contract._id);
+            req.user.contract.subscribed.push(contract._id);
             req.user.save();
 
             req.flash(
@@ -220,9 +244,9 @@ router.put("/:id/unsubscribe", middleWare.isLoggedIn, function(req, res) {
             }
             contract.save();
 
-            for (let i = 0; i < req.user.subscribedContracts.length; i++) {
-                if (req.user.subscribedContracts[i].equals(contract.id)) {
-                    req.user.subscribedContracts.splice(i, 1);
+            for (let i = 0; i < req.user.contract.subscribed.length; i++) {
+                if (req.user.contract.subscribed[i].equals(contract.id)) {
+                    req.user.contract.subscribed.splice(i, 1);
                     break;
                 }
             }

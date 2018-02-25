@@ -2,7 +2,7 @@ const mongoose = require("mongoose"),
     passportLocalMongoose = require("passport-local-mongoose");
 
 const userSchema = new mongoose.Schema({
-    // Main
+    // Main -- Mendatory
     username: String,
     password: String,
     email: String,
@@ -23,10 +23,16 @@ const userSchema = new mongoose.Schema({
     },
 
     // Contract
-    subscribedContracts: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "Contract"
-    }]
+    contract: {
+        subscribed: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Contract"
+        }],
+        created: [{
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Contract"
+        }]
+    }
 });
 
 userSchema.plugin(passportLocalMongoose);

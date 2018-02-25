@@ -9,7 +9,7 @@
 <h1 class="ui center aligned block header">My Contracts</h1>
 
 <h2 class="ui medium header">Subscibed Contract(s) :</h2>
-<% user.subscribedContracts.forEach( function( contract ) { %>
+<% user.contract.subscribed.forEach( function( contract ) { %>
     <p><a href="/contracts/<%= contract._id %>">
         <%= contract.name %>
     </a></p>

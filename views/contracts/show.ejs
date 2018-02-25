@@ -10,8 +10,8 @@
 <a class="ui left floated huge button" href="/contracts"><i class="arrow left icon"></i>Go back</a>
 <% if (currentUser) { %>
     <% let isSubscribed = false; %>
-    <% for (let i = 0; i < currentUser.subscribedContracts.length; i++) { %>
-        <% if (currentUser.subscribedContracts[i].equals(contract._id)) { %>
+    <% for (let i = 0; i < currentUser.contract.subscribed.length; i++) { %>
+        <% if (currentUser.contract.subscribed[i].equals(contract._id)) { %>
             <% isSubscribed = true; %>
         <% } %>
     <% }; %>

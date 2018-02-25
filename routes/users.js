@@ -64,7 +64,7 @@ router.get("/settings", middleWare.isLoggedIn, function(req, res) {
 router.get("/my_contracts", middleWare.isLoggedIn, function(req, res) {
     User
         .findById(req.user._id)
-        .populate("subscribedContracts", ["name"])
+        .populate("contract.subscribed", ["name"])
         .exec(function(err, user) {
             if (err || !user) {
                 console.log(err);
