@@ -33,6 +33,36 @@
         <textarea rows="4" name="contract[description]" required><%= contract.description %></textarea>
     </div>
     
+    <h2 class="ui medium header">Delivery Information :</h2>
+    <div class="field">
+        <label>Day of the week</label>
+        <select name="contract[delivery][dayOfWeek]" required>
+            <option <% if( contract.delivery.dayOfWeek === "Monday" ) { %> selected <% } %>>Monday</option>
+            <option <% if( contract.delivery.dayOfWeek === "Tuesday" ) { %> selected <% } %>>Tuesday</option>
+            <option <% if( contract.delivery.dayOfWeek === "Wednesday" ) { %> selected <% } %>>Wednesday</option>
+            <option <% if( contract.delivery.dayOfWeek === "Thursday" ) { %> selected <% } %>>Thursday</option>
+            <option <% if( contract.delivery.dayOfWeek === "Friday" ) { %> selected <% } %>>Friday</option>
+            <option <% if( contract.delivery.dayOfWeek === "Saturday" ) { %> selected <% } %>>Saturday</option>
+            <option <% if( contract.delivery.dayOfWeek === "Sunday" ) { %> selected <% } %>>Sunday</option>
+        </select>
+    </div>
+    
+    <div class="field">
+        <label>Frequency (per month)</label>
+        <input type="number" name="contract[delivery][frequency]" value="<%= contract.delivery.frequency %>" min="0" max="4" step="1" required>
+    </div>
+    
+    <div class="field">
+        <label>Address</label>
+        <select name="addressId" required>
+            <% for( let i = 0; i < addresses.length; i++ ) { %>
+                <option  value="<%= addresses[i]._id %>" <% if(contract.delivery.address.id && contract.delivery.address.id.equals(addresses[i]._id)) { %> selected <% } %>>
+                    <%= addresses[i].name %>
+                </option>
+            <% } %>
+        </select>
+    </div>
+    
     <a class="ui button" href="/contracts"><i class="arrow left icon"></i>Go back</a>
     <input class="ui button" type="submit" value="Submit !">
 </form>

@@ -3,6 +3,7 @@ const express = require("express"),
 
 const Contract = require("../models/contract"),
     User = require("../models/user"),
+    Address = require("../models/address"),
     middleWare = require("../middleware");
 
 // INDEX ROUTE
@@ -19,7 +20,19 @@ router.get("/", function(req, res) {
 
 // NEW ROUTE
 router.get("/new", middleWare.isLoggedIn, middleWare.isProducer, function(req, res) {
-    res.render("contracts/new");
+    Address.find(function(err, addresses) {
+        if (err) {
+            console.log(err);
+            req.flash(
+                "error",
+                "The address cannot be found\nAn error has occurred finding the address, please contact an admin for more info"
+            );
+            res.redirect("/contracts");
+        }
+        else {
+            res.render("contracts/new", { addresses: addresses });
+        }
+    });
 });
 
 // CREATE ROUTE
@@ -29,9 +42,26 @@ router.post("/", middleWare.isLoggedIn, middleWare.isProducer, function(req, res
         id: req.user._id,
         username: req.user.username
     };
+    Address.findById(req.body.addressId, function(err, address) {
+        if (err || !address) {
+            console.log(err);
+            req.flash(
+                "error",
+                "The address cannot be found\nAn error has occurred finding the address, please contact an admin for more info"
+            );
+            res.redirect("/contracts");
+        }
+        else {
+            newContract.delivery.addressId = undefined;
+            newContract.delivery.address = {
+                id: address._id,
+                name: address.name
+            };
+        }
+    });
 
     Contract.create(newContract, function(err, contract) {
-        if (err) {
+        if (err || !contract) {
             console.log(err);
             req.flash(
                 "error",
@@ -71,7 +101,7 @@ router.get("/:id", function(req, res) {
 // EDIT ROUTE
 router.get("/:id/edit", middleWare.isLoggedIn, middleWare.checkContractOwnership, function(req, res) {
     Contract.findById(req.params.id, function(err, contract) {
-        if (err) {
+        if (err || !contract) {
             console.log(err);
             req.flash(
                 "error",
@@ -80,28 +110,58 @@ router.get("/:id/edit", middleWare.isLoggedIn, middleWare.checkContractOwnership
             res.redirect("/contracts");
         }
         else {
-            res.render("contracts/edit", { contract: contract });
+            Address.find(function(err, addresses) {
+                if (err) {
+                    console.log(err);
+                    req.flash(
+                        "error",
+                        "The address cannot be found\nAn error has occurred finding the address, please contact an admin for more info"
+                    );
+                    res.redirect("/contracts");
+                }
+                else {
+                    res.render("contracts/edit", { contract: contract, addresses: addresses });
+                }
+            });
         }
     });
 });
 
 // UPDATE ROUTE
 router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, function(req, res) {
-    Contract.findByIdAndUpdate(req.params.id, req.body.contract, function(err, contract) {
-        if (err) {
+    const updatedContract = req.body.contract;
+    Address.findById(req.body.addressId, function(err, address) {
+        if (err || !address) {
             console.log(err);
             req.flash(
                 "error",
-                "The contract have fail to be updated\nAn error has occurred during update, please contact an admin for more info"
+                "The address cannot be found\nAn error has occurred finding the address, please contact an admin for more info"
             );
             res.redirect("/contracts");
         }
         else {
-            req.flash(
-                "success",
-                "The contract have been successfully updated !\nFeel free to remodify or delete it at any time if needed"
-            );
-            res.redirect("/contracts/" + req.params.id);
+            updatedContract.delivery.address = {
+                id: address._id,
+                name: address.name
+            };
+
+            Contract.findByIdAndUpdate(req.params.id, updatedContract, function(err, contract) {
+                if (err || !contract) {
+                    console.log(err);
+                    req.flash(
+                        "error",
+                        "The contract have fail to be updated\nAn error has occurred during update, please contact an admin for more info"
+                    );
+                    res.redirect("/contracts");
+                }
+                else {
+                    req.flash(
+                        "success",
+                        "The contract have been successfully updated !\nFeel free to remodify or delete it at any time if needed"
+                    );
+                    res.redirect("/contracts/" + req.params.id);
+                }
+            });
         }
     });
 });
@@ -109,7 +169,7 @@ router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, fun
 // DESTROY ROUTE
 router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, function(req, res) {
     Contract.findById(req.params.id, function(err, contract) {
-        if (err) {
+        if (err || !contract) {
             console.log(err);
             req.flash(
                 "error",
@@ -121,7 +181,7 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
             // Remove this contract for all subcribed users
             for (let i = 0; i < contract.subscribedUsers; i++) {
                 User.findById(contract.subscribedUsers[i], function(err, user) {
-                    if (err) {
+                    if (err || !user) {
                         console.log(err);
                     }
                     else {
@@ -138,7 +198,7 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
 
             // Remove this contract in created contract for the producer
             User.findById(contract.producer.id, function(err, producer) {
-                if (err) {
+                if (err || !producer) {
                     console.log(err);
                 }
                 else {
@@ -167,7 +227,7 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
 // SUBSCRIBING ROUTE
 router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
     Contract.findById(req.params.id, function(err, contract) {
-        if (err) {
+        if (err || !contract) {
             console.log(err);
             req.flash(
                 "error",
@@ -213,7 +273,7 @@ router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
 // UNSUBSCRIBING ROUTE
 router.put("/:id/unsubscribe", middleWare.isLoggedIn, function(req, res) {
     Contract.findById(req.params.id, function(err, contract) {
-        if (err) {
+        if (err || !contract) {
             console.log(err);
             req.flash(
                 "error",

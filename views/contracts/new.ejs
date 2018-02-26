@@ -33,6 +33,36 @@
         <textarea rows="4" name="contract[description]" placeholder="Description" required></textarea>
     </div>
     
+    <h2 class="ui medium header">Delivery Information :</h2>
+    <div class="field">
+        <label>Day of the week</label>
+        <select name="contract[delivery][dayOfWeek]" required>
+            <option>Monday</option>
+            <option>Tuesday</option>
+            <option>Wednesday</option>
+            <option>Thursday</option>
+            <option>Friday</option>
+            <option>Saturday</option>
+            <option>Sunday</option>
+        </select>
+    </div>
+    
+    <div class="field">
+        <label>Frequency (per month)</label>
+        <input type="number" name="contract[delivery][frequency]" placeholder="Frequency (per month)" min="0" max="4" step="1" required>
+    </div>
+    
+    <div class="field">
+        <label>Address</label>
+        <select name="addressId" required>
+            <% for( let i = 0; i < addresses.length; i++ ) { %>
+                <option  value="<%= addresses[i]._id %>">
+                    <%= addresses[i].name %>
+                </option>
+            <% } %>
+        </select>
+    </div>
+    
     <a class="ui button" href="/contracts"><i class="arrow left icon"></i>Go back</a>
     <input class="ui button" type="submit" value="Submit !">
 </form>

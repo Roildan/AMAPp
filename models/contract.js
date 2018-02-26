@@ -6,6 +6,20 @@ const contractSchema = new mongoose.Schema({
     description: String,
     price: Number,
     disponibility: Number,
+
+    delivery: {
+        // Per month
+        frequency: Number,
+        dayOfWeek: String,
+        address: {
+            id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Address"
+            },
+            name: String
+        }
+    },
+
     producer: {
         id: {
             type: mongoose.Schema.Types.ObjectId,
