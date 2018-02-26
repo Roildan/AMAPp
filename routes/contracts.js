@@ -108,8 +108,6 @@ router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, fun
 
 // DESTROY ROUTE
 router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, function(req, res) {
-    let subscribedUsers = [];
-    let producerId;
     Contract.findById(req.params.id, function(err, contract) {
         if (err) {
             console.log(err);
@@ -120,24 +118,9 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
             res.redirect("back");
         }
         else {
-            producerId = contract.producer.id;
-            subscribedUsers = contract.subscribedUsers;
-        }
-    });
-
-    Contract.findByIdAndRemove(req.params.id, function(err) {
-        if (err) {
-            console.log(err);
-            req.flash(
-                "error",
-                "The contract have fail to be deleted\nAn error has occurred during deletion, please contact an admin for more info"
-            );
-            res.redirect("back");
-        }
-        else {
             // Remove this contract for all subcribed users
-            for (let i = 0; i < subscribedUsers; i++) {
-                User.findById(subscribedUsers[i], function(err, user) {
+            for (let i = 0; i < contract.subscribedUsers; i++) {
+                User.findById(contract.subscribedUsers[i], function(err, user) {
                     if (err) {
                         console.log(err);
                     }
@@ -154,7 +137,7 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
             }
 
             // Remove this contract in created contract for the producer
-            User.findById(producerId, function(err, producer) {
+            User.findById(contract.producer.id, function(err, producer) {
                 if (err) {
                     console.log(err);
                 }
@@ -168,6 +151,9 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
                     producer.save();
                 }
             });
+
+            // Remove the contract from database
+            contract.remove();
 
             req.flash(
                 "success",
