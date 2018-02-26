@@ -16,10 +16,18 @@
                 <a id="login" class="item right" href="/login"><i class="user icon"></i>Login</a>
                 <a id="register" class="item" href="/register"><i class="add user icon"></i>Sign Up</a>
             <% } else { %>
-                <% if( currentUser.isAdmin ) { %>
-                    <a id="management" class="item right" href="/<%= currentUser.username %>/management">
-                        <i class="users icon"></i>Management
-                    </a>
+                <% if( currentUser.isAdmin || currentUser.isProducer ) { %>
+                    <div id="management" class="ui dropdown item right">
+                        <i class="users icon"></i>
+                        Management
+                        <i class="dropdown icon"></i>
+                        <div class="menu">
+                            <a id="contracts" class="item" href="/management/contracts">Contracts</a>
+                            <% if( currentUser.isAdmin ) { %>
+                                <a id="users" class="item" href="/management/users">Users</a>
+                            <% } %>
+                        </div>
+                    </div>
                 <% } %>
                 <div id="user" class="ui dropdown item right">
                     <i class="user icon"></i>

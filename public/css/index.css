@@ -10,7 +10,8 @@
 }
 
 
-#user {
+#user,
+#management {
     color: rgba(255, 255, 255, .7);
 }
 

@@ -62,12 +62,14 @@ app.use(function(req, res, next) {
 const indexRoutes = require("./routes/index"),
     authenticationRoutes = require("./routes/authentication"),
     userRoutes = require("./routes/users"),
+    managementRoutes = require("./routes/management"),
     contractRoutes = require("./routes/contracts");
 
 
 app.use(indexRoutes);
 app.use(authenticationRoutes);
 app.use("/:username", userRoutes);
+app.use("/management", managementRoutes);
 app.use("/contracts", contractRoutes);
 
 
