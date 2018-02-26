@@ -4,6 +4,8 @@ const express = require("express"),
 const User = require("../models/user"),
     middleWare = require("../middleware");
 
+const tools = require("./tools");
+
 
 router.get("/profile", middleWare.isLoggedIn, function(req, res) {
     res.render("users/profile");
@@ -19,15 +21,9 @@ router.put("/profile", middleWare.isLoggedIn, function(req, res) {
     req.checkBody("contact[postalCode]", "Enter a valid postal code").isPostalCode("FR");
     let inputErrors = req.validationErrors();
     if (inputErrors) {
-        let inputErrorsStr = "";
-        for (let i = 0; i < inputErrors.length; i++) {
-            inputErrorsStr += inputErrors[i].msg + "\n";
-        }
-        // Remove last '\n'
-        inputErrorsStr = inputErrorsStr.slice(0, -1);
         req.flash(
             "error",
-            "Edit profile error\n" + inputErrorsStr
+            "Edit profile error\n" + tools.errorsToStr(inputErrors)
         );
         return res.redirect("/" + req.user.username + "/profile/edit");
     }
@@ -83,7 +79,7 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
 });
 
 router.get("/management", middleWare.isLoggedIn, middleWare.isAdmin, function(req, res) {
-    User.find({}, function(err, users) {
+    User.find(function(err, users) {
         if (err) {
             console.log(err);
             req.flash(

@@ -4,6 +4,8 @@ const express = require("express"),
 
 const User = require("../models/user");
 
+const tools = require("./tools");
+
 
 router.get("/register", function(req, res) {
     res.render("authentication/register");
@@ -18,15 +20,9 @@ router.post("/register", function(req, res) {
     req.checkBody("email", "Enter a valid email address").isEmail();
     let inputErrors = req.validationErrors();
     if (inputErrors) {
-        let inputErrorsStr = "";
-        for (let i = 0; i < inputErrors.length; i++) {
-            inputErrorsStr += inputErrors[i].msg + "\n";
-        }
-        // Remove last '\n'
-        inputErrorsStr = inputErrorsStr.slice(0, -1);
         req.flash(
             "error",
-            "Registration error\n" + inputErrorsStr
+            "Registration error\n" + tools.errorsToStr(inputErrors)
         );
         return res.redirect("/register");
     }
@@ -47,7 +43,7 @@ router.post("/register", function(req, res) {
             console.log(err);
             req.flash(
                 "error",
-                "Registration error\nAn error has occurred during your registration, please contact an admin for more info"
+                "Registration error\n" + err.message
             );
             return res.redirect("/register");
         }
