@@ -2,13 +2,12 @@
 <% include ../partials/headerNavbar %>
 
 <script type="text/javascript">
-    $("#contracts").addClass("active");
+    $("#managementContracts").addClass("active");
     $("#management").css("color", "#fff");
 </script>
 
-<h1 class="ui center aligned block header">Management</h1>
-    
-<h2 class="ui medium header">Created Contract(s) :</h2>
+<h1 class="ui center aligned block header">Contracts Management</h1>
+
 <% user.contract.created.forEach( function( contract ) { %>
     <p><a href="/contracts/<%= contract._id %>">
         <%= contract.name %>

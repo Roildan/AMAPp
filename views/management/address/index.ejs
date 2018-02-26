@@ -1,0 +1,36 @@
+<% include ../../partials/headerDoctype %>
+<% include ../../partials/headerNavbar %>
+
+<script type="text/javascript">
+    $("#managementAddress").addClass("active");
+    $("#management").css("color", "#fff");
+</script>
+
+<h1 class="ui center aligned block header">Address Management</h1>
+<a class="ui button" href="/management/address/new">Add an Address</a>
+
+<div class=" ui divided items">
+    <% address.forEach( function( adr ) { %>
+        <div class="item">
+            <div class="content">
+                <h2 class="ui medium header">
+                    <%= adr.name %>
+                </h2>
+                <div class="description">
+                    <p><strong>Address 1 : </strong><%= adr.address1 %></p>
+                    <% if( adr.address2 && adr.address2.length > 0 ) { %>
+                        <p><strong>Address 2 : </strong><%= adr.address2 %></p>
+                    <% } %>
+                    <p><strong>Postal Code : </strong><%= adr.postalCode %></p>
+                    <p><strong>City : </strong><%= adr.city %></p>
+                </div>
+                <a class="ui button" href="/management/address/<%= adr._id %>">Edit</a>
+                <form class="inlineForm" action="/management/address/<%= adr._id %>?_method=DELETE" method=POST>
+                    <button class="ui button">Delete</button>
+                </form>
+            </div>
+        </div>
+    <% }); %>
+</div>
+
+<% include ../../partials/footer %>

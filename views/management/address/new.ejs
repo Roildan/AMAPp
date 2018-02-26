@@ -1,0 +1,41 @@
+<% include ../../partials/headerDoctype %>
+<% include ../../partials/headerNavbar %>
+
+<script type="text/javascript">
+    $("#managementAddress").addClass("active");
+    $("#management").css("color", "#fff");
+</script>
+
+<h1>Add New Address</h1>
+    
+<form class="ui form" action="/management/address" method="POST">
+    <div class="field">
+        <label>Address Name</label>
+        <input type="text" name="address[name]" placeholder="Name" required>
+    </div>
+    
+    <div class="field">
+        <label>Address 1</label>
+        <input type="text" name="address[address1]" placeholder="Address 1" required>
+    </div>
+    
+    <div class="field">
+        <label>Address 2</label>
+        <input type="text" name="address[address2]" placeholder="Address 2">
+    </div>
+    
+    <div class="field">
+        <label>Postal Code1</label>
+        <input type="text" name="address[postalCode]" placeholder="Postal Code" required>
+    </div>
+    
+    <div class="field">
+        <label>City</label>
+        <input type="text" name="address[city]" placeholder="City" required>
+    </div>
+    
+    <a class="ui button" href="/management/address"><i class="arrow left icon"></i>Go back</a>
+    <input class="ui button" type="submit" value="Submit !">
+</form>
+
+<% include ../../partials/footer %>

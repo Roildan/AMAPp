@@ -1,0 +1,41 @@
+<% include ../../partials/headerDoctype %>
+<% include ../../partials/headerNavbar %>
+
+<script type="text/javascript">
+    $("#managementAddress").addClass("active");
+    $("#management").css("color", "#fff");
+</script>
+
+<h1>Edit <%= address.name %></h1>
+    
+<form class="ui form" action="/management/address<%= address._id %>?_method=PUT" method="POST">
+    <div class="field">
+        <label>Address Name</label>
+        <input type="text" name="address[name]" value="<%= address.name %>" required>
+    </div>
+    
+    <div class="field">
+        <label>Address 1</label>
+        <input type="text" name="address[address1]" value="<%= address.address1 %>" required>
+    </div>
+    
+    <div class="field">
+        <label>Address 2</label>
+        <input type="text" name="address[address2]" value="<%= address.address2 %>">
+    </div>
+    
+    <div class="field">
+        <label>Postal Code1</label>
+        <input type="text" name="address[postalCode]" value="<%= address.postalCode %>" required>
+    </div>
+    
+    <div class="field">
+        <label>City</label>
+        <input type="text" name="address[city]" value="<%= address.city %>" required>
+    </div>
+    
+    <a class="ui button" href="/management/address"><i class="arrow left icon"></i>Go back</a>
+    <input class="ui button" type="submit" value="Submit !">
+</form>
+
+<% include ../../partials/footer %>
