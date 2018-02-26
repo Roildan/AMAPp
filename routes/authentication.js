@@ -59,6 +59,13 @@ router.post("/register", function(req, res) {
 });
 
 router.get("/login", function(req, res) {
+    if (req.isAuthenticated()) {
+        req.flash(
+            "error",
+            "You are already logged in\nPlease, stop trying to break my site :)"
+        );
+        return res.redirect("back");
+    }
     res.render("authentication/login");
 });
 
