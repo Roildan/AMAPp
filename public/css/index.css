@@ -22,3 +22,8 @@
 .mainContent {
     flex: 1;
 }
+
+#onClick,
+#mail {
+    cursor: pointer;
+}
