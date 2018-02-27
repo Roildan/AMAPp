@@ -56,7 +56,7 @@
         <label>Address</label>
         <select name="addressId" required>
             <% for( let i = 0; i < addresses.length; i++ ) { %>
-                <option  value="<%= addresses[i]._id %>" <% if(contract.delivery.address.id && contract.delivery.address.id.equals(addresses[i]._id)) { %> selected <% } %>>
+                <option  value="<%= addresses[i]._id %>" <% if( contract.delivery.address.id.equals(addresses[i]._id)) { %> selected <% } %>>
                     <%= addresses[i].name %>
                 </option>
             <% } %>
