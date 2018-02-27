@@ -57,26 +57,26 @@ router.post("/", middleWare.isLoggedIn, middleWare.isProducer, function(req, res
                 id: address._id,
                 name: address.name
             };
-        }
-    });
-
-    Contract.create(newContract, function(err, contract) {
-        if (err || !contract) {
-            console.log(err);
-            req.flash(
-                "error",
-                "The contract have fail to be created\nAn error has occurred during creation, please contact an admin for more info"
-            );
-        }
-        else {
-            // Add contract Id in created contract for the producer
-            req.user.contract.created.push(contract._id);
-            req.user.save();
-
-            req.flash(
-                "success",
-                "The contract have been successfully created !\nFeel free to modify or delete it at any time if needed"
-            );
+            
+            Contract.create(newContract, function(err, contract) {
+                if (err || !contract) {
+                    console.log(err);
+                    req.flash(
+                        "error",
+                        "The contract have fail to be created\nAn error has occurred during creation, please contact an admin for more info"
+                    );
+                }
+                else {
+                    // Add contract Id in created contract for the producer
+                    req.user.contract.created.push(contract._id);
+                    req.user.save();
+                
+                    req.flash(
+                        "success",
+                        "The contract have been successfully created !\nFeel free to modify or delete it at any time if needed"
+                    );
+                }
+                });
         }
     });
 
@@ -85,17 +85,20 @@ router.post("/", middleWare.isLoggedIn, middleWare.isProducer, function(req, res
 
 // SHOW ROUTE
 router.get("/:id", function(req, res) {
-    Contract.findById(req.params.id, function(err, contract) {
-        if (err || !contract) {
-            console.log(err);
-            req.flash(
-                "error",
-                "This contract cannot be found\nAn error has occurred finding this contract, please contact an admin for more info"
-            );
-            return res.redirect('/contracts');
-        }
-        res.render("contracts/show", { contract: contract });
-    });
+    Contract
+        .findById(req.params.id)
+        .populate("delivery.address.id")
+        .exec(function(err, contract) {
+            if (err || !contract) {
+                console.log(err);
+                req.flash(
+                    "error",
+                    "This contract cannot be found\nAn error has occurred finding this contract, please contact an admin for more info"
+                );
+                return res.redirect('/contracts');
+            }
+            res.render("contracts/show", { contract: contract });
+        });
 });
 
 // EDIT ROUTE

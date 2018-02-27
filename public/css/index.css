@@ -1,9 +1,3 @@
-.site {
-    display: flex;
-    height: 100%;
-    flex-direction: column;
-}
-
 #header,
 #footer {
     margin-bottom: 0;
@@ -15,6 +9,11 @@
     color: rgba(255, 255, 255, .7);
 }
 
+#onClick,
+#mail {
+    cursor: pointer;
+}
+
 .inlineForm {
     display: inline;
 }
@@ -23,7 +22,12 @@
     flex: 1;
 }
 
-#onClick,
-#mail {
-    cursor: pointer;
+.site {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+}
+
+.marginTop {
+    margin-top: 10px;
 }

@@ -8,6 +8,7 @@
 <h1 class="ui center aligned block header"><%= contract.name %></h1>
 
 <a class="ui left floated huge button" href="/contracts"><i class="arrow left icon"></i>Go back</a>
+
 <% if (currentUser) { %>
     <% let isSubscribed = false; %>
     <% for (let i = 0; i < currentUser.contract.subscribed.length; i++) { %>
@@ -27,20 +28,72 @@
 <% } %>
 
 <img class="ui large centered rounded image" src="<%= contract.image %>">
-<h2>Description :</h2>
-<p><%= contract.description %></p>
+
+<div class="ui styled fluid accordion">
+    <div class="active title">
+        <h2 class="ui center aligned block header">
+            <i class="dropdown icon"></i>
+            General Information
+            <i class="dropdown icon"></i>
+        </h2>
+    </div>
+    <div class="active content">
+        <h3 class="ui header">Description :</h3>
+        <p><%= contract.description %></p>
+        
+        <h3 class="ui header">Price :</h3>
+        <p><%= contract.price %>€ per delivery.</p>
+        
+        <h3 class="ui header">Disponibility :</h3>
+        <p><%= contract.disponibility - contract.subscribedUsers.length %> still available.</p>
+    </div>
+
+    <div class="title">
+        <h2 class="ui center aligned block header">
+            <i class="dropdown icon"></i>
+            Delivery Information
+            <i class="dropdown icon"></i>
+        </h2>
+    </div>
+    <div class="content">
+        <h3 class="ui header">Frequency :</h3>
+        <p><%= contract.delivery.frequency %> per month</p>
+        
+        <h3 class="ui header">Delivery Day :</h3>
+        <p><%= contract.delivery.dayOfWeek %></p>
     
-<h2>Price :</h2>
-<p><%= contract.price %>€ per delivery.</p>
-    
-<h2>Disponibility :</h2>
-<p><%= contract.disponibility - contract.subscribedUsers.length %> still available.</p>
+        <div class="accordion">
+            <div class="title">
+                <h3 class="ui ui center aligned block header">
+                    <i class="dropdown icon"></i>
+                    Address : <%= contract.delivery.address.name %>
+                    <i class="dropdown icon"></i>
+                </h3>
+            </div>
+            <div class="content">
+                <p>
+                    <%= contract.delivery.address.id.address1 %>
+                    <%= contract.delivery.address.id.address2 %>
+                    <br>
+                    <%= contract.delivery.address.id.postalCode %>
+                    <%= contract.delivery.address.id.city %>
+                </p>
+            </div>
+        </div>
+    </div>
+</div>
     
 <% if( currentUser && contract.producer.id.equals( currentUser._id ) ) { %>
-    <a class="ui button" href="/contracts/<%= contract._id %>/edit">Edit</a>
-    <form class="inlineForm" action="/contracts/<%= contract._id %>?_method=DELETE" method=POST>
-        <button class="ui button">Delete</button>
-    </form>
+    <div class="marginTop">
+        <a class="ui large inverted olive button" href="/contracts/<%= contract._id %>/edit">Edit</a>
+        <form class="inlineForm" action="/contracts/<%= contract._id %>?_method=DELETE" method=POST>
+            <button class="ui large right floated inverted red button">Delete</button>
+        </form>
+    </div>
 <% } %>
+
+<script>
+    $('.ui.accordion').accordion();
+</script>
 
 <% include ../partials/footer %>
