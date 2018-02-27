@@ -2,31 +2,38 @@
     </main>
     
     <footer id="footer" class="ui inverted segment grid">
-        <div class="eight wide column">
+        <div class="six wide column">
             <a class="item" href="https://github.com/Roildan/AMAPp" target="_blank">
                 <i class="github icon"></i>GitHub
             </a>
         </div>
-        <div class="eight wide right aligned column">
-            <div id="design">
-                Design by : Arthur Moulin <i class="creative commons icon"></i>
-            </div>
+        
+        <div class="four wide center aligned column">
+            <a id="onClick" href="#">
+                Mail Contact
+            </a>
             <div id="mail">
                 <i class="envelope open icon"></i> arthurmoulin@hotmail.fr
             </div>
         </div>
         
+        <div class="six wide right aligned column">
+            <p class="item">
+                Design by : Arthur Moulin <i class="creative commons icon"></i>
+            </p>
+        </div>
+        
         <script>
             $("#mail").hide();
             
-            $("#design").on("click", function() {
+            $("#onClick").on("click", function() {
                 $(this).hide();
                 $("#mail").show();
             });
             
             $("#mail").on("click", function() {
                 $(this).hide();
-                $("#design").show();
+                $("#onClick").show();
             });
         </script>
     </footer>
