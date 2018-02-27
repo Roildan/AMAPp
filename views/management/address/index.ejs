@@ -7,7 +7,15 @@
 </script>
 
 <h1 class="ui center aligned block header">Address Management</h1>
-<a class="ui button" href="/management/address/new">Add an Address</a>
+
+<a class="ui animated fade inverted green button" href="/management/address/new">
+    <div class="visible content">
+        Add an Address
+    </div>
+    <div class="hidden content">
+        <i class="plus circle large icon"></i>
+    </div>
+</a>
 
 <div class=" ui divided items">
     <% address.forEach( function( adr ) { %>
@@ -24,10 +32,15 @@
                     <p><strong>Postal Code : </strong><%= adr.postalCode %></p>
                     <p><strong>City : </strong><%= adr.city %></p>
                 </div>
-                <a class="ui button" href="/management/address/<%= adr._id %>">Edit</a>
-                <form class="inlineForm" action="/management/address/<%= adr._id %>?_method=DELETE" method=POST>
-                    <button class="ui button">Delete</button>
-                </form>
+                
+                <div class="marginTop">
+                    <a class="ui inverted olive button" href="/management/address/<%= adr._id %>">
+                        Edit
+                    </a>
+                    <form class="inlineForm" action="/management/address/<%= adr._id %>?_method=DELETE" method=POST>
+                        <button class="ui inverted red button">Delete</button>
+                    </form>
+                </div>
             </div>
         </div>
     <% }); %>

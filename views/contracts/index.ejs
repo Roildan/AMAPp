@@ -8,7 +8,14 @@
 <h1 class="ui center aligned block header">Contracts</h1>
     
 <% if( currentUser && ( currentUser.isAdmin || currentUser.isProducer )) { %>
-    <a class="ui button" href="/contracts/new">Add a New Contract</a>
+    <a class="ui animated fade inverted green button" href="/contracts/new">
+        <div class="visible content">
+            Add a New Contract
+        </div>
+        <div class="hidden content">
+            <i class="plus circle large icon"></i>
+        </div>
+    </a>
 <% } %>
 
 <div class="ui divided items">
@@ -26,7 +33,14 @@
                 <div class="description">
                     <p><%= contract.description.substring(0,400); %>...</p>
                 </div>
-                <a class="ui button" href="/contracts/<%= contract._id %>">Show More</a>
+                <a class="ui animated inverted violet button" href="/contracts/<%= contract._id %>">
+                    <div class="visible content">
+                        Show More
+                    </div>
+                    <div class="hidden content">
+                        <i class="right arrow large icon"></i>
+                    </div>
+                </a>
             </div>
         </div>
     <% }); %>

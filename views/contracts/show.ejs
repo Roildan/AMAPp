@@ -7,7 +7,14 @@
 
 <h1 class="ui center aligned block header"><%= contract.name %></h1>
 
-<a class="ui left floated huge button" href="/contracts"><i class="arrow left icon"></i>Go back</a>
+<a class="ui left floated animated huge inverted violet button" href="/contracts">
+    <div class="visible content">
+        Go back
+    </div>
+    <div class="hidden content">
+        <i class="left arrow large icon"></i>
+    </div>
+</a>
 
 <% if (currentUser) { %>
     <% let isSubscribed = false; %>
@@ -18,18 +25,18 @@
     <% }; %>
     <% if (isSubscribed) { %>
         <form class="inlineForm" action="/contracts/<%= contract._id %>/unsubscribe?_method=PUT" method=POST>
-            <button class="ui right floated huge button">Unsubscribe</button>
+            <button class="ui right floated huge inverted red button">Unsubscribe</button>
         </form>
     <% } else if (contract.disponibility > contract.subscribedUsers.length) { %>
         <form class="inlineForm" action="/contracts/<%= contract._id %>/subscribe?_method=PUT" method=POST>
-            <button class="ui right floated huge button">Subscribe</button>
+            <button class="ui right floated huge inverted green button">Subscribe</button>
         </form>
     <% } %>
 <% } %>
 
 <img class="ui large centered rounded image" src="<%= contract.image %>">
 
-<div class="ui styled fluid accordion">
+<div class="ui styled fluid accordion marginTop">
     <div class="active title">
         <h2 class="ui center aligned block header">
             <i class="dropdown icon"></i>
