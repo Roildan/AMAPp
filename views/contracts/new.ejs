@@ -54,7 +54,7 @@
     
     <div class="field">
         <label>Address</label>
-        <select name="addressId" required>
+        <select name="contract[delivery][address]" required>
             <% for( let i = 0; i < addresses.length; i++ ) { %>
                 <option  value="<%= addresses[i]._id %>">
                     <%= addresses[i].name %>

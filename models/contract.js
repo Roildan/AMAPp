@@ -12,11 +12,8 @@ const contractSchema = new mongoose.Schema({
         frequency: Number,
         dayOfWeek: String,
         address: {
-            id: {
-                type: mongoose.Schema.Types.ObjectId,
-                ref: "Address"
-            },
-            name: String
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "Address"
         }
     },
 

@@ -42,41 +42,24 @@ router.post("/", middleWare.isLoggedIn, middleWare.isProducer, function(req, res
         id: req.user._id,
         username: req.user.username
     };
-    Address.findById(req.body.addressId, function(err, address) {
-        if (err || !address) {
+
+    Contract.create(newContract, function(err, contract) {
+        if (err || !contract) {
             console.log(err);
             req.flash(
                 "error",
-                "The address cannot be found\nAn error has occurred finding the address, please contact an admin for more info"
+                "The contract have fail to be created\nAn error has occurred during creation, please contact an admin for more info"
             );
-            res.redirect("/contracts");
         }
         else {
-            newContract.delivery.addressId = undefined;
-            newContract.delivery.address = {
-                id: address._id,
-                name: address.name
-            };
-            
-            Contract.create(newContract, function(err, contract) {
-                if (err || !contract) {
-                    console.log(err);
-                    req.flash(
-                        "error",
-                        "The contract have fail to be created\nAn error has occurred during creation, please contact an admin for more info"
-                    );
-                }
-                else {
-                    // Add contract Id in created contract for the producer
-                    req.user.contract.created.push(contract._id);
-                    req.user.save();
-                
-                    req.flash(
-                        "success",
-                        "The contract have been successfully created !\nFeel free to modify or delete it at any time if needed"
-                    );
-                }
-                });
+            // Add contract Id in created contract for the producer
+            req.user.contract.created.push(contract._id);
+            req.user.save();
+
+            req.flash(
+                "success",
+                "The contract have been successfully created !\nFeel free to modify or delete it at any time if needed"
+            );
         }
     });
 
@@ -87,7 +70,7 @@ router.post("/", middleWare.isLoggedIn, middleWare.isProducer, function(req, res
 router.get("/:id", function(req, res) {
     Contract
         .findById(req.params.id)
-        .populate("delivery.address.id")
+        .populate("delivery.address")
         .exec(function(err, contract) {
             if (err || !contract) {
                 console.log(err);
@@ -133,40 +116,58 @@ router.get("/:id/edit", middleWare.isLoggedIn, middleWare.checkContractOwnership
 // UPDATE ROUTE
 router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, function(req, res) {
     const updatedContract = req.body.contract;
-    Address.findById(req.body.addressId, function(err, address) {
-        if (err || !address) {
+    Contract.findByIdAndUpdate(req.params.id, updatedContract, function(err, contract) {
+        if (err || !contract) {
             console.log(err);
             req.flash(
                 "error",
-                "The address cannot be found\nAn error has occurred finding the address, please contact an admin for more info"
+                "The contract have fail to be updated\nAn error has occurred during update, please contact an admin for more info"
             );
             res.redirect("/contracts");
         }
         else {
-            updatedContract.delivery.address = {
-                id: address._id,
-                name: address.name
-            };
-
-            Contract.findByIdAndUpdate(req.params.id, updatedContract, function(err, contract) {
-                if (err || !contract) {
-                    console.log(err);
-                    req.flash(
-                        "error",
-                        "The contract have fail to be updated\nAn error has occurred during update, please contact an admin for more info"
-                    );
-                    res.redirect("/contracts");
-                }
-                else {
-                    req.flash(
-                        "success",
-                        "The contract have been successfully updated !\nFeel free to remodify or delete it at any time if needed"
-                    );
-                    res.redirect("/contracts/" + req.params.id);
-                }
-            });
+            req.flash(
+                "success",
+                "The contract have been successfully updated !\nFeel free to remodify or delete it at any time if needed"
+            );
+            res.redirect("/contracts/" + req.params.id);
         }
     });
+
+    // Address.findById(req.body.addressId, function(err, address) {
+    //     if (err || !address) {
+    //         console.log(err);
+    //         req.flash(
+    //             "error",
+    //             "The address cannot be found\nAn error has occurred finding the address, please contact an admin for more info"
+    //         );
+    //         res.redirect("/contracts");
+    //     }
+    //     else {
+    //         updatedContract.delivery.address = {
+    //             id: address._id,
+    //             name: address.name
+    //         };
+
+    //         Contract.findByIdAndUpdate(req.params.id, updatedContract, function(err, contract) {
+    //             if (err || !contract) {
+    //                 console.log(err);
+    //                 req.flash(
+    //                     "error",
+    //                     "The contract have fail to be updated\nAn error has occurred during update, please contact an admin for more info"
+    //                 );
+    //                 res.redirect("/contracts");
+    //             }
+    //             else {
+    //                 req.flash(
+    //                     "success",
+    //                     "The contract have been successfully updated !\nFeel free to remodify or delete it at any time if needed"
+    //                 );
+    //                 res.redirect("/contracts/" + req.params.id);
+    //             }
+    //         });
+    //     }
+    // });
 });
 
 // DESTROY ROUTE
