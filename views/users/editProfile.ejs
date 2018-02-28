@@ -6,53 +6,56 @@
     $("#user").css("color", "#fff");
 </script>
 
+<% const { username, email, name, contact } = currentUser; %>
+<% const { phone, address1, address2, postalCode, city } = contact; %>
+
 <h1 class="ui center aligned block header">Edit Your Profile</h1>
     
-<form class="ui form" action="/<%= currentUser.username %>/profile?_method=PUT" method="POST">
+<form class="ui form" action="/<%= username %>/profile?_method=PUT" method="POST">
     <h2 class="ui medium header">Email (required) :</h2>
     <div class="field">
         <label>Email</label>
-        <input type="text" name="email" value="<%= currentUser.email%>" required>
+        <input type="text" name="email" value="<%= email%>" required>
     </div>
     
     <h2 class="ui medium header">Name :</h2>
     <div class="field">
         <label>First Name</label>
-        <input type="text" name="name[firstName]" value="<%= currentUser.name.firstName %>">
+        <input type="text" name="name[firstName]" value="<%= name.firstName %>">
     </div>
     
     <div class="field">
         <label>Last Name</label>
-        <input type="text" name="name[lastName]" value="<%= currentUser.name.lastName %>">
+        <input type="text" name="name[lastName]" value="<%= name.lastName %>">
     </div>
     
     <h2 class="ui medium header">Contact Information :</h2>
     <div class="field">
         <label>Phone Number</label>
-        <input type="text" name="contact[phone]" value="<%= currentUser.contact.phone %>">
+        <input type="text" name="contact[phone]" value="<%= phone %>">
     </div>
     
     <div class="field">
         <label>Address 1</label>
-        <input type="text" name="contact[address1]" value="<%= currentUser.contact.address1 %>">
+        <input type="text" name="contact[address1]" value="<%= address1 %>">
     </div>
     
     <div class="field">
         <label>Address 2</label>
-        <input type="text" name="contact[address2]" value="<%= currentUser.contact.address2 %>">
+        <input type="text" name="contact[address2]" value="<%= address2 %>">
     </div>
     
     <div class="field">
         <label>Postal Code</label>
-        <input type="text" name="contact[postalCode]" value="<%= currentUser.contact.postalCode %>">
+        <input type="text" name="contact[postalCode]" value="<%= postalCode %>">
     </div>
     
     <div class="field">
         <label>City</label>
-        <input type="text" name="contact[city]" value="<%= currentUser.contact.city %>">
+        <input type="text" name="contact[city]" value="<%= city %>">
     </div>
 
-    <a class="ui left floated animated inverted violet button" href="/<%= currentUser.username %>/profile">
+    <a class="ui left floated animated inverted violet button" href="/<%= username %>/profile">
         <div class="visible content">
             Go back
         </div>

@@ -5,66 +5,70 @@
     $("#contracts").addClass("active");
 </script>
 
-<h1 class="ui center aligned block header">Edit <%= contract.name %></h1>
+<% const { _id, name, image, price, disponibility, description, delivery } = contract; %>
+<% const { frequency, dayOfWeek, address } = delivery; %>
+
+
+<h1 class="ui center aligned block header">Edit <%= name %></h1>
     
-<form class="ui form" action="/contracts/<%= contract._id %>?_method=PUT" method="POST">
+<form class="ui form" action="/contracts/<%= _id %>?_method=PUT" method="POST">
     <h2 class="ui header">Basics :</h2>
     <div class="field">
         <label>Contract Name</label>
-        <input type="text" name="contract[name]" value="<%= contract.name %>" required>
+        <input type="text" name="contract[name]" value="<%= name %>" required>
     </div>
     
     <div class="field">
         <label>Image URL</label>
-        <input type="text" name="contract[image]" value="<%= contract.image %>" required>
+        <input type="text" name="contract[image]" value="<%= image %>" required>
     </div>
     
     <div class="field">
         <label>Price</label>
-        <input type="number" name="contract[price]" value="<%= contract.price %>" min="0.00" step="0.01" required>
+        <input type="number" name="contract[price]" value="<%= price %>" min="0.00" step="0.01" required>
     </div>
     
     <div class="field">
         <label>Disponibility</label>
-        <input type="number" name="contract[disponibility]" value="<%= contract.disponibility %>" min="0" step="1" required>
+        <input type="number" name="contract[disponibility]" value="<%= disponibility %>" min="0" step="1" required>
     </div>
     
     <div class="field">
         <label>Description</label>
-        <textarea rows="4" name="contract[description]" required><%= contract.description %></textarea>
+        <textarea rows="4" name="contract[description]" required><%= description %></textarea>
     </div>
     
     <h2 class="ui header">Delivery Information :</h2>
     <div class="field">
         <label>Day of the week</label>
         <select name="contract[delivery][dayOfWeek]" required>
-            <option <% if( contract.delivery.dayOfWeek === "Monday" ) { %> selected <% } %>>Monday</option>
-            <option <% if( contract.delivery.dayOfWeek === "Tuesday" ) { %> selected <% } %>>Tuesday</option>
-            <option <% if( contract.delivery.dayOfWeek === "Wednesday" ) { %> selected <% } %>>Wednesday</option>
-            <option <% if( contract.delivery.dayOfWeek === "Thursday" ) { %> selected <% } %>>Thursday</option>
-            <option <% if( contract.delivery.dayOfWeek === "Friday" ) { %> selected <% } %>>Friday</option>
-            <option <% if( contract.delivery.dayOfWeek === "Saturday" ) { %> selected <% } %>>Saturday</option>
-            <option <% if( contract.delivery.dayOfWeek === "Sunday" ) { %> selected <% } %>>Sunday</option>
+            <option <% if( dayOfWeek === "Monday" ) { %> selected <% } %>>Monday</option>
+            <option <% if( dayOfWeek === "Tuesday" ) { %> selected <% } %>>Tuesday</option>
+            <option <% if( dayOfWeek === "Wednesday" ) { %> selected <% } %>>Wednesday</option>
+            <option <% if( dayOfWeek === "Thursday" ) { %> selected <% } %>>Thursday</option>
+            <option <% if( dayOfWeek === "Friday" ) { %> selected <% } %>>Friday</option>
+            <option <% if( dayOfWeek === "Saturday" ) { %> selected <% } %>>Saturday</option>
+            <option <% if( dayOfWeek === "Sunday" ) { %> selected <% } %>>Sunday</option>
         </select>
     </div>
     
     <div class="field">
         <label>Frequency (per month)</label>
-        <input type="number" name="contract[delivery][frequency]" value="<%= contract.delivery.frequency %>" min="0" max="4" step="1" required>
+        <input type="number" name="contract[delivery][frequency]" value="<%= frequency %>" min="0" max="4" step="1" required>
     </div>
     
     <div class="field">
         <label>Address</label>
         <select name="contract[delivery][address]" required>
             <% for( let i = 0; i < addresses.length; i++ ) { %>
-                <option  value="<%= addresses[i]._id %>" <% if( contract.delivery.address.equals(addresses[i]._id)) { %> selected <% } %>>
+                <option  value="<%= addresses[i]._id %>" <% if( address.equals(addresses[i]._id)) { %> selected <% } %>>
                     <%= addresses[i].name %>
                 </option>
             <% } %>
         </select>
     </div>
     
-    <a class="ui left floated animated inverted violet button" href="/contracts">
+    <a class="ui left floated animated inverted violet button" href="/contracts/<%= _id %>">
         <div class="visible content">
             Go back
         </div>

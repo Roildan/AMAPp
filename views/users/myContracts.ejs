@@ -10,8 +10,9 @@
 
 <h2 class="ui medium header">Subscibed Contract(s) :</h2>
 <% user.contract.subscribed.forEach( function( contract ) { %>
-    <p><a href="/contracts/<%= contract._id %>">
-        <%= contract.name %>
+    <% const { _id, name } = contract; %>
+    <p><a href="/contracts/<%= _id %>">
+        <%= name %>
     </a></p>
 <% }); %>
 

@@ -9,8 +9,10 @@
 <h1 class="ui center aligned block header">Contracts Management</h1>
 
 <% user.contract.created.forEach( function( contract ) { %>
-    <p><a href="/contracts/<%= contract._id %>">
-        <%= contract.name %>
+    <% const { _id, name } = contract; %>
+    
+    <p><a href="/contracts/<%= _id %>">
+        <%= name %>
     </a></p>
 <% }); %>
 

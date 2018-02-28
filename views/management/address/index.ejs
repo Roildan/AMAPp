@@ -19,29 +19,31 @@
 
 <div class=" ui divided items">
     <% addresses.forEach( function( address ) { %>
+        <% const { _id, name, address1, address2, postalCode, city, time } = address; %>
+        
         <div class="item">
             <div class="content">
-                <h2 class="ui header"><%= address.name %></h2>
+                <h2 class="ui dividing header"><%= name %></h2>
                 <div class="description">
                     <h3 class="ui header">Address</h3>
-                    <p><strong>Address 1 : </strong><%= address.address1 %></p>
-                    <% if( address.address2.length > 0 ) { %>
-                        <p><strong>Address 2 : </strong><%= address.address2 %></p>
+                    <p><strong>Address 1 : </strong><%= address1 %></p>
+                    <% if( address2.length > 0 ) { %>
+                        <p><strong>Address 2 : </strong><%= address2 %></p>
                     <% } %>
-                    <p><strong>Postal Code : </strong><%= address.postalCode %></p>
-                    <p><strong>City : </strong><%= address.city %></p>
+                    <p><strong>Postal Code : </strong><%= postalCode %></p>
+                    <p><strong>City : </strong><%= city %></p>
                     
                     <h3 class="ui header">Time</h3>
-                    <p><strong>Hour : </strong><%= address.time.hour %> h</p>
-                    <% const minute = address.time.minute === 0 ? "00" : address.time.minute %>
+                    <p><strong>Hour : </strong><%= time.hour %> h</p>
+                    <% const minute = time.minute === 0 ? "00" : time.minute %>
                     <p><strong>Minute : </strong><%= minute %> min</p>
                 </div>
                 
                 <div class="marginTop">
-                    <a class="ui inverted olive button" href="/management/address/<%= address._id %>">
+                    <a class="ui inverted olive button" href="/management/address/<%= _id %>">
                         Edit
                     </a>
-                    <form class="inlineForm" action="/management/address/<%= address._id %>?_method=DELETE" method=POST>
+                    <form class="inlineForm" action="/management/address/<%= _id %>?_method=DELETE" method=POST>
                         <button class="ui inverted red button">Delete</button>
                     </form>
                 </div>

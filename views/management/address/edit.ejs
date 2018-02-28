@@ -6,44 +6,46 @@
     $("#management").css("color", "#fff");
 </script>
 
-<h1 class="ui center aligned block header">Edit <%= address.name %></h1>
+<% const { _id, name, address1, address2, postalCode, city, time } = address; %>
+
+<h1 class="ui center aligned block header">Edit <%= name %></h1>
     
-<form class="ui form" action="/management/address/<%= address._id %>?_method=PUT" method="POST">
+<form class="ui form" action="/management/address/<%= _id %>?_method=PUT" method="POST">
     <h2 class="ui header">Address :</h2>
     <div class="field">
         <label>Name</label>
-        <input type="text" name="address[name]" value="<%= address.name %>" required>
+        <input type="text" name="address[name]" value="<%= name %>" required>
     </div>
     
     <div class="field">
         <label>Address 1</label>
-        <input type="text" name="address[address1]" value="<%= address.address1 %>" required>
+        <input type="text" name="address[address1]" value="<%= address1 %>" required>
     </div>
     
     <div class="field">
         <label>Address 2</label>
-        <input type="text" name="address[address2]" value="<%= address.address2 %>">
+        <input type="text" name="address[address2]" value="<%= address2 %>">
     </div>
     
     <div class="field">
         <label>Postal Code1</label>
-        <input type="text" name="address[postalCode]" value="<%= address.postalCode %>" required>
+        <input type="text" name="address[postalCode]" value="<%= postalCode %>" required>
     </div>
     
     <div class="field">
         <label>City</label>
-        <input type="text" name="address[city]" value="<%= address.city %>" required>
+        <input type="text" name="address[city]" value="<%= city %>" required>
     </div>
     
     <h2 class="ui header">Time :</h2>
     <div class="field">
         <label>Hour</label>
-        <input type="number" name="address[time][hour]" value="<%= address.time.hour %>" min="0" max ="24" step="1" required>
+        <input type="number" name="address[time][hour]" value="<%= time.hour %>" min="0" max ="24" step="1" required>
     </div>
     
     <div class="field">
         <label>Minute</label>
-        <input type="number" name="address[time][minute]" value="<%= address.time.minute %>" min="0" max ="60" step="1" required>
+        <input type="number" name="address[time][minute]" value="<%= time.minute %>" min="0" max ="60" step="1" required>
     </div>
     
     <a class="ui left floated animated inverted violet button" href="/management/address">

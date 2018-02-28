@@ -6,6 +6,9 @@
     $("#user").css("color", "#fff");
 </script>
 
+<% const { username, email, name, contact } = currentUser; %>
+<% const { phone, address1, address2, postalCode, city } = contact; %>
+
 <h1 class="ui center aligned block header">Profile</h1>
 
 <!-- Main -->
@@ -13,7 +16,7 @@
 <div class="ui label">
     <i class="mail icon"></i> Your email : 
 </div>
-<%= currentUser.email %>
+<%= email %>
 
 
 <!-- Personnal -->
@@ -24,13 +27,13 @@
     <div class="ui label">
         <i class="user circle icon"></i> First name : 
     </div>
-    <%= currentUser.name.firstName %>
+    <%= name.firstName %>
 </p>
 <p>
     <div class="ui label">
         <i class="user circle icon"></i> Last name : 
     </div>
-    <%= currentUser.name.lastName %>
+    <%= name.lastName %>
 </p>
 
 
@@ -40,36 +43,36 @@
     <div class="ui label">
         <i class="phone icon"></i> Phone Number : 
     </div>
-    <%= currentUser.contact.phone %>
+    <%= phone %>
 </p>
 <p>
     <div class="ui label">
         <i class="address card icon"></i> Address 1 : 
     </div>
-    <%= currentUser.contact.address1 %>
+    <%= address1 %>
 </p>
-<% if( currentUser.contact.address2 && currentUser.contact.address2.length > 0 ) { %>
+<% if( address2 && address2.length > 0 ) { %>
     <p>
         <div class="ui label">
             <i class="address card icon"></i> Address 2 : 
         </div>
-        <%= currentUser.contact.address2 %>
+        <%= address2 %>
     </p>
 <% } %>
 <p>
     <div class="ui label">
         <i class="address card icon"></i> Postal Code : 
     </div>
-    <%= currentUser.contact.postalCode %>
+    <%= postalCode %>
 </p>
 <p>
     <div class="ui label">
         <i class="address card icon"></i> City : 
     </div>
-    <%= currentUser.contact.city %>
+    <%= city %>
 </p>
 
-<a class="ui right floated huge inverted olive button" href="/<%= currentUser.username %>/profile/edit">
+<a class="ui right floated huge inverted olive button" href="/<%= username %>/profile/edit">
     Edit
 </a>
 

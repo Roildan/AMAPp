@@ -20,20 +20,22 @@
 
 <div class="ui divided items">
     <% contracts.forEach( function( contract ) { %>
+        <% const { _id, name, image, description, producer } = contract; %>
+        
         <div class="item">
-            <a class="image" href="/contracts/<%= contract._id %>">
-                <img src="<%= contract.image %>">
+            <a class="image" href="/contracts/<%= _id %>">
+                <img src="<%= image %>">
             </a>
             <div class="content">
                 <h2 class="ui medium header">
-                    <a href="/contracts/<%= contract._id %>">
-                        <%= contract.name %> <em>by <%= contract.producer.username %></em>
+                    <a href="/contracts/<%= _id %>">
+                        <%= name %> <em>by <%= producer.username %></em>
                     </a>
                 </h2>
                 <div class="description">
-                    <p><%= contract.description.substring(0,400); %>...</p>
+                    <p><%= description.substring(0,400); %>...</p>
                 </div>
-                <a class="ui animated inverted violet button" href="/contracts/<%= contract._id %>">
+                <a class="ui animated inverted violet button" href="/contracts/<%= _id %>">
                     <div class="visible content">
                         Show More
                     </div>

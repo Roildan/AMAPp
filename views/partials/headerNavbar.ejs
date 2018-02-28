@@ -16,7 +16,9 @@
                 <a id="login" class="item right" href="/login"><i class="user icon"></i>Login</a>
                 <a id="register" class="item" href="/register"><i class="add user icon"></i>Sign Up</a>
             <% } else { %>
-                <% if( currentUser.isAdmin || currentUser.isProducer ) { %>
+                <% const { username, isAdmin, isProducer } = currentUser; %>
+                
+                <% if( isAdmin || isProducer ) { %>
                     <div id="management" class="ui dropdown item right">
                         <i class="users icon"></i>
                         Management
@@ -24,7 +26,7 @@
                         <div class="menu">
                             <a id="managementAddress" class="item" href="/management/address">Address</a>
                             <a id="managementContracts" class="item" href="/management/contracts">Contracts</a>
-                            <% if( currentUser.isAdmin ) { %>
+                            <% if( isAdmin ) { %>
                                 <a id="managementUsers" class="item" href="/management/users">Users</a>
                             <% } %>
                         </div>
@@ -32,24 +34,24 @@
                 <% } %>
                 <div id="user" class="ui dropdown item right">
                     <i class="user icon"></i>
-                    <%= currentUser.username %>
-                    <% if( currentUser.isAdmin ) { %>
+                    <%= username %>
+                    <% if( isAdmin ) { %>
                         (Admin)
-                    <% } else if( currentUser.isProducer ) { %>
+                    <% } else if( isProducer ) { %>
                         (Producer)
                     <% } %>
                     <i class="dropdown icon"></i>
                     <div class="menu">
-                        <a id="profile" class="item" href="/<%= currentUser.username %>/profile">
+                        <a id="profile" class="item" href="/<%= username %>/profile">
                             Profile
                         </a>
-                        <a id="settings" class="item" href="/<%= currentUser.username %>/settings">
+                        <a id="settings" class="item" href="/<%= username %>/settings">
                             Settings
                         </a>
-                        <a id="myContracts" class="item" href="/<%= currentUser.username %>/my_contracts">
+                        <a id="myContracts" class="item" href="/<%= username %>/my_contracts">
                             My Contracts
                         </a>
-                        <a id="planning" class="item" href="/<%= currentUser.username %>/planning">
+                        <a id="planning" class="item" href="/<%= username %>/planning">
                             Planning
                         </a>
                     </div>
