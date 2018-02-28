@@ -133,41 +133,6 @@ router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, fun
             res.redirect("/contracts/" + req.params.id);
         }
     });
-
-    // Address.findById(req.body.addressId, function(err, address) {
-    //     if (err || !address) {
-    //         console.log(err);
-    //         req.flash(
-    //             "error",
-    //             "The address cannot be found\nAn error has occurred finding the address, please contact an admin for more info"
-    //         );
-    //         res.redirect("/contracts");
-    //     }
-    //     else {
-    //         updatedContract.delivery.address = {
-    //             id: address._id,
-    //             name: address.name
-    //         };
-
-    //         Contract.findByIdAndUpdate(req.params.id, updatedContract, function(err, contract) {
-    //             if (err || !contract) {
-    //                 console.log(err);
-    //                 req.flash(
-    //                     "error",
-    //                     "The contract have fail to be updated\nAn error has occurred during update, please contact an admin for more info"
-    //                 );
-    //                 res.redirect("/contracts");
-    //             }
-    //             else {
-    //                 req.flash(
-    //                     "success",
-    //                     "The contract have been successfully updated !\nFeel free to remodify or delete it at any time if needed"
-    //                 );
-    //                 res.redirect("/contracts/" + req.params.id);
-    //             }
-    //         });
-    //     }
-    // });
 });
 
 // DESTROY ROUTE

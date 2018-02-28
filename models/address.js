@@ -5,7 +5,11 @@ const addressSchema = new mongoose.Schema({
     address1: String,
     address2: String,
     postalCode: String,
-    city: String
+    city: String,
+    time: {
+        hour: Number,
+        minute: Number
+    }
 });
 
 module.exports = mongoose.model("Address", addressSchema);

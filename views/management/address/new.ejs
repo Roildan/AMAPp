@@ -6,11 +6,12 @@
     $("#management").css("color", "#fff");
 </script>
 
-<h1>Add New Address</h1>
+<h1 class="ui center aligned block header">Add New Address</h1>
     
 <form class="ui form" action="/management/address" method="POST">
+    <h2 class="ui header">Address :</h2>
     <div class="field">
-        <label>Address Name</label>
+        <label>Name</label>
         <input type="text" name="address[name]" placeholder="Name" required>
     </div>
     
@@ -32,6 +33,17 @@
     <div class="field">
         <label>City</label>
         <input type="text" name="address[city]" placeholder="City" required>
+    </div>
+    
+    <h2 class="ui header">Time :</h2>
+    <div class="field">
+        <label>Hour</label>
+        <input type="number" name="address[time][hour]" placeholder="Hour" min="0" max ="24" step="1" required>
+    </div>
+    
+    <div class="field">
+        <label>Minute</label>
+        <input type="number" name="address[time][minute]" placeholder="Minute" min="0" max ="60" step="1" required>
     </div>
     
     <a class="ui left floated animated inverted violet button" href="/management/address">

@@ -49,7 +49,7 @@ router.post("/address", middleWare.isLoggedIn, middleWare.isProducer, function(r
 
 // ADDRESS INDEX ROUTE
 router.get("/address", middleWare.isLoggedIn, middleWare.isProducer, function(req, res) {
-    Address.find(function(err, address) {
+    Address.find(function(err, addresses) {
         if (err) {
             console.log(err);
             req.flash(
@@ -58,13 +58,13 @@ router.get("/address", middleWare.isLoggedIn, middleWare.isProducer, function(re
             );
             return res.redirect("back");
         }
-        res.render("management/address/index", { address: address });
+        res.render("management/address/index", { addresses: addresses });
     });
 });
 
 // ADDRESS EDIT ROUTE
 router.get("/address/:id", middleWare.isLoggedIn, middleWare.isProducer, function(req, res) {
-    Address.findById(req.params.id, function(err, adr) {
+    Address.findById(req.params.id, function(err, address) {
         if (err) {
             console.log(err);
             req.flash(
@@ -74,14 +74,14 @@ router.get("/address/:id", middleWare.isLoggedIn, middleWare.isProducer, functio
             res.redirect("/management/address");
         }
         else {
-            res.render("management/address/edit", { address: adr });
+            res.render("management/address/edit", { address: address });
         }
     });
 });
 
 // ADDRESS UPDATE ROUTE
 router.put("/address/:id", middleWare.isLoggedIn, middleWare.isProducer, function(req, res) {
-    Address.findByIdAndUpdate(req.params.id, req.body.address, function(err, adr) {
+    Address.findByIdAndUpdate(req.params.id, req.body.address, function(err, address) {
         if (err) {
             console.log(err);
             req.flash(

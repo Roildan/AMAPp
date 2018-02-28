@@ -45,14 +45,17 @@
         </h2>
     </div>
     <div class="active content">
-        <h3 class="ui header">Description :</h3>
         <p><%= contract.description %></p>
         
-        <h3 class="ui header">Price :</h3>
-        <p><%= contract.price %>€ per delivery.</p>
+        <p>
+            <strong>Price : </strong>
+            <%= contract.price %>€ per delivery.
+        </p>
         
-        <h3 class="ui header">Disponibility :</h3>
-        <p><%= contract.disponibility - contract.subscribedUsers.length %> still available.</p>
+        <p>
+            <strong>Disponibility : </strong>
+            <%= contract.disponibility - contract.subscribedUsers.length %> still available.
+        </p>
     </div>
 
     <div class="title">
@@ -63,11 +66,21 @@
         </h2>
     </div>
     <div class="content">
-        <h3 class="ui header">Frequency :</h3>
-        <p><%= contract.delivery.frequency %> per month</p>
+        <p>
+            <strong>Frequency : </strong>
+            <%= contract.delivery.frequency %> per month
+        </p>
         
-        <h3 class="ui header">Delivery Day :</h3>
-        <p><%= contract.delivery.dayOfWeek %></p>
+        <p>
+            <strong>Day of the Week : </strong>
+            <%= contract.delivery.dayOfWeek %>
+        </p>
+        
+        <% const minute = contract.delivery.address.time.minute === 0 ? "00" : contract.delivery.address.time.minute %>
+        <p>
+            <strong>Time : </strong>
+            <%= contract.delivery.address.time.hour %> h <%= minute %>
+        </p>
     
         <div class="accordion">
             <div class="title">

@@ -5,9 +5,10 @@
     $("#contracts").addClass("active");
 </script>
 
-<h1>Edit <%= contract.name %></h1>
+<h1 class="ui center aligned block header">Edit <%= contract.name %></h1>
     
 <form class="ui form" action="/contracts/<%= contract._id %>?_method=PUT" method="POST">
+    <h2 class="ui header">Basics :</h2>
     <div class="field">
         <label>Contract Name</label>
         <input type="text" name="contract[name]" value="<%= contract.name %>" required>
@@ -33,7 +34,7 @@
         <textarea rows="4" name="contract[description]" required><%= contract.description %></textarea>
     </div>
     
-    <h2 class="ui medium header">Delivery Information :</h2>
+    <h2 class="ui header">Delivery Information :</h2>
     <div class="field">
         <label>Day of the week</label>
         <select name="contract[delivery][dayOfWeek]" required>
