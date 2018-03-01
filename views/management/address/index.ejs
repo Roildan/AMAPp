@@ -6,7 +6,7 @@
     $("#management").css("color", "#fff");
 </script>
 
-<h1 class="ui center aligned block header">Address Management</h1>
+<h1 class="ui center aligned block inverted olive header">Address Management</h1>
 
 <a class="ui animated fade inverted green button" href="/management/address/new">
     <div class="visible content">
@@ -40,11 +40,11 @@
                 </div>
                 
                 <div class="marginTop">
-                    <a class="ui inverted olive button" href="/management/address/<%= _id %>">
+                    <a class="ui olive button" href="/management/address/<%= _id %>">
                         Edit
                     </a>
                     <form class="inlineForm" action="/management/address/<%= _id %>?_method=DELETE" method=POST>
-                        <button class="ui inverted red button">Delete</button>
+                        <button class="ui red button">Delete</button>
                     </form>
                 </div>
             </div>

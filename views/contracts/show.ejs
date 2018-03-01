@@ -8,8 +8,9 @@
 <% const { _id, name, image, price, disponibility, description } = contract; %>
 <% const { delivery, producer, subscribedUsers } = contract; %>
 <% const { frequency, dayOfWeek, address } = delivery; %>
+<% const available = disponibility - subscribedUsers.length; %>
 
-<h1 class="ui center aligned block header"><%= name %></h1>
+<h1 class="ui center aligned block inverted olive header"><%= name %></h1>
 
 <a class="ui left floated animated huge inverted violet button" href="/contracts">
     <div class="visible content">
@@ -31,7 +32,7 @@
         <form class="inlineForm" action="/contracts/<%= _id %>/unsubscribe?_method=PUT" method=POST>
             <button class="ui right floated huge inverted red button">Unsubscribe</button>
         </form>
-    <% } else if (disponibility > subscribedUsers.length) { %>
+    <% } else if (available) { %>
         <form class="inlineForm" action="/contracts/<%= _id %>/subscribe?_method=PUT" method=POST>
             <button class="ui right floated huge inverted green button">Subscribe</button>
         </form>
@@ -42,7 +43,7 @@
 
 <div class="ui styled fluid accordion marginTop">
     <div class="active title">
-        <h2 class="ui center aligned block header">
+        <h2 class="ui center aligned block inverted olive header">
             <i class="dropdown icon"></i>
             General Information
             <i class="dropdown icon"></i>
@@ -58,12 +59,16 @@
         
         <p>
             <strong>Disponibility : </strong>
-            <%= disponibility - subscribedUsers.length %> still available.
+            <% if( available) { %>
+                <%= disponibility - subscribedUsers.length %> still available.
+            <% } else { %>
+                Not available anymore !
+            <% } %>
         </p>
     </div>
 
     <div class="title">
-        <h2 class="ui center aligned block header">
+        <h2 class="ui center aligned block inverted olive header">
             <i class="dropdown icon"></i>
             Delivery Information
             <i class="dropdown icon"></i>
@@ -88,7 +93,7 @@
     
         <div class="accordion">
             <div class="title">
-                <h3 class="ui ui center aligned block header">
+                <h3 class="ui ui center aligned block inverted olive header">
                     <i class="dropdown icon"></i>
                     Address : <%= address.name %>
                     <i class="dropdown icon"></i>
@@ -109,9 +114,9 @@
     
 <% if( currentUser && producer.id.equals( currentUser._id ) ) { %>
     <div class="marginTop">
-        <a class="ui large inverted olive button" href="/contracts/<%= _id %>/edit">Edit</a>
+        <a class="ui large olive button" href="/contracts/<%= _id %>/edit">Edit</a>
         <form class="inlineForm" action="/contracts/<%= _id %>?_method=DELETE" method=POST>
-            <button class="ui large right floated inverted red button">Delete</button>
+            <button class="ui large right floated red button">Delete</button>
         </form>
     </div>
 <% } %>

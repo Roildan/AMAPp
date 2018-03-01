@@ -1,13 +1,13 @@
 TODO :
 
  * Menu with :
-    - Settings      --> Anonymous / Mail (mailgun ?)
+    - Settings      --> Anonymous / Mail (mailgun / nodemailer ?)
     - My Contract   --> Simplified table to overview subscribed contracts
     - Planning      --> See Scheduled delivery
 
  * Attendance Sheet --> Printable PDF
  
- * Choose language
+ * Choose language --> i18n-node
 
  * Management :
     - Table of users (Sorted by privilege)
