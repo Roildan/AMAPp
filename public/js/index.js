@@ -1,5 +1,3 @@
-$("#mail").hide();
-
 $("#onClick").on("click", function() {
     $(this).hide();
     $("#mail").show();

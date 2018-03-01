@@ -31,3 +31,11 @@
 .marginTop {
     margin-top: 10px;
 }
+
+select:invalid {
+    color: lightgrey !important;
+}
+
+option {
+    color: black;
+}

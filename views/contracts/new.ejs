@@ -21,12 +21,12 @@
     
     <div class="field">
         <label>Price</label>
-        <input type="number" name="contract[price]" placeholder="Price" min="0.00" step="0.01" required>
+        <input type="number" name="contract[price]" placeholder="Price" min="0.01" step="0.01" required>
     </div>
     
     <div class="field">
         <label>Disponibility</label>
-        <input type="number" name="contract[disponibility]" placeholder="Disponibility" min="0" step="1" required>
+        <input type="number" name="contract[disponibility]" placeholder="Disponibility" min="1" step="1" required>
     </div>
     
     <div class="field">
@@ -38,6 +38,7 @@
     <div class="field">
         <label>Day of the week</label>
         <select name="contract[delivery][dayOfWeek]" required>
+            <option value="">Choose a day</option>
             <option>Monday</option>
             <option>Tuesday</option>
             <option>Wednesday</option>
@@ -50,18 +51,37 @@
     
     <div class="field">
         <label>Frequency (per month)</label>
-        <input type="number" name="contract[delivery][frequency]" placeholder="Frequency (per month)" min="0" max="4" step="1" required>
+        <input type="number" name="contract[delivery][frequency]" placeholder="Frequency (per month)" min="1" max="4" step="1" required>
     </div>
     
     <div class="field">
         <label>Address</label>
         <select name="contract[delivery][address]" required>
-            <% for( let i = 0; i < addresses.length; i++ ) { %>
-                <option  value="<%= addresses[i]._id %>">
-                    <%= addresses[i].name %>
+            <option onclick="displayAddress($(this));" value="">Choose an address</option>
+            <% addresses.forEach( function(address) { %>
+                <option onclick="displayAddress($(this));" value="<%= address._id %>">
+                    <%= address.name %>
                 </option>
-            <% } %>
+            <% }); %>
         </select>
+        
+        <div id="divAddress" class="ui secondary center aligned segment">
+            <% addresses.forEach( function(address) { %>
+                <p class ="address" id="<%= address._id %>" hidden>
+                    <%= address.address1 %>
+                    <%= address.address2 %>
+                    <br>
+                    <%= address.postalCode %>
+                    <%= address.city %>
+                    <br>
+                    <% const minute = address.time.minute === 0 ? "00" : address.time.minute %>
+                    <strong>Time : </strong>
+                    <%= address.time.hour %> h <%= minute %>
+                </p>
+            <% }); %>
+        </div>
+        
+        <script type="text/javascript" src="/js/displayAddress.js"></script>
     </div>
     
     <a class="ui left floated animated inverted violet button" href="/contracts">
