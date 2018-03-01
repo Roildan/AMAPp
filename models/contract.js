@@ -6,6 +6,8 @@ const contractSchema = new mongoose.Schema({
     description: String,
     price: Number,
     disponibility: Number,
+    startDate: Date,
+    endDate: Date,
 
     delivery: {
         // Per month

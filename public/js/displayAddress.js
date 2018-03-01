@@ -3,14 +3,7 @@
 // Called on loading to initialize display
 
 function displayAddress(obj) {
-    $(".address").each(function() {
-        if (!obj[0].value) {
-            $("#divAddress").hide();
-        }
-        else {
-            $("#divAddress").show();
-        }
-
+    $(".ui.secondary.segment").each(function() {
         if ($(this)[0].id === obj[0].value) {
             $(this).show();
         }

@@ -34,6 +34,16 @@
         <textarea rows="4" name="contract[description]" placeholder="Description" required></textarea>
     </div>
     
+    <div class="field">
+        <label>Start</label>
+        <input type="date" name="start" min="2018-01-01" required>
+    </div>
+    
+    <div class="field">
+        <label>End</label>
+        <input type="date" name="end" min="2018-01-01" required>
+    </div>
+    
     <h2 class="ui header">Delivery Information :</h2>
     <div class="field">
         <label>Day of the week</label>
@@ -65,21 +75,19 @@
             <% }); %>
         </select>
         
-        <div id="divAddress" class="ui secondary center aligned segment">
-            <% addresses.forEach( function(address) { %>
-                <p class ="address" id="<%= address._id %>" hidden>
-                    <%= address.address1 %>
-                    <%= address.address2 %>
-                    <br>
-                    <%= address.postalCode %>
-                    <%= address.city %>
-                    <br>
-                    <% const minute = address.time.minute === 0 ? "00" : address.time.minute %>
-                    <strong>Time : </strong>
-                    <%= address.time.hour %> h <%= minute %>
-                </p>
-            <% }); %>
-        </div>
+        <% addresses.forEach( function(address) { %>
+            <div id="<%= address._id %>" class="ui secondary center aligned segment" hidden>
+                <%= address.address1 %>
+                <%= address.address2 %>
+                <br>
+                <%= address.postalCode %>
+                <%= address.city %>
+                <br>
+                <% const minute = address.time.minute === 0 ? "00" : address.time.minute %>
+                <strong>Time : </strong>
+                <%= address.time.hour %> h <%= minute %>
+            </div>
+        <% }); %>
         
         <script type="text/javascript" src="/js/displayAddress.js"></script>
     </div>

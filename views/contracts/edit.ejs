@@ -5,7 +5,7 @@
     $("#contracts").addClass("active");
 </script>
 
-<% const { _id, name, image, price, disponibility, description, delivery } = contract; %>
+<% const { _id, name, image, price, disponibility, description, delivery, startDate, endDate } = contract; %>
 <% const { frequency, dayOfWeek, address } = delivery; %>
 
 
@@ -36,6 +36,23 @@
     <div class="field">
         <label>Description</label>
         <textarea rows="4" name="contract[description]" required><%= description %></textarea>
+    </div>
+    
+    <!-- Input value needs to be 'yyyy-mm-dd' -->
+    <% const startDay = startDate.getDate() < 10 ? "0" + startDate.getDate() : startDate.getDate(); %>
+    <% const startMonth = startDate.getMonth() < 10 ? "0" + (startDate.getMonth() + 1) : startDate.getMonth() + 1; %>
+    <% const start = startDate.getFullYear() + "-" + startMonth + "-" + startDay %>
+    <div class="field">
+        <label>Start</label>
+        <input type="date" name="start" value="<%= start %>" min="2018-01-01" required>
+    </div>
+    
+    <% const endDay = endDate.getDate() < 10 ? "0" + endDate.getDate() : endDate.getDate(); %>
+    <% const endMonth = endDate.getMonth() < 10 ? "0" + (endDate.getMonth() + 1) : endDate.getMonth() + 1; %>
+    <% const end = endDate.getFullYear() + "-" + endMonth + "-" + endDay %>
+    <div class="field">
+        <label>End</label>
+        <input type="date" name="end" value="<%= end %>" min="2018-01-01" required>
     </div>
     
     <h2 class="ui header">Delivery Information :</h2>
@@ -69,21 +86,19 @@
             <% } %>
         </select>
         
-        <div id="divAddress" class="ui secondary center aligned segment">
-            <% addresses.forEach( function(address) { %>
-                <p class ="address" id="<%= address._id %>" hidden>
-                    <%= address.address1 %>
-                    <%= address.address2 %>
-                    <br>
-                    <%= address.postalCode %>
-                    <%= address.city %>
-                    <br>
-                    <% const minute = address.time.minute === 0 ? "00" : address.time.minute %>
-                    <strong>Time : </strong>
-                    <%= address.time.hour %> h <%= minute %>
-                </p>
-            <% }); %>
-        </div>
+        <% addresses.forEach( function(address) { %>
+            <div id="<%= address._id %>" class="ui secondary center aligned segment" hidden>
+                <%= address.address1 %>
+                <%= address.address2 %>
+                <br>
+                <%= address.postalCode %>
+                <%= address.city %>
+                <br>
+                <% const minute = address.time.minute === 0 ? "00" : address.time.minute %>
+                <strong>Time : </strong>
+                <%= address.time.hour %> h <%= minute %>
+            </div>
+        <% }); %>
         
         <script type="text/javascript" src="/js/displayAddress.js"></script>
     </div>
