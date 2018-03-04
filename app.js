@@ -15,7 +15,7 @@ const express = require("express"),
 //require("./seedDB")();
 
 // Connection with DataBase
-mongoose.connect("mongodb://localhost/amapp_v5");
+mongoose.connect("mongodb://localhost/amapp_v6");
 // Set '.ejs' to the 'view' directory.
 app.set("view engine", "ejs");
 // Call for 'public' directory (CSS/Ressources).

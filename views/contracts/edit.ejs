@@ -5,7 +5,8 @@
     $("#contracts").addClass("active");
 </script>
 
-<% const { _id, name, image, price, disponibility, description, delivery, startDate, endDate } = contract; %>
+<% const { _id, name, image, price, disponibility, description, delivery, date } = contract; %>
+<% const { start, end } = date; %>
 <% const { frequency, dayOfWeek, address } = delivery; %>
 
 
@@ -39,20 +40,20 @@
     </div>
     
     <!-- Input value needs to be 'yyyy-mm-dd' -->
-    <% const startDay = startDate.getDate() < 10 ? "0" + startDate.getDate() : startDate.getDate(); %>
-    <% const startMonth = startDate.getMonth() < 10 ? "0" + (startDate.getMonth() + 1) : startDate.getMonth() + 1; %>
-    <% const start = startDate.getFullYear() + "-" + startMonth + "-" + startDay %>
+    <% const startDay = start.getDate() < 10 ? "0" + start.getDate() : start.getDate(); %>
+    <% const startMonth = start.getMonth() < 10 ? "0" + (start.getMonth() + 1) : start.getMonth() + 1; %>
+    <% const startDate = start.getFullYear() + "-" + startMonth + "-" + startDay %>
     <div class="field">
         <label>Start</label>
-        <input type="date" name="start" value="<%= start %>" min="2018-01-01" required>
+        <input type="date" name="start" value="<%= startDate %>" min="2018-01-01" required>
     </div>
     
-    <% const endDay = endDate.getDate() < 10 ? "0" + endDate.getDate() : endDate.getDate(); %>
-    <% const endMonth = endDate.getMonth() < 10 ? "0" + (endDate.getMonth() + 1) : endDate.getMonth() + 1; %>
-    <% const end = endDate.getFullYear() + "-" + endMonth + "-" + endDay %>
+    <% const endDay = end.getDate() < 10 ? "0" + end.getDate() : end.getDate(); %>
+    <% const endMonth = end.getMonth() < 10 ? "0" + (end.getMonth() + 1) : end.getMonth() + 1; %>
+    <% const endDate = end.getFullYear() + "-" + endMonth + "-" + endDay %>
     <div class="field">
         <label>End</label>
-        <input type="date" name="end" value="<%= end %>" min="2018-01-01" required>
+        <input type="date" name="end" value="<%= endDate %>" min="2018-01-01" required>
     </div>
     
     <h2 class="ui header">Delivery Information :</h2>

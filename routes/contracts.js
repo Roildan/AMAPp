@@ -38,8 +38,14 @@ router.get("/new", middleWare.isLoggedIn, middleWare.isProducer, function(req, r
 // CREATE ROUTE
 router.post("/", middleWare.isLoggedIn, middleWare.isProducer, function(req, res) {
     const newContract = req.body.contract;
-    newContract.startDate = new Date(req.body.start);
-    newContract.endDate = new Date(req.body.end);
+
+    // Set Date
+    newContract.date = {
+        start: new Date(req.body.start),
+        end: new Date(req.body.end)
+    };
+
+    // Set Producer
     newContract.producer = {
         id: req.user._id,
         username: req.user.username
@@ -118,8 +124,13 @@ router.get("/:id/edit", middleWare.isLoggedIn, middleWare.checkContractOwnership
 // UPDATE ROUTE
 router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, function(req, res) {
     const updatedContract = req.body.contract;
-    updatedContract.startDate = new Date(req.body.start);
-    updatedContract.endDate = new Date(req.body.end);
+
+    // Set Date
+    updatedContract.date = {
+        start: new Date(req.body.start),
+        end: new Date(req.body.end)
+    };
+
     Contract.findByIdAndUpdate(req.params.id, updatedContract, function(err, contract) {
         if (err || !contract) {
             console.log(err);
