@@ -89,65 +89,85 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
                 return res.redirect("back");
             }
 
-            // Manually populate address in subscribed contracts
-            Address.find(function(err, addresses) {
-                if (err) {
-                    console.log(err);
-                    req.flash(
-                        "error",
-                        "This addresses cannot be found\nAn error has occurred finding the addresses, please contact an admin for more info"
-                    );
-                    return res.redirect("back");
-                }
+            // Represents the 7 days of the week
+            const days = [
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+                [],
+            ];
+            for (let contract of user.contract.subscribed) {
+                const isValid = contract.date.start < Date.now() && contract.date.end > Date.now();
 
-                user.contract.subscribed.forEach(function(contract) {
-                    addresses.forEach(function(address) {
-                        if (contract.delivery.address.equals(address._id)) {
-                            contract.delivery.address = address;
-                        }
-                    });
-                });
-
-                const days = [
-                    [],
-                    [],
-                    [],
-                    [],
-                    [],
-                    [],
-                    [],
-                ];
-                user.contract.subscribed.forEach(function(contract) {
-                    switch (contract.delivery.dayOfWeek) {
-                        case "Monday":
+                // Order contracts in the corresponding day
+                switch (contract.delivery.dayOfWeek) {
+                    case "Monday":
+                        if (isValid) {
                             days[0].push(contract);
-                            break;
-                        case "Tuesday":
+                        }
+                        break;
+                    case "Tuesday":
+                        if (isValid) {
                             days[1].push(contract);
-                            break;
-                        case "Wednesday":
+                        }
+                        break;
+                    case "Wednesday":
+                        if (isValid) {
                             days[2].push(contract);
-                            break;
-                        case "Thursday":
+                        }
+                        break;
+                    case "Thursday":
+                        if (isValid) {
                             days[3].push(contract);
-                            break;
-                        case "Friday":
+                        }
+                        break;
+                    case "Friday":
+                        if (isValid) {
                             days[4].push(contract);
-                            break;
-                        case "Saturday":
+                        }
+                        break;
+                    case "Saturday":
+                        if (isValid) {
                             days[5].push(contract);
-                            break;
-                        case "Sunday":
+                        }
+                        break;
+                    case "Sunday":
+                        if (isValid) {
                             days[6].push(contract);
-                            break;
-                    }
-                });
-                const maxPerDay = Math.max(...days.map(tab => tab.length));
+                        }
+                        break;
+                }
+            }
 
-                res.render("users/planning", { days: days, maxPerDay: maxPerDay });
-            });
+            const maxPerDay = Math.max(...days.map(tab => tab.length));
+
+            res.render("users/planning", { days: days, maxPerDay: maxPerDay });
         });
+
+    // USELESS ? (if only show links)
+    // Manually populate address in subscribed contracts
+    // Address.find(function(err, addresses) {
+    //     if (err) {
+    //         console.log(err);
+    //         req.flash(
+    //             "error",
+    //             "This addresses cannot be found\nAn error has occurred finding the addresses, please contact an admin for more info"
+    //         );
+    //         return res.redirect("back");
+    //     }
+    // Find and save delivery address
+    // for (let contract of user.contract.subscribed) {
+    // for (let address of addresses) {
+    //     if (contract.delivery.address.equals(address._id)) {
+    //         contract.delivery.address = address;
+    //         break;
+    //     }
+    // }
 });
+
 
 router.get("/management", middleWare.isLoggedIn, middleWare.isAdmin, function(req, res) {
     User.find(function(err, users) {
