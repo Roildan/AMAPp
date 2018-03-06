@@ -77,7 +77,11 @@
     <div class="content">
         <p>
             <strong>Frequency : </strong>
-            <%= frequency %> per month
+            Every
+            <% if (frequency !== 1) { %>
+                <strong><%= frequency %></strong>
+            <% } %>
+            weeks
         </p>
         
         <p>

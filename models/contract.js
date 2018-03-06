@@ -13,7 +13,7 @@ const contractSchema = new mongoose.Schema({
     },
 
     delivery: {
-        // Per month
+        // Every 'x' week(s)
         frequency: Number,
         dayOfWeek: String,
         address: {

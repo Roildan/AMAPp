@@ -35,12 +35,12 @@
     </div>
     
     <div class="field">
-        <label>Start</label>
+        <label>Start (<i class="exclamation triangle icon"></i>Must be the Monday of the week of the first delivery !)</label>
         <input type="date" name="start" min="2018-01-01" required>
     </div>
     
     <div class="field">
-        <label>End</label>
+        <label>End (<i class="exclamation triangle icon"></i>Must be the Monday of the week following the last delivery !)</label>
         <input type="date" name="end" min="2018-01-01" required>
     </div>
     
@@ -60,7 +60,7 @@
     </div>
     
     <div class="field">
-        <label>Frequency (per month)</label>
+        <label>Frequency (Every 'x' week(s))</label>
         <input type="number" name="contract[delivery][frequency]" placeholder="Frequency (per month)" min="1" max="4" step="1" required>
     </div>
     
