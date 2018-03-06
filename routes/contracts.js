@@ -45,6 +45,15 @@ router.post("/", middleWare.isLoggedIn, middleWare.isProducer, function(req, res
         end: new Date(req.body.end)
     };
 
+    // Check if satrt & end day is a 'Monday' 
+    if (newContract.date.start.getDay() !== 2 || newContract.date.end.getDay() !== 2) {
+        req.flash(
+            "error",
+            "Date input error\nPlease enter a date corresponding to a 'Monday'"
+        );
+        return res.redirect("/contracts/new");
+    }
+
     // Set Producer
     newContract.producer = {
         id: req.user._id,
@@ -130,6 +139,15 @@ router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, fun
         start: new Date(req.body.start),
         end: new Date(req.body.end)
     };
+
+    // Check if satrt & end day is a 'Monday' 
+    if (updatedContract.date.start.getDay() !== 2 || updatedContract.date.end.getDay() !== 2) {
+        req.flash(
+            "error",
+            "Date input error\nPlease enter a date corresponding to a 'Monday'"
+        );
+        return res.redirect("/contracts/" + req.params.id + "/edit");
+    }
 
     Contract.findByIdAndUpdate(req.params.id, updatedContract, function(err, contract) {
         if (err || !contract) {
