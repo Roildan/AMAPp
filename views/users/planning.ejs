@@ -6,92 +6,71 @@
     $("#user").css("color", "#fff");
 </script>
 
-<% const today = new Date(); %>
-<% const thisDate = today.getDate(); %>
-<% const thisYear = today.getFullYear(); %>
-<% const thisMonth = today.getMonth(); %>
-
-<!-- Change day to go from Monday to Sunday instead of Sunday to Saturday -->
-<% const thisDay = today.getDay() === 0 ? 6 : today.getDay() - 1; %>
-
-<!-- Check wether we are in a leap year -->
-<% const isLeapYear = thisYear % 400 === 0 || (thisYear % 100 !== 0 && thisYear % 4 === 0); %>
-
-<!-- Store the number of days for each month -->
-<% const daysPerMonth = [ 31, isLeapYear ? 29 : 28, 31, 30, 31, 30, 31, 31, 30, 31, 30, 31]; %>
-
-<!-- Add or subtract 1 to current month if the month if changing -->
-<% const getMonth = (day) => thisDate - day < 1 ? thisMonth - 1 : thisDate - day > daysPerMonth[thisMonth] ? thisMonth : thisMonth; %>
-
-<!-- Adapt date if month is changing -->
-<% const getDate = (day) => thisDate - day < 1 ? daysPerMonth[thisMonth - 1] + (thisDate - day) : thisDate - day > daysPerMonth[thisMonth] ? thisDate - day - daysPerMonth[thisMonth] : thisDate - day %>
-
 <h1 class="ui center aligned block inverted olive header">Planning</h1>
 
-<table class="ui celled olive large center aligned table">
-    <thead>
-        <tr>
-            <th colspan="7" class=" ui olive large header">
-                Subscribed Contracts
-            </th>
-        </tr>
-        <tr>
-            <th>
-                Monday <%= getDate(thisDay) %>/<%= 1 + getMonth(thisDay) %>
-            </th>
-            <th>
-                Tuesday <%= getDate(thisDay - 1) %>/<%= 1 + getMonth(thisDay - 1) %>
-            </th>
-            <th>
-                Wednesday <%= getDate(thisDay - 2) %>/<%= 1 + getMonth(thisDay - 2) %>
-            </th>
-            <th>
-                Thursday <%= getDate(thisDay - 3) %>/<%= 1 + getMonth(thisDay - 3) %>
-            </th>
-            <th>
-                Friday <%= getDate(thisDay - 4) %>/<%= 1 + getMonth(thisDay - 4) %>
-            </th>
-            <th>
-                Saturday <%= getDate(thisDay - 5) %>/<%= 1 + getMonth(thisDay - 5) %>
-            </th>
-            <th>
-                Sunday <%= getDate(thisDay - 6) %>/<%= 1 + getMonth(thisDay - 6) %>
-            </th>
-        </tr>
-    </thead>
-    
-    <tbody>
-        <% for (let i = 0; i < maxPerDay; i++) { %>
-            <tr>
-                <% for (let day of days) { %>
-                    <td>
-                        <% if (day[i]) { %>
-                            <a href="/contracts/<%= day[i]._id %>">
-                                <%= day[i].name %>
-                            </a>
+<% for (let i = 0; i < weeks.length; i++) { %>
+    <div id="<%= i %>" class="planning ui basic segment" <% if (i !== 2) { %>hidden<% } %>>
+        <table class="ui celled olive large center aligned table">
+            <thead>
+                <tr>
+                    <th colspan="7" class=" ui olive large header">
+                        Subscribed Contracts
+                    </th>
+                </tr>
+                <tr>
+                    <th>
+                        Monday <span class="Date"></span>/<span class="Month"></span>
+                    </th>
+                    <th>
+                        Tuesday <span class="Date"></span>/<span class="Month"></span>
+                    </th>
+                    <th>
+                        Wednesday <span class="Date"></span>/<span class="Month"></span>
+                    </th>
+                    <th>
+                        Thursday <span class="Date"></span>/<span class="Month"></span>
+                    </th>
+                    <th>
+                        Friday <span class="Date"></span>/<span class="Month"></span>
+                    </th>
+                    <th>
+                        Saturday <span class="Date"></span>/<span class="Month"></span>
+                    </th>
+                    <th>
+                        Sunday <span class="Date"></span>/<span class="Month"></span>
+                    </th>
+                </tr>
+            </thead>
+            
+            <tbody>
+                <% for (let j = 0; j < maxPerWeek[i]; j++) { %>
+                    <tr>
+                        <% for (let day of weeks[i]) { %>
+                            <td>
+                                <% if (day[j]) { %>
+                                    <a href="/contracts/<%= day[j]._id %>">
+                                        <%= day[j].name %>
+                                    </a>
+                                <% } %>
+                            </td>
                         <% } %>
-                    </td>
+                    </tr>
                 <% } %>
-            </tr>
-        <% } %>
-    </tbody>
-    
-    <tfoot>
-        <tr>
-            <th colspan="7">
-                <button class="ui left floated olive button">
-                    <i class="left chevron icon"></i>
-                    Previous Week
-                </button>
+            </tbody>
+        </table>
+    </div>
+<% } %>
 
-                <button class="ui right floated olive button">
-                    Next Week
-                    <i class="right chevron icon"></i>
-                </button>
-            </th>
-        </tr>
-    </tfoot>
-</table>
+<button id="prevButton" class="ui left floated olive button">
+    <i class="left chevron icon"></i>
+    Previous Week
+</button>
 
+<button id="nextButton" class="ui right floated olive button">
+    Next Week
+    <i class="right chevron icon"></i>
+</button>
+
+<script type="text/javascript" src="/js/planning.js"></script>
 
 <% include ../partials/footer %>

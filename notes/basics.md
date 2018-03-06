@@ -1,9 +1,12 @@
 TODO :
 
+ * Creating / Updating Contract --> Check if start & end dates are a monday
+
  * Menu with :
     - Settings      --> Anonymous / Mail (mailgun / nodemailer ?)
     - My Contract   --> Simplified table to overview subscribed contracts
     - Planning      --> See Scheduled delivery
+                    --> Almost DONE :)
 
  * Attendance Sheet --> Printable PDF
  

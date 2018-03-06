@@ -89,62 +89,82 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
                 return res.redirect("back");
             }
 
-            // Represents the 7 days of the week
-            const days = [
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-                [],
-            ];
-            for (let contract of user.contract.subscribed) {
-                const isValid = contract.date.start < Date.now() && contract.date.end > Date.now();
+            // Time of 1 week (in milliseconds)
+            const weekTime = 1000 * 3600 * 24 * 7;
 
-                // Order contracts in the corresponding day
-                switch (contract.delivery.dayOfWeek) {
-                    case "Monday":
-                        if (isValid) {
+            const weeks = [
+                [], // This week - 2
+                [], // This week - 1
+                [], // This week
+                [], // This week + 1
+                [], // This week + 2
+            ];
+
+            const maxPerWeek = [
+                [], // This week - 2
+                [], // This week - 1
+                [], // This week
+                [], // This week + 1
+                [], // This week + 2
+            ];
+
+            for (let i = -2; i < 3; i++) {
+                const weekDate = Date.now() + weekTime * i;
+                // Represents the 7 days of the week
+                const days = [
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                    [],
+                ];
+                for (let contract of user.contract.subscribed) {
+                    // Check whether the contract is active
+                    if (contract.date.start > weekDate || contract.date.end < weekDate) {
+                        continue;
+                    }
+
+                    // Check whether a delvery should be planned for this week
+                    if (contract.delivery.frequency !== 1) {
+                        const weekPassed = Math.floor((weekDate - contract.date.start) / weekTime);
+                        if (weekPassed !== 0 && weekPassed % contract.delivery.frequency !== 0) {
+                            continue;
+                        }
+                    }
+
+                    // Order contracts in the corresponding day
+                    switch (contract.delivery.dayOfWeek) {
+                        case "Monday":
                             days[0].push(contract);
-                        }
-                        break;
-                    case "Tuesday":
-                        if (isValid) {
+                            break;
+                        case "Tuesday":
                             days[1].push(contract);
-                        }
-                        break;
-                    case "Wednesday":
-                        if (isValid) {
+                            break;
+                        case "Wednesday":
                             days[2].push(contract);
-                        }
-                        break;
-                    case "Thursday":
-                        if (isValid) {
+                            break;
+                        case "Thursday":
                             days[3].push(contract);
-                        }
-                        break;
-                    case "Friday":
-                        if (isValid) {
+                            break;
+                        case "Friday":
                             days[4].push(contract);
-                        }
-                        break;
-                    case "Saturday":
-                        if (isValid) {
+                            break;
+                        case "Saturday":
                             days[5].push(contract);
-                        }
-                        break;
-                    case "Sunday":
-                        if (isValid) {
+                            break;
+                        case "Sunday":
                             days[6].push(contract);
-                        }
-                        break;
+                            break;
+                    }
                 }
+
+                weeks[i + 2] = days;
+                maxPerWeek[i + 2] = Math.max(...days.map(tab => tab.length));
             }
 
-            const maxPerDay = Math.max(...days.map(tab => tab.length));
-
-            res.render("users/planning", { days: days, maxPerDay: maxPerDay });
+            res.render("users/planning", { weeks: weeks, maxPerWeek: maxPerWeek });
         });
 
     // USELESS ? (if only show links)
