@@ -24,19 +24,23 @@
         <div class="item">
             <div class="content">
                 <h2 class="ui dividing header"><%= name %></h2>
-                <div class="description">
-                    <h3 class="ui header">Address</h3>
-                    <p><strong>Address 1 : </strong><%= address1 %></p>
-                    <% if( address2.length > 0 ) { %>
-                        <p><strong>Address 2 : </strong><%= address2 %></p>
-                    <% } %>
-                    <p><strong>Postal Code : </strong><%= postalCode %></p>
-                    <p><strong>City : </strong><%= city %></p>
+                <div class="description ui grid">
+                    <div class="eight wide column">
+                        <h3 class="ui header">Address</h3>
+                        <p><strong>Address 1 : </strong><%= address1 %></p>
+                        <% if( address2.length > 0 ) { %>
+                            <p><strong>Address 2 : </strong><%= address2 %></p>
+                        <% } %>
+                        <p><strong>Postal Code : </strong><%= postalCode %></p>
+                        <p><strong>City : </strong><%= city %></p>
+                    </div>
                     
-                    <h3 class="ui header">Time</h3>
-                    <p><strong>Hour : </strong><%= time.hour %> h</p>
-                    <% const minute = time.minute === 0 ? "00" : time.minute %>
-                    <p><strong>Minute : </strong><%= minute %> min</p>
+                    <div class="eight wide column">
+                        <h3 class="ui header">Time</h3>
+                        <p><strong>Hour : </strong><%= time.hour %> h</p>
+                        <% const minute = time.minute === 0 ? "00" : time.minute %>
+                        <p><strong>Minute : </strong><%= minute %> min</p>
+                    </div>
                 </div>
                 
                 <div class="marginTop">
