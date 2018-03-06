@@ -91,22 +91,10 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
 
             // Time of 1 week (in milliseconds)
             const weekTime = 1000 * 3600 * 24 * 7;
-
-            const weeks = [
-                [], // This week - 2
-                [], // This week - 1
-                [], // This week
-                [], // This week + 1
-                [], // This week + 2
-            ];
-
-            const maxPerWeek = [
-                [], // This week - 2
-                [], // This week - 1
-                [], // This week
-                [], // This week + 1
-                [], // This week + 2
-            ];
+            // All the weeks that will be displayed
+            const weeks = [];
+            // Maximum contract in one day for each week
+            const maxPerDay = [];
 
             for (let i = -2; i < 3; i++) {
                 const weekDate = Date.now() + weekTime * i;
@@ -160,11 +148,11 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
                     }
                 }
 
-                weeks[i + 2] = days;
-                maxPerWeek[i + 2] = Math.max(...days.map(tab => tab.length));
+                weeks.push(days);
+                maxPerDay.push(Math.max(...days.map(tab => tab.length)));
             }
 
-            res.render("users/planning", { weeks: weeks, maxPerWeek: maxPerWeek });
+            res.render("users/planning", { weeks: weeks, maxPerDay: maxPerDay });
         });
 
     // USELESS ? (if only show links)
