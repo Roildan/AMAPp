@@ -7,9 +7,61 @@
 </script>
 
 <h1 class="ui center aligned block inverted olive header">Users Management</h1>
-    
-<% users.forEach( function( user ) { %>
-    <p><%= user.username %></p>
-<% }); %>
 
+<table class="ui celled olive center aligned table">
+    <thead>
+        <tr>
+            <th>
+                Username
+            </th>
+            <th>
+                Name
+            </th>
+            <th>
+                Email
+            </th>
+            <th>
+                Phone Number
+            </th>
+            <th>
+                Contract(s) Subscribed
+            </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <% users.forEach( function( user ) { %>
+            <tr>
+                <td>
+                    <%= user.username %>
+                    <% if (user.isAdmin) { %>
+                        <strong>(Admin)</strong>
+                    <% } else if (user.isProducer) { %>
+                        <strong>(Producer)</strong>
+                    <% } %>
+                </td>
+                <td>
+                    <% if (!user.name.firstName || !user.name.lastName) { %>
+                        /
+                    <% } else { %>
+                        <%= user.name.firstName %> <%= user.name.lastName %>
+                    <% } %>
+                </td>
+                <td>
+                    <%= user.email %>
+                </td>
+                <td>
+                    <% if (!user.contact.phone) { %>
+                        /
+                    <% } else { %>
+                        <%= user.contact.phone %>
+                    <% } %>
+                </td>
+                <td>
+                    <%= user.contract.subscribed.length %>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
 <% include ../partials/footer %>
