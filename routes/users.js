@@ -2,7 +2,6 @@ const express = require("express"),
     router = express.Router();
 
 const User = require("../models/user"),
-    Address = require("../models/address"),
     middleWare = require("../middleware");
 
 const tools = require("./tools");
@@ -89,67 +88,13 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
                 return res.redirect("back");
             }
 
-            // Time of 1 week (in milliseconds)
-            const weekTime = 1000 * 3600 * 24 * 7;
             // All the weeks that will be displayed
-            const weeks = [];
+            const weeks = tools.computeDelivery(user.contract.subscribed, 5);
+
             // Maximum contract in one day for each week
             const maxPerDay = [];
-
-            for (let i = -2; i < 3; i++) {
-                const weekDate = Date.now() + weekTime * i;
-                // Represents the 7 days of the week
-                const days = [
-                    [],
-                    [],
-                    [],
-                    [],
-                    [],
-                    [],
-                    [],
-                ];
-                for (let contract of user.contract.subscribed) {
-                    // Check whether the contract is active
-                    if (contract.date.start > weekDate || contract.date.end < weekDate) {
-                        continue;
-                    }
-
-                    // Check whether a delvery should be planned for this week
-                    if (contract.delivery.frequency !== 1) {
-                        const weekPassed = Math.floor((weekDate - contract.date.start) / weekTime);
-                        if (weekPassed !== 0 && weekPassed % contract.delivery.frequency !== 0) {
-                            continue;
-                        }
-                    }
-
-                    // Order contracts in the corresponding day
-                    switch (contract.delivery.dayOfWeek) {
-                        case "Monday":
-                            days[0].push(contract);
-                            break;
-                        case "Tuesday":
-                            days[1].push(contract);
-                            break;
-                        case "Wednesday":
-                            days[2].push(contract);
-                            break;
-                        case "Thursday":
-                            days[3].push(contract);
-                            break;
-                        case "Friday":
-                            days[4].push(contract);
-                            break;
-                        case "Saturday":
-                            days[5].push(contract);
-                            break;
-                        case "Sunday":
-                            days[6].push(contract);
-                            break;
-                    }
-                }
-
-                weeks.push(days);
-                maxPerDay.push(Math.max(...days.map(tab => tab.length)));
+            for (const week of weeks) {
+                maxPerDay.push(Math.max(...week.map(tab => tab.length)));
             }
 
             res.render("users/planning", { weeks: weeks, maxPerDay: maxPerDay });
