@@ -46,7 +46,7 @@ router.post("/", middleWare.isLoggedIn, middleWare.isProducer, function(req, res
     };
 
     // Check if satrt & end day is a 'Monday' 
-    if (newContract.date.start.getDay() !== 2 || newContract.date.end.getDay() !== 2) {
+    if (newContract.date.start.getDay() !== 1 || newContract.date.end.getDay() !== 1) {
         req.flash(
             "error",
             "Date input error\nPlease enter a date corresponding to a 'Monday'"
@@ -141,7 +141,7 @@ router.put("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, fun
     };
 
     // Check if satrt & end day is a 'Monday' 
-    if (updatedContract.date.start.getDay() !== 2 || updatedContract.date.end.getDay() !== 2) {
+    if (updatedContract.date.start.getDay() !== 1 || updatedContract.date.end.getDay() !== 1) {
         req.flash(
             "error",
             "Date input error\nPlease enter a date corresponding to a 'Monday'"
@@ -182,13 +182,13 @@ router.delete("/:id", middleWare.isLoggedIn, middleWare.checkContractOwnership, 
         else {
             // Remove this contract for all subcribed users
             for (let i = 0; i < contract.subscribedUsers; i++) {
-                User.findById(contract.subscribedUsers[i], function(err, user) {
+                User.findById(contract.subscribedUsers[i].id, function(err, user) {
                     if (err || !user) {
                         console.log(err);
                     }
                     else {
                         for (let j = 0; j < user.contract.subscribed.length; j++) {
-                            if (user.contract.subscribed[i].equals(req.params.id)) {
+                            if (user.contract.subscribed[i].id.equals(req.params.id)) {
                                 user.contract.subscribed.splice(i, 1);
                                 break;
                             }
@@ -239,7 +239,9 @@ router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
         }
         else {
             // Check disponibility
-            if (contract.disponibility < contract.subscribedUsers.length) {
+            const reducer = (acc, current) => acc + current.quantity;
+            const newTotal = contract.subscribedUsers.reduce(reducer, 0) + req.body.quantity;
+            if (contract.disponibility < newTotal) {
                 req.flash(
                     "error",
                     "You cannot subscribe to this contract\nThis contract has reached his maximun capacity, the producer cannot provide more of it"
@@ -248,8 +250,8 @@ router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
             }
 
             // Check if not already subscribed
-            for (let i = 0; i < contract.subscribedUsers.length; i++) {
-                if (contract.subscribedUsers[i].equals(req.user._id)) {
+            for (const user of contract.subscribedUsers) {
+                if (user.id.equals(req.user._id)) {
                     req.flash(
                         "error",
                         "You cannot subscribe to this contract\nYou are already subscribed to this contract"
@@ -258,9 +260,18 @@ router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
                 }
             }
 
-            contract.subscribedUsers.push(req.user._id);
+            // Save contract
+            contract.subscribedUsers.push({
+                id: req.user._id,
+                quantity: req.body.quantity
+            });
             contract.save();
-            req.user.contract.subscribed.push(contract._id);
+
+            // Save user
+            req.user.contract.subscribed.push({
+                id: contract._id,
+                quantity: req.body.quantity
+            });
             req.user.save();
 
             req.flash(
@@ -285,7 +296,7 @@ router.put("/:id/unsubscribe", middleWare.isLoggedIn, function(req, res) {
         }
         else {
             for (let i = 0; i < contract.subscribedUsers.length; i++) {
-                if (contract.subscribedUsers[i].equals(req.user._id)) {
+                if (contract.subscribedUsers[i].id.equals(req.user._id)) {
                     contract.subscribedUsers.splice(i, 1);
                     break;
                 }
@@ -293,7 +304,7 @@ router.put("/:id/unsubscribe", middleWare.isLoggedIn, function(req, res) {
             contract.save();
 
             for (let i = 0; i < req.user.contract.subscribed.length; i++) {
-                if (req.user.contract.subscribed[i].equals(contract.id)) {
+                if (req.user.contract.subscribed[i].id.equals(contract.id)) {
                     req.user.contract.subscribed.splice(i, 1);
                     break;
                 }

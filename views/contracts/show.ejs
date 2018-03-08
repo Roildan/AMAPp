@@ -8,7 +8,43 @@
 <% const { _id, name, image, price, disponibility, description } = contract; %>
 <% const { delivery, producer, subscribedUsers } = contract; %>
 <% const { frequency, dayOfWeek, address } = delivery; %>
-<% const available = disponibility - subscribedUsers.length; %>
+
+<% const reducer = (acc, current) => acc + current.quantity; %>
+<% const available = disponibility - contract.subscribedUsers.reduce(reducer, 0); %>
+
+<div class="ui modal">
+    <div class="header">Subscribe to <%= name %></div>
+    <div class="content">
+        <h2>Contract Terms</h2>
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod tempor incididunt
+            ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco
+            laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in
+            voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat
+            non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.
+    
+            Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium,
+            totam rem aperiam, eaque ipsa quae ab illo inventore veritatis et quasi architecto beatae vitae
+            dicta sunt explicabo. Nemo enim ipsam voluptatem quia voluptas sit aspernatur aut odit aut fugit,
+            sed quia consequuntur magni dolores eos qui ratione voluptatem sequi nesciunt. Neque porro quisquam
+            est, qui dolorem ipsum quia dolor sit amet, consectetur, adipisci velit, sed quia non numquam eius
+            modi tempora incidunt ut labore et dolore magnam aliquam quaerat voluptatem. Ut enim ad minima
+            veniam, quis nostrum exercitationem ullam corporis suscipit laboriosam, nisi ut aliquid ex ea
+            commodi consequatur? Quis autem vel eum iure reprehenderit qui in ea voluptate velit esse quam
+            nihil molestiae consequatur, vel illum qui dolorem eum fugiat quo voluptas nulla pariatur?
+        </p>
+        <div class="actions marginTop">
+            <form class="inlineForm" action="/contracts/<%= _id %>/subscribe?_method=PUT" method=POST>
+                <div class="field">
+                    <label>Quantity</label>
+                    <input type="number" name="quantity" value="1" min="1" max="<%= available %>" step="1" required>
+                </div>
+                <button class="ui right floated green approve button">Subscribe</button>
+            </form>
+            <div class="ui right floated red cancel button">Cancel</div>
+        </div>
+    </div>
+</div>
 
 <h1 class="ui center aligned block inverted olive header"><%= name %></h1>
 
@@ -23,8 +59,8 @@
 
 <% if (currentUser) { %>
     <% let isSubscribed = false; %>
-    <% for (let i = 0; i < currentUser.contract.subscribed.length; i++) { %>
-        <% if (currentUser.contract.subscribed[i].equals(contract._id)) { %>
+    <% for (const subscribedContract of currentUser.contract.subscribed) { %>
+        <% if (subscribedContract.id.equals(contract._id)) { %>
             <% isSubscribed = true; %>
         <% } %>
     <% }; %>
@@ -33,9 +69,7 @@
             <button class="ui right floated huge inverted red button">Unsubscribe</button>
         </form>
     <% } else if (available) { %>
-        <form class="inlineForm" action="/contracts/<%= _id %>/subscribe?_method=PUT" method=POST>
-            <button class="ui right floated huge inverted green button">Subscribe</button>
-        </form>
+        <button id="subButton" class="ui right floated huge inverted green button">Subscribe</button>
     <% } %>
 <% } %>
 
@@ -60,7 +94,7 @@
         <p>
             <strong>Disponibility : </strong>
             <% if( available) { %>
-                <%= disponibility - subscribedUsers.length %> still available.
+                <%= available %> still available.
             <% } else { %>
                 Not available anymore !
             <% } %>
@@ -127,6 +161,16 @@
 
 <script>
     $('.ui.accordion').accordion();
+    $("#subButton").on("click", function() {
+        $('.ui.modal')
+            .modal({
+                closable: false,
+                inverted: true,
+                onDeny: function() {},
+                onApprove: function() {}
+            })
+            .modal('show');
+    });
 </script>
 
 <% include ../partials/footer %>

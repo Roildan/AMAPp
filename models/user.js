@@ -25,8 +25,11 @@ const userSchema = new mongoose.Schema({
     // Contract
     contract: {
         subscribed: [{
-            type: mongoose.Schema.Types.ObjectId,
-            ref: "Contract"
+            id: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "Contract"
+            },
+            quantity: Number
         }],
         created: [{
             type: mongoose.Schema.Types.ObjectId,

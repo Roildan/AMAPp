@@ -60,7 +60,7 @@ router.get("/settings", middleWare.isLoggedIn, function(req, res) {
 router.get("/my_contracts", middleWare.isLoggedIn, function(req, res) {
     User
         .findById(req.user._id)
-        .populate("contract.subscribed", ["name"])
+        .populate("contract.subscribed.id")
         .exec(function(err, user) {
             if (err || !user) {
                 console.log(err);
@@ -70,14 +70,14 @@ router.get("/my_contracts", middleWare.isLoggedIn, function(req, res) {
                 );
                 return res.redirect("back");
             }
-            res.render("users/myContracts", { user: user });
+            res.render("users/myContracts", { contracts: user.contract.subscribed });
         });
 });
 
 router.get("/planning", middleWare.isLoggedIn, function(req, res) {
     User
         .findById(req.user._id)
-        .populate("contract.subscribed")
+        .populate("contract.subscribed.id")
         .populate("contract.created")
         .exec(function(err, user) {
             if (err || !user) {
@@ -92,7 +92,7 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
             // All the weeks that will be displayed
             // First one is subscribed, second one is created (if not empty)
             const weeks = [];
-            weeks.push(tools.computeDelivery(user.contract.subscribed, 5));
+            weeks.push(tools.computeDelivery(user.contract.subscribed.map(x => x.id), 5));
             if (user.contract.created.length > 0) {
                 weeks.push(tools.computeDelivery(user.contract.created, 5));
             }

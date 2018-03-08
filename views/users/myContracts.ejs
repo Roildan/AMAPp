@@ -8,13 +8,54 @@
 
 <h1 class="ui center aligned block inverted olive header">My Contracts</h1>
 
-<h2 class="ui medium header">Subscibed Contract(s) :</h2>
-<% user.contract.subscribed.forEach( function( contract ) { %>
-    <% const { _id, name } = contract; %>
-    <p><a href="/contracts/<%= _id %>">
-        <%= name %>
-    </a></p>
-<% }); %>
-
+<table class="ui celled olive center aligned table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Producer
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Status
+            </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <% contracts.forEach( function( contract ) { %>
+            <% quantity = contract.quantity %>
+            <% contract = contract.id %>
+            <tr>
+                <td>
+                    <a href="/contracts/<%= contract._id %>">
+                        <%= contract.name %>
+                    </a>
+                </td>
+                <td>
+                    <%= contract.producer.username %>
+                </td>
+                <td>
+                    <%= quantity %>
+                </td>
+                <td>
+                    <% if (contract.date.start > Date.now()) { %>
+                        <% const date = contract.date.start.getDate() + "/" + (contract.date.start.getMonth() + 1) + "/" + contract.date.start.getFullYear() %>
+                        <em>Not Started : start the <%= date %></em>
+                    <% } else if (contract.date.end < Date.now()) { %>
+                        <em>Finished</em>
+                    <% } else { %>
+                        <% const date = contract.date.end.getDate() + "/" + (contract.date.end.getMonth() + 1) + "/" + contract.date.end.getFullYear() %>
+                        <em>Ongoing : end the <%= date %></em>
+                    <% } %>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
 
 <% include ../partials/footer %>

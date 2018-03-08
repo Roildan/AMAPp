@@ -30,8 +30,11 @@ const contractSchema = new mongoose.Schema({
         username: String
     },
     subscribedUsers: [{
-        type: mongoose.Schema.Types.ObjectId,
-        ref: "User"
+        id: {
+            type: mongoose.Schema.Types.ObjectId,
+            ref: "User"
+        },
+        quantity: Number
     }]
 });
 
