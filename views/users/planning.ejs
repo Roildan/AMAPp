@@ -8,68 +8,76 @@
 
 <h1 class="ui center aligned block inverted olive header">Planning</h1>
 
-<% for (let i = 0; i < weeks.length; i++) { %>
-    <div id="<%= i %>" class="planning ui basic segment" <% if (i !== 2) { %>hidden<% } %>>
-        <table class="ui celled olive large center aligned table">
-            <thead>
-                <tr>
-                    <th colspan="7" class=" ui olive large header">
-                        Subscribed Contracts
-                    </th>
-                </tr>
-                <tr>
-                    <th>
-                        Monday <span class="Date"></span>/<span class="Month"></span>
-                    </th>
-                    <th>
-                        Tuesday <span class="Date"></span>/<span class="Month"></span>
-                    </th>
-                    <th>
-                        Wednesday <span class="Date"></span>/<span class="Month"></span>
-                    </th>
-                    <th>
-                        Thursday <span class="Date"></span>/<span class="Month"></span>
-                    </th>
-                    <th>
-                        Friday <span class="Date"></span>/<span class="Month"></span>
-                    </th>
-                    <th>
-                        Saturday <span class="Date"></span>/<span class="Month"></span>
-                    </th>
-                    <th>
-                        Sunday <span class="Date"></span>/<span class="Month"></span>
-                    </th>
-                </tr>
-            </thead>
-            
-            <tbody>
-                <% for (let j = 0; j < maxPerDay[i]; j++) { %>
+<% for (let k = 0; k < weeks.length; k++) { %>
+    <% for (let i = 0; i < weeks[k].length; i++) { %>
+        <div id="<%= i + (k * 5) %>" class="planning<%= k %> ui basic segment" <% if (i !== 2) { %>hidden<% } %>>
+            <table class="ui celled olive large center aligned table">
+                <thead>
                     <tr>
-                        <% for (let day of weeks[i]) { %>
-                            <td>
-                                <% if (day[j]) { %>
-                                    <a href="/contracts/<%= day[j]._id %>">
-                                        <%= day[j].name %>
-                                    </a>
-                                <% } %>
-                            </td>
-                        <% } %>
+                        <th colspan="7" class=" ui olive large header">
+                            <% if (k === 0) { %>
+                                Subscribed Contracts
+                            <% } else { %>
+                                Created Contracts
+                            <% } %>
+                        </th>
                     </tr>
-                <% } %>
-            </tbody>
-        </table>
-    </div>
+                    <tr>
+                        <th>
+                            Monday <span class="Date<%= k %>"></span>/<span class="Month<%= k %>"></span>
+                        </th>
+                        <th>
+                            Tuesday <span class="Date<%= k %>"></span>/<span class="Month<%= k %>"></span>
+                        </th>
+                        <th>
+                            Wednesday <span class="Date<%= k %>"></span>/<span class="Month<%= k %>"></span>
+                        </th>
+                        <th>
+                            Thursday <span class="Date<%= k %>"></span>/<span class="Month<%= k %>"></span>
+                        </th>
+                        <th>
+                            Friday <span class="Date<%= k %>"></span>/<span class="Month<%= k %>"></span>
+                        </th>
+                        <th>
+                            Saturday <span class="Date<%= k %>"></span>/<span class="Month<%= k %>"></span>
+                        </th>
+                        <th>
+                            Sunday <span class="Date<%= k %>"></span>/<span class="Month<%= k %>"></span>
+                        </th>
+                    </tr>
+                </thead>
+                
+                <tbody>
+                    <% for (let j = 0; j < maxPerDay[k][i]; j++) { %>
+                        <tr>
+                            <% for (let day of weeks[k][i]) { %>
+                                <td>
+                                    <% if (day[j]) { %>
+                                        <a href="/contracts/<%= day[j]._id %>">
+                                            <%= day[j].name %>
+                                        </a>
+                                    <% } %>
+                                </td>
+                            <% } %>
+                        </tr>
+                    <% } %>
+                </tbody>
+            </table>
+        </div>
+    <% } %>
+    
+    <button id="prevButton<%= k %>" class="ui left floated olive button">
+        <i class="left chevron icon"></i>
+        Previous Week
+    </button>
+    
+    <button id="nextButton<%= k %>" class="ui right floated olive button">
+        Next Week
+        <i class="right chevron icon"></i>
+    </button>
+    
+    <br>
 <% } %>
-
-<button id="prevButton" class="ui left floated olive button">
-    <i class="left chevron icon"></i>
-    Previous Week
-</button>
-
-<button id="nextButton" class="ui right floated olive button">
-    Next Week
-    <i class="right chevron icon"></i>
-</button>
 
 <script type="text/javascript" src="/js/planning.js"></script>
 

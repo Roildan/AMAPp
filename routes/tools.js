@@ -21,7 +21,7 @@ module.exports = {
         let weekIndex;
         let middle = Math.floor(nb / 2);
         if (nb === 1) {
-            weekIndex = 1;
+            weekIndex = 0;
         }
         else if (nb % 2 === 1) {
             weekIndex = -1 * middle;

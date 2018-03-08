@@ -78,6 +78,7 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
     User
         .findById(req.user._id)
         .populate("contract.subscribed")
+        .populate("contract.created")
         .exec(function(err, user) {
             if (err || !user) {
                 console.log(err);
@@ -89,12 +90,26 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
             }
 
             // All the weeks that will be displayed
-            const weeks = tools.computeDelivery(user.contract.subscribed, 5);
+            // First one is subscribed, second one is created (if not empty)
+            const weeks = [];
+            weeks.push(tools.computeDelivery(user.contract.subscribed, 5));
+            if (user.contract.created.length > 0) {
+                weeks.push(tools.computeDelivery(user.contract.created, 5));
+            }
 
             // Maximum contract in one day for each week
-            const maxPerDay = [];
-            for (const week of weeks) {
-                maxPerDay.push(Math.max(...week.map(tab => tab.length)));
+            // First one is subscribed, second one is created (if not empty)
+            const maxPerDay = [
+                [],
+                []
+            ];
+            for (const week of weeks[0]) {
+                maxPerDay[0].push(Math.max(...week.map(tab => tab.length)));
+            }
+            if (user.contract.created.length > 0) {
+                for (const week of weeks[1]) {
+                    maxPerDay[1].push(Math.max(...week.map(tab => tab.length)));
+                }
             }
 
             res.render("users/planning", { weeks: weeks, maxPerDay: maxPerDay });
