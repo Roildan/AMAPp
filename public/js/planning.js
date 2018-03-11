@@ -1,6 +1,7 @@
 // Time of 1 week (in milliseconds)
 const weekTime = 1000 * 3600 * 24 * 7;
 
+// Begin 2 weeks before now (as planning goes to -2 weeks to +2 weeks)
 const start = new Date(Date.now() - weekTime * 2);
 
 // Add or subtract 1 to current month if the month if changing
@@ -31,6 +32,7 @@ const getDate = function(date, month, daysPerMonth, nbDays) {
     }
 };
 
+// Compute and display all dates
 const display = function(date) {
     const thisDate = date.getDate();
     const thisYear = date.getFullYear();
@@ -62,66 +64,27 @@ const display = function(date) {
 
 display(start);
 
-$("#prevButton0").on("click", function() {
-    // If nextButton was hidden
-    $("#nextButton0").show();
+const buttonName = ["#prevButton", "#nextButton"];
 
-    // Find the planning currently displayed
-    const displayed = Number($(".planning0:visible")[0].id);
-    $("#" + displayed).hide();
+// For each planning
+for (let i = 0; i < 2; i++) {
+    // For each button
+    for (let j = 0; j < 2; j++) {
+        $(buttonName[j] + i).on("click", function() {
+            // If the other button was hidden
+            $(buttonName[(j + 1) % 2] + i).show();
 
-    const toBeDisplayed = displayed - 1;
-    $("#" + toBeDisplayed).show();
+            // Find the planning currently displayed
+            const displayed = Number($(".planning" + i + ":visible")[0].id);
+            $("#" + displayed).hide();
 
-    if (toBeDisplayed === 0) {
-        $("#prevButton0").hide();
+            // Find the next or previous planning (depends on 'j')
+            const toBeDisplayed = j === 0 ? displayed - 1 : displayed + 1;
+            $("#" + toBeDisplayed).show();
+
+            if (toBeDisplayed === j * 4 + i * 5) {
+                $(buttonName[j] + i).hide();
+            }
+        });
     }
-});
-
-$("#prevButton1").on("click", function() {
-    // If nextButton was hidden
-    $("#nextButton1").show();
-
-    // Find the planning currently displayed
-    const displayed = Number($(".planning1:visible")[0].id);
-    $("#" + displayed).hide();
-
-    const toBeDisplayed = displayed - 1;
-    $("#" + toBeDisplayed).show();
-
-    if (toBeDisplayed === 5) {
-        $("#prevButton1").hide();
-    }
-});
-
-$("#nextButton0").on("click", function() {
-    // If nextButton was hidden
-    $("#prevButton0").show();
-
-    // Find the planning currently displayed
-    const displayed = Number($(".planning0:visible")[0].id);
-    $("#" + displayed).hide();
-
-    const toBeDisplayed = displayed + 1;
-    $("#" + toBeDisplayed).show();
-
-    if (toBeDisplayed === 4) {
-        $("#nextButton0").hide();
-    }
-});
-
-$("#nextButton1").on("click", function() {
-    // If nextButton was hidden
-    $("#prevButton1").show();
-
-    // Find the planning currently displayed
-    const displayed = Number($(".planning1:visible")[0].id);
-    $("#" + displayed).hide();
-
-    const toBeDisplayed = displayed + 1;
-    $("#" + toBeDisplayed).show();
-
-    if (toBeDisplayed === 9) {
-        $("#nextButton1").hide();
-    }
-});
+}
