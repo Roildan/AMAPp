@@ -6,14 +6,47 @@
     $("#management").css("color", "#fff");
 </script>
 
+<% const reducer = (acc, current) => acc + current.quantity; %>
+
 <h1 class="ui center aligned block inverted olive header">Contracts Management</h1>
 
-<% user.contract.created.forEach( function( contract ) { %>
-    <% const { _id, name } = contract; %>
+<table class="ui celled olive center aligned table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Subscriber(s)
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Next Delivery
+            </th>
+        </tr>
+    </thead>
     
-    <p><a href="/contracts/<%= _id %>">
-        <%= name %>
-    </a></p>
-<% }); %>
+    <tbody>
+        <% contracts.forEach( function( contract ) { %>
+            <%= console.log(contract) %>
+            <tr>
+                <td>
+                    <a href="/contracts/<%= contract._id %>"><%= contract.name %></a>
+                </td>
+                <td>
+                    <%= contract.subscribedUsers.length %>
+                </td>
+                <td>
+                    <%= contract.subscribedUsers.reduce(reducer, 0); %>
+                </td>
+                <td>
+                    Tomorow
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
 
 <% include ../partials/footer %>

@@ -10,7 +10,7 @@
 <% const { frequency, dayOfWeek, address } = delivery; %>
 
 <% const reducer = (acc, current) => acc + current.quantity; %>
-<% const available = disponibility - contract.subscribedUsers.reduce(reducer, 0); %>
+<% const available = disponibility - subscribedUsers.reduce(reducer, 0); %>
 
 <div class="ui modal">
     <div class="header">Subscribe to <%= name %></div>

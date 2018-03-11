@@ -138,7 +138,7 @@ router.get("/users", middleWare.isLoggedIn, middleWare.isAdmin, function(req, re
 router.get("/contracts", middleWare.isLoggedIn, middleWare.isProducer, function(req, res) {
     User
         .findById(req.user._id)
-        .populate("contract.created", ["name"])
+        .populate("contract.created")
         .exec(function(err, user) {
             if (err || !user) {
                 console.log(err);
@@ -148,7 +148,7 @@ router.get("/contracts", middleWare.isLoggedIn, middleWare.isProducer, function(
                 );
                 return res.redirect("back");
             }
-            res.render("management/contracts", { user: user });
+            res.render("management/contracts", { contracts: user.contract.created });
         });
 });
 
