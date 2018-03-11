@@ -148,6 +148,11 @@ router.get("/contracts", middleWare.isLoggedIn, middleWare.isProducer, function(
                 );
                 return res.redirect("back");
             }
+
+            user.contract.created.forEach(function(contract) {
+                contract.nextDelivery = tools.computeNextDelivery(contract);
+            });
+
             res.render("management/contracts", { contracts: user.contract.created });
         });
 });

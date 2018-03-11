@@ -30,7 +30,6 @@
     
     <tbody>
         <% contracts.forEach( function( contract ) { %>
-            <%= console.log(contract) %>
             <tr>
                 <td>
                     <a href="/contracts/<%= contract._id %>"><%= contract.name %></a>
@@ -42,7 +41,7 @@
                     <%= contract.subscribedUsers.reduce(reducer, 0); %>
                 </td>
                 <td>
-                    Tomorow
+                    <%= contract.nextDelivery.getDate() %>/<%= contract.nextDelivery.getMonth() + 1 %>/<%= contract.nextDelivery.getFullYear() %>
                 </td>
             </tr>
         <% }); %>
