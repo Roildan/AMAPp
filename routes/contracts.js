@@ -1,4 +1,7 @@
 const express = require("express"),
+    ejs = require("ejs"),
+    fs = require("fs"),
+    pdf = require("html-pdf"),
     router = express.Router();
 
 const Contract = require("../models/contract"),
@@ -95,7 +98,7 @@ router.get("/:id", function(req, res) {
                     "error",
                     "This contract cannot be found\nAn error has occurred finding this contract, please contact an admin for more info"
                 );
-                return res.redirect('/contracts');
+                return res.redirect("/contracts");
             }
             res.render("contracts/show", { contract: contract });
         });
@@ -240,7 +243,7 @@ router.put("/:id/subscribe", middleWare.isLoggedIn, function(req, res) {
         else {
             // Check disponibility
             const reducer = (acc, current) => acc + current.quantity;
-            const newTotal = contract.subscribedUsers.reduce(reducer, 0) + req.body.quantity;
+            const newTotal = contract.subscribedUsers.reduce(reducer, 0) + Number(req.body.quantity);
             if (contract.disponibility < newTotal) {
                 req.flash(
                     "error",
@@ -320,6 +323,31 @@ router.put("/:id/unsubscribe", middleWare.isLoggedIn, function(req, res) {
     });
 });
 
+// ATTENDANCE SHEET ROUTE
+router.get("/:id/download/attendance/:date/:month/:year", middleWare.isLoggedIn, function(req, res) {
+    Contract
+        .findById(req.params.id)
+        .populate("subscribedUsers.id")
+        .exec(function(err, contract) {
+            if (err || !contract) {
+                console.log(err);
+                req.flash(
+                    "error",
+                    "This contract cannot be found\nAn error has occurred finding this contract, please contact an admin for more info"
+                );
+                return res.redirect("/management/contracts");
+            }
+
+            const template = fs.readFileSync("public/template/attendanceSheet.ejs", "utf-8");
+            const date = req.params.date + "/" + req.params.month + "/" + req.params.year;
+            const html = ejs.render(template, { contract: contract, date: date });
+            pdf.create(html).toFile("public/template/attendanceSheet.pdf", function(err, file) {
+                if (!err) {
+                    res.download("public/template/attendanceSheet.pdf");
+                }
+            });
+        });
+});
 
 
 module.exports = router;

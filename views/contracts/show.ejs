@@ -48,7 +48,8 @@
     
     <script>
         $("input[name='quantity']").change(function() {
-            $("#priceQuantity").text($(this).val() * Number($("#price").text());
+            const computedPrice = ($(this).val() * Number($("#price").text())).toFixed(2);
+            $("#priceQuantity").text(computedPrice);
         });
     </script>
     
