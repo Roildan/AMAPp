@@ -25,11 +25,17 @@
             <th>
                 Next Delivery
             </th>
+            <th>
+                Attendance Sheet
+            </th>
         </tr>
     </thead>
     
     <tbody>
         <% contracts.forEach( function( contract ) { %>
+            <% const date = contract.nextDelivery.getDate() %>
+            <% const month = contract.nextDelivery.getMonth() + 1 %>
+            <% const year = contract.nextDelivery.getFullYear() %>
             <tr>
                 <td>
                     <a href="/contracts/<%= contract._id %>"><%= contract.name %></a>
@@ -41,7 +47,12 @@
                     <%= contract.subscribedUsers.reduce(reducer, 0); %>
                 </td>
                 <td>
-                    <%= contract.nextDelivery.getDate() %>/<%= contract.nextDelivery.getMonth() + 1 %>/<%= contract.nextDelivery.getFullYear() %>
+                    <%= date %>/<%= month %>/<%= year %>
+                </td>
+                <td>
+                    <a href="/contracts/<%= contract._id %>/download/attendance/<%= date %>/<%= month %>/<%= year %>">
+                        Download
+                    </a>
                 </td>
             </tr>
         <% }); %>

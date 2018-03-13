@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.14/semantic.min.css"></link>
+</head>
+
+<% const { name, price, subscribedUsers } = contract; %>
+
+<body>
+    <h1 class="ui center aligned block inverted olive header">Attendance Sheet</h1>
+    <h2 class="ui center aligned block inverted header"><%= name %>, the <%= date %></h2>
+
+    <table class="ui celled olive center aligned table">
+        <thead>
+            <tr>
+                <th>
+                    Username
+                </th>
+                <th>
+                    Phone Number
+                </th>
+                <th>
+                    Quantity
+                </th>
+                <th>
+                    Price
+                </th>
+                <th>
+                    Signature
+                </th>
+            </tr>
+        </thead>
+        
+        <tbody>
+            <% subscribedUsers.forEach( function( user ) { %>
+                <tr>
+                    <td>
+                        <%= user.id.username %></a>
+                    </td>
+                    <td>
+                        <%= user.id.contact.phone %></a>
+                    </td>
+                    <td>
+                        <%= user.quantity %>
+                    </td>
+                    <td>
+                        <%= (user.quantity * price).toFixed(2); %>
+                    </td>
+                    <td>
+                        
+                    </td>
+                </tr>
+            <% }); %>
+        </tbody>
+    </table>
+</body>
+
+</html>
