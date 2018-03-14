@@ -8,5 +8,24 @@
 
 <h1 class="ui center aligned block inverted olive header">Settings</h1>
 
+<h2 class="ui header">General</h2>
+<form action="/<%= currentUser.username %>/settings/general?_method=PUT" method=POST>
+    <div class="ui horizontal segments">
+        <div class="ui basic segment">
+            <div class="ui toggle checkbox">
+                <input name="isAnonymous" value="true" type="checkbox" <% if (currentUser.isAnonymous) { %> checked="checked" <% } %>>
+                <label>Anonymous</label>
+            </div>
+        </div>
+        <div class="ui basic tertiary right aligned segment">
+            <p>If enabled, only your username will appear on the attendance sheet.</p>
+        </div>
+    </div>
+
+    <button class="ui green button">Save</button>
+</form>
+
+
+<h2 class="ui header">Mail Notification</h2>
 
 <% include ../partials/footer %>

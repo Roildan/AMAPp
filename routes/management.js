@@ -131,6 +131,7 @@ router.get("/users", middleWare.isLoggedIn, middleWare.isAdmin, function(req, re
             );
             return res.redirect("back");
         }
+
         res.render("management/users", { users: users });
     });
 });

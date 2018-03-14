@@ -22,6 +22,9 @@ const userSchema = new mongoose.Schema({
         city: String
     },
 
+    // Settings
+    isAnonymous: { type: Boolean, default: false },
+
     // Contract
     contract: {
         subscribed: [{

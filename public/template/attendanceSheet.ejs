@@ -16,7 +16,7 @@
         <thead>
             <tr>
                 <th>
-                    Username
+                    Name
                 </th>
                 <th>
                     Phone Number
@@ -37,10 +37,18 @@
             <% subscribedUsers.forEach( function( user ) { %>
                 <tr>
                     <td>
-                        <%= user.id.username %></a>
+                        <% if( user.id.isAnonymous || (!user.id.name.firstName && !user.id.name.lastName) ) { %>
+                            <%= user.id.username %>
+                        <% } else { %>
+                            <%= user.id.name.firstName %> <%= user.id.name.lastName %>
+                        <% } %>
                     </td>
                     <td>
-                        <%= user.id.contact.phone %></a>
+                        <% if( user.id.isAnonymous || !user.id.contact.phone ) { %>
+                            /
+                        <% } else { %>
+                            <%= user.id.contact.phone %>
+                        <% } %>
                     </td>
                     <td>
                         <%= user.quantity %>
