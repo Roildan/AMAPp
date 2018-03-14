@@ -147,13 +147,17 @@
                 </h3>
             </div>
             <div class="content">
-                <p>
-                    <%= address.address1 %>
-                    <%= address.address2 %>
-                    <br>
-                    <%= address.postalCode %>
-                    <%= address.city %>
-                </p>
+                <% let urlSource = "https:\//www.google.com/maps/embed/v1/place" %>
+                <% urlSource += "?key=AIzaSyBvfUawyBMuqdx-7mTuZwk_P4xM4oCHDxc" %>
+                <% urlSource += "&q=" + address.address1.replace(/ /g, "+") + "," + address.city %>
+                
+                <iframe
+                    width="100%"
+                    height="650"
+                    frameborder="0" style="border:0"
+                    src= <%= urlSource %>
+                >
+                </iframe>
             </div>
         </div>
     </div>

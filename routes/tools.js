@@ -25,7 +25,7 @@ module.exports = {
     // Capitalize a string
     capitalize: function(string) {
         return string.charAt(0).toUpperCase() + string.slice(1);
-    }
+    },
 
     // Convert errors object from validator into a readable string
     errorsToStr: function(errors) {
