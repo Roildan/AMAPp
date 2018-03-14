@@ -17,8 +17,12 @@ router.get("/profile/edit", middleWare.isLoggedIn, function(req, res) {
 
 router.put("/profile", middleWare.isLoggedIn, function(req, res) {
     req.checkBody("email", "Enter a valid email address").isEmail();
-    req.checkBody("contact[phone]", "Enter a valid phone number").isMobilePhone("fr-FR");
-    req.checkBody("contact[postalCode]", "Enter a valid postal code").isPostalCode("FR");
+    if (req.body.contact.phone) {
+        req.checkBody("contact[phone]", "Enter a valid phone number").isMobilePhone("fr-FR");
+    }
+    if (req.body.contact.postalCode) {
+        req.checkBody("contact[postalCode]", "Enter a valid postal code").isPostalCode("FR");
+    }
     let inputErrors = req.validationErrors();
     if (inputErrors) {
         req.flash(
@@ -43,18 +47,44 @@ router.put("/profile", middleWare.isLoggedIn, function(req, res) {
             );
             return res.redirect("back");
         }
-        else {
-            req.flash(
-                "success",
-                "Your profile have been successfully updated !\nPlease check if you haven't done any typo error"
-            );
-            res.redirect("/" + user.username + "/profile");
-        }
+
+        req.flash(
+            "success",
+            "Your profile have been successfully updated !\nPlease check if you haven't done any typo error"
+        );
+        res.redirect("/" + user.username + "/profile");
     });
 });
 
 router.get("/settings", middleWare.isLoggedIn, function(req, res) {
     res.render("users/settings");
+});
+
+router.put("/settings/general", middleWare.isLoggedIn, function(req, res) {
+    User.findById(req.user._id, function(err, user) {
+        if (err) {
+            console.log(err);
+            req.flash(
+                "error",
+                "You cannot be found\nAn error has occurred finding you, please contact an admin for more info"
+            );
+            return res.redirect("back");
+        }
+
+        if (req.body.isAnonymous) {
+            user.isAnonymous = true;
+        }
+        else {
+            user.isAnonymous = false;
+        }
+        user.save();
+
+        req.flash(
+            "success",
+            "Your general settings have been successfully updated !\nPlease check if you haven't done any error"
+        );
+        res.redirect("/" + user.username + "/settings");
+    });
 });
 
 router.get("/my_contracts", middleWare.isLoggedIn, function(req, res) {
