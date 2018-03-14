@@ -35,6 +35,10 @@ router.put("/profile", middleWare.isLoggedIn, function(req, res) {
     const updatedUser = req.user;
     updatedUser.email = req.body.email;
     updatedUser.name = req.body.name;
+    // Capitalize
+    updatedUser.name.firstName = tools.capitalize(updatedUser.name.firstName);
+    updatedUser.name.lastName = tools.capitalize(updatedUser.name.lastName);
+
     updatedUser.contact = req.body.contact;
     updatedUser.contact.city = updatedUser.contact.city.toUpperCase();
 
