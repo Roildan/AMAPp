@@ -18,7 +18,7 @@
             <% } else { %>
                 <% const { username, isAdmin, isProducer } = currentUser; %>
                 
-                <% if( isAdmin || isProducer ) { %>
+                <% if( isAdmin ) { %>
                     <div id="management" class="ui dropdown item right">
                         <i class="users icon"></i>
                         Management
@@ -26,9 +26,7 @@
                         <div class="menu">
                             <a id="managementAddress" class="item" href="/management/address">Address</a>
                             <a id="managementContracts" class="item" href="/management/contracts">Contracts</a>
-                            <% if( isAdmin ) { %>
-                                <a id="managementUsers" class="item" href="/management/users">Users</a>
-                            <% } %>
+                            <a id="managementUsers" class="item" href="/management/users">Users</a>
                         </div>
                     </div>
                 <% } %>
@@ -48,9 +46,15 @@
                         <a id="settings" class="item" href="/<%= username %>/settings">
                             Settings
                         </a>
-                        <a id="myContracts" class="item" href="/<%= username %>/my_contracts">
-                            My Contracts
+                        <a id="subscribedContracts" class="item" href="/<%= username %>/subscribed_contracts">
+                            Subscribed Contract(s)
                         </a>
+                        <% if( isAdmin || isProducer ) { %>
+                            <a id="createdContracts" class="item" href="/<%= username %>/created_contracts">
+                                Created Contract(s)
+                            </a>
+                        <% } %>
+                        
                         <a id="planning" class="item" href="/<%= username %>/planning">
                             Planning
                         </a>

@@ -1,18 +1,13 @@
 TODO :
 
  * Menu with :
-    - Settings      --> Anonymous / Mail (mailgun / nodemailer ?)
-    - My Contract   --> Simplified table to overview subscribed contracts
-
- * Attendance Sheet --> Printable PDF
+    - Settings      --> Mail (mailgun / nodemailer ?)
  
  * Choose language --> i18n-node
 
  * Management :
-    - Table of users (Sorted by privilege)
-    - Table of contract (Sortable by producer)
-
- * Google Map --> API Key :  AIzaSyBvfUawyBMuqdx-7mTuZwk_P4xM4oCHDxc 
+    - Table of users (Sorted by privilege) --> To be improve
+    - Table of contract (Sortable by producer) --> To be improve
 
  * Payement ?
 
@@ -22,8 +17,12 @@ DONE :
 
  * Click on "design by" fade out to show email, an other click reshow initial msg
 
+ * Attendance Sheet --> Printable PDF
+
  * Menu with :
     - Profile       --> Edit profile
+    - Settings      --> Anonymous
+    - My Contract   --> Simplified table to overview subscribed contracts
     - Planning      --> See Scheduled delivery
 
  * Contracts properties :
@@ -38,3 +37,5 @@ DONE :
                             --> Address
                             --> Postal Code
                             --> City
+
+ * Google Map --> API Key :  AIzaSyBvfUawyBMuqdx-7mTuZwk_P4xM4oCHDxc 

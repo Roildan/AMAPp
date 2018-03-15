@@ -1,0 +1,64 @@
+<% include ../partials/headerDoctype %>
+<% include ../partials/headerNavbar %>
+
+<script type="text/javascript">
+    $("#createdContracts").addClass("active");
+    $("#user").css("color", "#fff");
+</script>
+
+<% const reducer = (acc, current) => acc + current.quantity; %>
+
+<h1 class="ui center aligned block inverted olive header">Created Contract(s)</h1>
+
+<table class="ui celled olive center aligned large table">
+    <thead>
+        <tr>
+            <th>
+                Name
+            </th>
+            <th>
+                Subscriber(s)
+            </th>
+            <th>
+                Quantity
+            </th>
+            <th>
+                Next Delivery
+            </th>
+            <th>
+                Attendance Sheet
+            </th>
+        </tr>
+    </thead>
+    
+    <tbody>
+        <% contracts.forEach( function( contract ) { %>
+            <% const date = contract.nextDelivery.getDate() %>
+            <% const month = contract.nextDelivery.getMonth() + 1 %>
+            <% const year = contract.nextDelivery.getFullYear() %>
+            <tr>
+                <td>
+                    <a href="/contracts/<%= contract._id %>"><%= contract.name %></a>
+                </td>
+                <td>
+                    <%= contract.subscribedUsers.length %>
+                </td>
+                <td>
+                    <%= contract.subscribedUsers.reduce(reducer, 0); %>
+                </td>
+                <td>
+                    <%= date %>/<%= month %>/<%= year %>
+                </td>
+                <td>
+                    <a class="ui tiny button"
+                    href="/contracts/<%= contract._id %>/download/attendance/<%= date %>/<%= month %>/<%= year %>">
+                        <i class="download icon"></i>
+                        Download
+                    </a>
+                </td>
+            </tr>
+        <% }); %>
+    </tbody>
+</table>
+
+<% include ../partials/footer %>

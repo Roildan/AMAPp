@@ -8,11 +8,11 @@ const tools = require("./tools");
 
 
 router.get("/profile", middleWare.isLoggedIn, function(req, res) {
-    res.render("users/profile");
+    res.render("user/profile");
 });
 
 router.get("/profile/edit", middleWare.isLoggedIn, function(req, res) {
-    res.render("users/editProfile");
+    res.render("user/editProfile");
 });
 
 router.put("/profile", middleWare.isLoggedIn, function(req, res) {
@@ -61,7 +61,7 @@ router.put("/profile", middleWare.isLoggedIn, function(req, res) {
 });
 
 router.get("/settings", middleWare.isLoggedIn, function(req, res) {
-    res.render("users/settings");
+    res.render("user/settings");
 });
 
 router.put("/settings/general", middleWare.isLoggedIn, function(req, res) {
@@ -91,7 +91,7 @@ router.put("/settings/general", middleWare.isLoggedIn, function(req, res) {
     });
 });
 
-router.get("/my_contracts", middleWare.isLoggedIn, function(req, res) {
+router.get("/subscribed_contracts", middleWare.isLoggedIn, function(req, res) {
     User
         .findById(req.user._id)
         .populate("contract.subscribed.id")
@@ -104,7 +104,29 @@ router.get("/my_contracts", middleWare.isLoggedIn, function(req, res) {
                 );
                 return res.redirect("back");
             }
-            res.render("users/myContracts", { contracts: user.contract.subscribed });
+            res.render("user/subscribedContracts", { contracts: user.contract.subscribed });
+        });
+});
+
+router.get("/created_contracts", middleWare.isLoggedIn, middleWare.isProducer, function(req, res) {
+    User
+        .findById(req.user._id)
+        .populate("contract.created")
+        .exec(function(err, user) {
+            if (err || !user) {
+                console.log(err);
+                req.flash(
+                    "error",
+                    "You cannot be found\nAn error has occurred finding you, please contact an admin for more info"
+                );
+                return res.redirect("back");
+            }
+
+            user.contract.created.forEach(function(contract) {
+                contract.nextDelivery = tools.computeNextDelivery(contract);
+            });
+
+            res.render("user/createdContracts", { contracts: user.contract.created });
         });
 });
 
@@ -146,7 +168,7 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
                 }
             }
 
-            res.render("users/planning", { weeks: weeks, maxPerDay: maxPerDay });
+            res.render("user/planning", { weeks: weeks, maxPerDay: maxPerDay });
         });
 
     // USELESS ? (if only show links)
@@ -168,21 +190,6 @@ router.get("/planning", middleWare.isLoggedIn, function(req, res) {
     //         break;
     //     }
     // }
-});
-
-
-router.get("/management", middleWare.isLoggedIn, middleWare.isAdmin, function(req, res) {
-    User.find(function(err, users) {
-        if (err) {
-            console.log(err);
-            req.flash(
-                "error",
-                "Database error\nAn error has occurred finding all users, please contact an admin for more info, Wait... You're admin, well have fun debugging this ^^'"
-            );
-            return res.redirect("back");
-        }
-        res.render("users/management", { users: users });
-    });
 });
 
 module.exports = router;

@@ -2,6 +2,7 @@ const express = require("express"),
     router = express.Router();
 
 const User = require("../models/user"),
+    Contract = require("../models/contract"),
     Address = require("../models/address"),
     middleWare = require("../middleware");
 
@@ -121,6 +122,21 @@ router.delete("/address/:id", middleWare.isLoggedIn, middleWare.isProducer, func
     });
 });
 
+router.get("/contracts", middleWare.isLoggedIn, middleWare.isAdmin, function(req, res) {
+    Contract.find(function(err, contracts) {
+        if (err || !contracts) {
+            console.log(err);
+            req.flash(
+                "error",
+                "Database error\nAn error has occurred finding all contracts, please contact an admin for more info, Wait... You're admin, well have fun debugging this ^^'"
+            );
+            return res.redirect("back");
+        }
+
+        res.render("management/contracts", { contracts: contracts });
+    });
+});
+
 router.get("/users", middleWare.isLoggedIn, middleWare.isAdmin, function(req, res) {
     User.find(function(err, users) {
         if (err) {
@@ -134,28 +150,6 @@ router.get("/users", middleWare.isLoggedIn, middleWare.isAdmin, function(req, re
 
         res.render("management/users", { users: users });
     });
-});
-
-router.get("/contracts", middleWare.isLoggedIn, middleWare.isProducer, function(req, res) {
-    User
-        .findById(req.user._id)
-        .populate("contract.created")
-        .exec(function(err, user) {
-            if (err || !user) {
-                console.log(err);
-                req.flash(
-                    "error",
-                    "You cannot be found\nAn error has occurred finding you, please contact an admin for more info"
-                );
-                return res.redirect("back");
-            }
-
-            user.contract.created.forEach(function(contract) {
-                contract.nextDelivery = tools.computeNextDelivery(contract);
-            });
-
-            res.render("management/contracts", { contracts: user.contract.created });
-        });
 });
 
 module.exports = router;

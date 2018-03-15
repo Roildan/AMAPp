@@ -17,28 +17,33 @@
                 Name
             </th>
             <th>
+                Producer
+            </th>
+            <th>
                 Subscriber(s)
             </th>
             <th>
                 Quantity
             </th>
             <th>
-                Next Delivery
+                Disponibility
             </th>
             <th>
-                Attendance Sheet
+                Status
             </th>
         </tr>
     </thead>
     
     <tbody>
         <% contracts.forEach( function( contract ) { %>
-            <% const date = contract.nextDelivery.getDate() %>
-            <% const month = contract.nextDelivery.getMonth() + 1 %>
-            <% const year = contract.nextDelivery.getFullYear() %>
             <tr>
                 <td>
-                    <a href="/contracts/<%= contract._id %>"><%= contract.name %></a>
+                    <a href="/contracts/<%= contract._id %>">
+                        <%= contract.name %>
+                    </a>
+                </td>
+                <td>
+                    <%= contract.producer.username %>
                 </td>
                 <td>
                     <%= contract.subscribedUsers.length %>
@@ -47,14 +52,18 @@
                     <%= contract.subscribedUsers.reduce(reducer, 0); %>
                 </td>
                 <td>
-                    <%= date %>/<%= month %>/<%= year %>
+                    <%= contract.disponibility %>
                 </td>
                 <td>
-                    <a class="ui tiny button"
-                    href="/contracts/<%= contract._id %>/download/attendance/<%= date %>/<%= month %>/<%= year %>">
-                        <i class="download icon"></i>
-                        Download
-                    </a>
+                    <% if (contract.date.start > Date.now()) { %>
+                        <% const date = contract.date.start.getDate() + "/" + (contract.date.start.getMonth() + 1) + "/" + contract.date.start.getFullYear() %>
+                        <em>Not Started : start the <%= date %></em>
+                    <% } else if (contract.date.end < Date.now()) { %>
+                        <em>Finished</em>
+                    <% } else { %>
+                        <% const date = contract.date.end.getDate() + "/" + (contract.date.end.getMonth() + 1) + "/" + contract.date.end.getFullYear() %>
+                        <em>Ongoing : end the <%= date %></em>
+                    <% } %>
                 </td>
             </tr>
         <% }); %>
