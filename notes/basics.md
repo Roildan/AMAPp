@@ -4,6 +4,8 @@ TODO :
     - Settings      --> Mail (mailgun / nodemailer ?)
  
  * Choose language --> i18n-node
+ 
+ * Local storage of images instead of URLs
 
  * Management :
     - Table of users (Sorted by privilege) --> To be improve

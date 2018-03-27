@@ -18,6 +18,14 @@
     display: inline;
 }
 
+.showButton {
+    padding-bottom: 0 !important;
+}
+
+.hiddenPlace {
+    top: 30% !important;
+}
+
 .mainContent {
     flex: 1;
 }
@@ -29,7 +37,7 @@
 }
 
 .marginTop {
-    margin-top: 10px;
+    margin-top: 10px !important;
 }
 
 select:invalid {
