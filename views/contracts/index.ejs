@@ -19,11 +19,34 @@
 <% } %>
 
 <% const reducer = (acc, current) => acc + current.quantity; %>
-<% const available = contracts.filter(contract => (contract.disponibility > contract.subscribedUsers.reduce(reducer, 0)) && contract.date.start < Date.now() && contract.date.end > Date.now()); %>
-<% const notAvailable = contracts.filter(contract => contract.disponibility === contract.subscribedUsers.reduce(reducer, 0)); %>
-<% const notStarted = contracts.filter(contract => contract.date.start > Date.now()); %>
-<% const ended = contracts.filter(contract => contract.date.end < Date.now()); %>
-<% const contractType = [{title: "Available & Active", data: available}, {title: "Out of Stock", data: notAvailable}, {title: "Not Started", data: notStarted}, {title: "Ended", data: ended}]; %>
+<% const ended = []; %>
+<% const notStarted = []; %>
+<% const notAvailable = []; %>
+<% const available = []; %>
+
+<% for (let i = 0; i < contracts.length; i++) { %>
+    <% const contract = contracts[i]; %>
+    
+    <% if (contract.date.end < Date.now()) { %>
+        <% ended.push(contract); continue; %>
+        
+    <% } else if (contract.date.start > Date.now()) { %>
+        <% notStarted.push(contract); continue; %>
+        
+    <% } else if (contract.disponibility === contract.subscribedUsers.reduce(reducer, 0)) { %>
+        <% notAvailable.push(contract); continue; %>
+        
+    <% } else { %>
+        <% available.push(contract); %>
+    <% } %>
+<% } %>
+
+
+<% const contractType = [ {title: "Available & Active", data: available} ]; %>
+<% contractType.push( {title: "Out of Stock", data: notAvailable} ); %>
+<% contractType.push( {title: "Not Started", data: notStarted} ); %>
+<% contractType.push(  {title: "Ended", data: ended} ); %>
+
 
 <div class="ui styled fluid accordion marginTop">
     <% contractType.forEach( function( type, i ) { %>
@@ -47,15 +70,20 @@
                             <img src="<%= image %>">
                         </a>
                         <div class="content">
-                            <h2 class="ui medium header">
+                            <h2 class="ui medium left floated header">
                                 <a href="/contracts/<%= _id %>">
-                                    <%= name %> <em>by <%= producer.username %></em>
+                                    <%= name %>
                                 </a>
                             </h2>
+                            <h2 class="ui tiny right floated header">
+                                <em>by <%= producer.username %></em>
+                            </h2>
+                            
+                            <br>
                             <div class="description">
                                 <p><%= description.substring(0,400); %>...</p>
                             </div>
-                            <a class="ui animated inverted violet button marginTop showButton" href="/contracts/<%= _id %>">
+                            <a class="ui animated inverted violet tiny button marginTop showButton" href="/contracts/<%= _id %>">
                                 <div class="visible content">
                                     Show More
                                 </div>
