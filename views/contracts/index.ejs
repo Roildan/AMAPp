@@ -23,163 +23,52 @@
 <% const notAvailable = contracts.filter(contract => contract.disponibility === contract.subscribedUsers.reduce(reducer, 0)); %>
 <% const notStarted = contracts.filter(contract => contract.date.start > Date.now()); %>
 <% const ended = contracts.filter(contract => contract.date.end < Date.now()); %>
+<% const contractType = [{title: "Available & Active", data: available}, {title: "Out of Stock", data: notAvailable}, {title: "Not Started", data: notStarted}, {title: "Ended", data: ended}]; %>
 
 <div class="ui styled fluid accordion marginTop">
-    <div class="active title">
-        <h2 class="ui center aligned block inverted olive header">
-            <i class="dropdown icon"></i>
-            Available & Active
-            <i class="dropdown icon"></i>
-        </h2>
-    </div>
-    <div class="active content">
-        <div class="ui divided items">
-            <% available.forEach( function( contract ) { %>
-                <% const { _id, name, image, description, producer } = contract; %>
-                
-                <div class="item">
-                    <a class="image" href="/contracts/<%= _id %>">
-                        <img src="<%= image %>">
-                    </a>
-                    <div class="content">
-                        <h2 class="ui medium header">
-                            <a href="/contracts/<%= _id %>">
-                                <%= name %> <em>by <%= producer.username %></em>
-                            </a>
-                        </h2>
-                        <div class="description">
-                            <p><%= description.substring(0,400); %>...</p>
-                        </div>
-                        <a class="ui animated inverted violet button marginTop showButton" href="/contracts/<%= _id %>">
-                            <div class="visible content">
-                                Show More
-                            </div>
-                            <div class="hidden content hiddenPlace">
-                                <i class="right arrow large icon"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            <% }); %>
+    <% contractType.forEach( function( type, i ) { %>
+        <!-- TITLE -->
+        <div class="<% if(i === 0) { %> active <% } %>  title">
+            <h2 class="ui center aligned block inverted olive header">
+                <i class="dropdown icon"></i>
+                <%= type.title %>
+                <i class="dropdown icon"></i>
+            </h2>
         </div>
-    </div>
-    
-    <div class="title">
-        <h2 class="ui center aligned block inverted olive header">
-            <i class="dropdown icon"></i>
-            Not Available
-            <i class="dropdown icon"></i>
-        </h2>
-    </div>
-    <div class="content">
-        <div class="ui divided items">
-            <% notAvailable.forEach( function( contract ) { %>
-                <% const { _id, name, image, description, producer } = contract; %>
-                
-                <div class="item">
-                    <a class="image" href="/contracts/<%= _id %>">
-                        <img src="<%= image %>">
-                    </a>
-                    <div class="content">
-                        <h2 class="ui medium header">
-                            <a href="/contracts/<%= _id %>">
-                                <%= name %> <em>by <%= producer.username %></em>
-                            </a>
-                        </h2>
-                        <div class="description">
-                            <p><%= description.substring(0,400); %>...</p>
-                        </div>
-                        <a class="ui animated inverted violet button marginTop showButton" href="/contracts/<%= _id %>">
-                            <div class="visible content">
-                                Show More
-                            </div>
-                            <div class="hidden content hiddenPlace">
-                                <i class="right arrow large icon"></i>
-                            </div>
+        
+        <!-- CONTENT -->
+        <div class="<% if(i === 0) { %> active <% } %>  content">
+            <div class="ui divided items">
+                <% type.data.forEach( function( contract ) { %>
+                    <% const { _id, name, image, description, producer } = contract; %>
+                    
+                    <div class="item">
+                        <a class="image" href="/contracts/<%= _id %>">
+                            <img src="<%= image %>">
                         </a>
-                    </div>
-                </div>
-            <% }); %>
-        </div>
-    </div>
-    
-    <div class="title">
-        <h2 class="ui center aligned block inverted olive header">
-            <i class="dropdown icon"></i>
-            Not Started
-            <i class="dropdown icon"></i>
-        </h2>
-    </div>
-    <div class="content">
-        <div class="ui divided items">
-            <% notStarted.forEach( function( contract ) { %>
-                <% const { _id, name, image, description, producer } = contract; %>
-                
-                <div class="item">
-                    <a class="image" href="/contracts/<%= _id %>">
-                        <img src="<%= image %>">
-                    </a>
-                    <div class="content">
-                        <h2 class="ui medium header">
-                            <a href="/contracts/<%= _id %>">
-                                <%= name %> <em>by <%= producer.username %></em>
+                        <div class="content">
+                            <h2 class="ui medium header">
+                                <a href="/contracts/<%= _id %>">
+                                    <%= name %> <em>by <%= producer.username %></em>
+                                </a>
+                            </h2>
+                            <div class="description">
+                                <p><%= description.substring(0,400); %>...</p>
+                            </div>
+                            <a class="ui animated inverted violet button marginTop showButton" href="/contracts/<%= _id %>">
+                                <div class="visible content">
+                                    Show More
+                                </div>
+                                <div class="hidden content hiddenPlace">
+                                    <i class="right arrow large icon"></i>
+                                </div>
                             </a>
-                        </h2>
-                        <div class="description">
-                            <p><%= description.substring(0,400); %>...</p>
                         </div>
-                        <a class="ui animated inverted violet button marginTop showButton" href="/contracts/<%= _id %>">
-                            <div class="visible content">
-                                Show More
-                            </div>
-                            <div class="hidden content hiddenPlace">
-                                <i class="right arrow large icon"></i>
-                            </div>
-                        </a>
                     </div>
-                </div>
-            <% }); %>
+                <% }); %>
+            </div>
         </div>
-    </div>
-    
-    <div class="title">
-        <h2 class="ui center aligned block inverted olive header">
-            <i class="dropdown icon"></i>
-            Ended
-            <i class="dropdown icon"></i>
-        </h2>
-    </div>
-    <div class="content">
-        <div class="ui divided items">
-            <% ended.forEach( function( contract ) { %>
-                <% const { _id, name, image, description, producer } = contract; %>
-                
-                <div class="item">
-                    <a class="image" href="/contracts/<%= _id %>">
-                        <img src="<%= image %>">
-                    </a>
-                    <div class="content">
-                        <h2 class="ui medium header">
-                            <a href="/contracts/<%= _id %>">
-                                <%= name %> <em>by <%= producer.username %></em>
-                            </a>
-                        </h2>
-                        <div class="description">
-                            <p><%= description.substring(0,400); %>...</p>
-                        </div>
-                        <a class="ui animated inverted violet button marginTop showButton" href="/contracts/<%= _id %>">
-                            <div class="visible content">
-                                Show More
-                            </div>
-                            <div class="hidden content hiddenPlace">
-                                <i class="right arrow large icon"></i>
-                            </div>
-                        </a>
-                    </div>
-                </div>
-            <% }); %>
-        </div>
-    </div>
+    <% }); %>
 </div>
 
 <script>
