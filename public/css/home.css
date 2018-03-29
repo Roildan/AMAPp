@@ -42,26 +42,31 @@ div[role="alert"] {
 }
 
 .slideshow li:nth-child(1) {
-    background-image: url(https://media.tourisme-cambresis.fr/legumes-jardin-bio-84553.jpg);
+    /*https://media.tourisme-cambresis.fr/legumes-jardin-bio-84553.jpg*/
+    background-image: url(/img/home/slideshow1.jpg);
 }
 
 .slideshow li:nth-child(2) {
-    background-image: url(https://blog.oleomac.fr/wp-content/uploads/2015/03/jardin-potager.jpg);
+    /*https://blog.oleomac.fr/wp-content/uploads/2015/03/jardin-potager.jpg*/
+    background-image: url(/img/home/slideshow2.jpg);
     animation-delay: 10s;
 }
 
 .slideshow li:nth-child(3) {
-    background-image: url(https://www.aquaportail.com/pictures1212/fruits-ou-legumes.jpg);
+    /*https://www.aquaportail.com/pictures1212/fruits-ou-legumes.jpg*/
+    background-image: url(/img/home/slideshow3.jpg);
     animation-delay: 20s;
 }
 
 .slideshow li:nth-child(4) {
-    background-image: url(https://beautyhealthtips.in/remedies/wp-content/uploads/2016/11/Vegetables-and-their-health-and-nutritional-benefits.jpg);
+    /*https://beautyhealthtips.in/remedies/wp-content/uploads/2016/11/Vegetables-and-their-health-and-nutritional-benefits.jpg*/
+    background-image: url(/img/home/slideshow4.jpg);
     animation-delay: 30s;
 }
 
 .slideshow li:nth-child(5) {
-    background-image: url(https://www.vitaminelocale.ch/uploads/dz/2/paniers-fruits-legumes-bio.jpg);
+    /*https://www.vitaminelocale.ch/uploads/dz/2/paniers-fruits-legumes-bio.jpg*/
+    background-image: url(/img/home/slideshow5.jpg);
     animation-delay: 40s;
 }
 
