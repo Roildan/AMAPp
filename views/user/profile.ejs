@@ -12,65 +12,115 @@
 <h1 class="ui center aligned block inverted olive header">Profile</h1>
 
 <!-- Main -->
-<h2 class="ui medium header">Email :</h2>
-<div class="ui label">
-    <i class="mail icon"></i> Your email : 
+<h2 class="ui dividing medium header">Email :</h2>
+
+<div class="ui grid">
+    <div class="three wide right aligned column">
+        <div class="ui basic olive label">
+            <i class="mail icon"></i> Your email :
+        </div>
+    </div>
+    
+    <div class="thirteen wide column">
+        <div class="ui basic label">
+            <%= email %>
+        </div>
+    </div>
 </div>
-<%= email %>
+
 
 
 <!-- Personnal -->
 
     <!-- Name -->
-<h2 class="ui medium header">Name :</h2>
-<p>
-    <div class="ui label">
-        <i class="user circle icon"></i> First name : 
+<h2 class="ui dividing medium header">Name :</h2>
+
+<div class="ui grid">
+    <div class="three wide right aligned column">
+        <div class="ui basic olive label">
+            <i class="user circle icon"></i> First name :
+        </div>
+        <p></p>
+        
+        <div class="ui basic olive label">
+            <i class="user circle icon"></i> Last name :
+        </div>
     </div>
-    <%= name.firstName %>
-</p>
-<p>
-    <div class="ui label">
-        <i class="user circle icon"></i> Last name : 
+
+    <div class="thirteen wide column">
+        <div class="ui basic label">
+            <%= name.firstName %>
+        </div>
+        <p></p>
+        
+        <div class="ui basic label">
+            <%= name.lastName %>
+        </div>
     </div>
-    <%= name.lastName %>
-</p>
+</div>
 
 
     <!-- Contact -->
-<h2 class="ui medium header">Contact Information :</h2>
-<p>
-    <div class="ui label">
-        <i class="phone icon"></i> Phone Number : 
-    </div>
-    <%= phone %>
-</p>
-<p>
-    <div class="ui label">
-        <i class="address card icon"></i> Address 1 : 
-    </div>
-    <%= address1 %>
-</p>
-<% if( address2 && address2.length > 0 ) { %>
-    <p>
-        <div class="ui label">
-            <i class="address card icon"></i> Address 2 : 
+<h2 class="ui dividing medium header">Contact Information :</h2>
+
+<div class="ui grid">
+    <div class="three wide right aligned column">
+        <div class="ui basic olive label">
+            <i class="phone icon"></i> Phone Number :
         </div>
-        <%= address2 %>
-    </p>
-<% } %>
-<p>
-    <div class="ui label">
-        <i class="address card icon"></i> Postal Code : 
+        <p></p>
+        
+        <div class="ui basic olive label">
+            <i class="address card icon"></i> Address 1 :
+        </div>
+        <p></p>
+        
+        <% if( address2 && address2.length > 0 ) { %>
+            <div class="ui basic olive label">
+                <i class="address card icon"></i> Address 2 :
+            </div>
+            <p></p>
+        <% } %>
+        
+        <div class="ui basic olive label">
+            <i class="address card icon"></i> Postal Code :
+        </div>
+        <p></p>
+        
+        <div class="ui basic olive label">
+            <i class="address card icon"></i> City :
+        </div>
     </div>
-    <%= postalCode %>
-</p>
-<p>
-    <div class="ui label">
-        <i class="address card icon"></i> City : 
+    
+    <div class="thirteen wide column">
+        <div class="ui basic label">
+            <%= phone %>
+        </div>
+        <p></p>
+        
+        <div class="ui basic label">
+            <%= address1 %>
+        </div>
+        <p></p>
+        
+        <% if( address2 && address2.length > 0 ) { %>
+            <div class="ui basic label">
+                <%= address2 %>
+            </div>
+            <p></p>
+        <% } %>
+        
+        <div class="ui basic label">
+            <%= postalCode %>
+        </div>
+        <p></p>
+        
+        <div class="ui basic label">
+            <%= city %>
+        </div>
+        <p></p>
     </div>
-    <%= city %>
-</p>
+</div>
 
 <a class="ui right floated huge olive button" href="/<%= username %>/profile/edit">
     Edit
