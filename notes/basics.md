@@ -6,6 +6,10 @@ TODO :
  * Choose language --> i18n-node
  
  * Local storage of images instead of URLs
+ 
+ * Online attendance ?
+ 
+ * Badges to indicate subscribed contracts on index page ?
 
  * Management :
     - Table of users (Sorted by privilege) --> To be improve

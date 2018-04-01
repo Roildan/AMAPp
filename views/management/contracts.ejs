@@ -1,4 +1,5 @@
 <% include ../partials/headerDoctype %>
+<script type="text/javascript" src="/js/tableSort.js"></script>
 <% include ../partials/headerNavbar %>
 
 <script type="text/javascript">
@@ -10,7 +11,7 @@
 
 <h1 class="ui center aligned block inverted olive header">Contracts Management</h1>
 
-<table class="ui celled olive center aligned large table">
+<table class="ui sortable celled olive center aligned large table">
     <thead>
         <tr>
             <th>
@@ -37,37 +38,52 @@
     <tbody>
         <% contracts.forEach( function( contract ) { %>
             <tr>
+                <!-- NAME -->
                 <td>
                     <a href="/contracts/<%= contract._id %>">
                         <%= contract.name %>
                     </a>
                 </td>
+                <!-- PRODUCER -->
                 <td>
                     <%= contract.producer.username %>
                 </td>
-                <td>
+                <!-- SUBSCRIBER(S) -->
+                <td data-sort-value="<%= contract.subscribedUsers.length %>">
                     <%= contract.subscribedUsers.length %>
                 </td>
-                <td>
-                    <%= contract.subscribedUsers.reduce(reducer, 0); %>
+                <!-- QUANTITY -->
+                <% const quantity = contract.subscribedUsers.reduce(reducer, 0); %>
+                <td data-sort-value="<%= quantity %>">
+                    <%= quantity %>
                 </td>
-                <td>
+                <!-- DISPONIBILITY -->
+                <td data-sort-value="<%= contract.disponibility %>">
                     <%= contract.disponibility %>
                 </td>
-                <td>
-                    <% if (contract.date.start > Date.now()) { %>
+                <!-- STATUS -->
+                <% if (contract.date.start > Date.now()) { %>
+                    <td data-sort-value="0">
                         <% const date = contract.date.start.getDate() + "/" + (contract.date.start.getMonth() + 1) + "/" + contract.date.start.getFullYear() %>
                         <em>Not Started : start the <%= date %></em>
-                    <% } else if (contract.date.end < Date.now()) { %>
+                    </td>
+                <% } else if (contract.date.end < Date.now()) { %>
+                    <td data-sort-value="2">
                         <em>Finished</em>
-                    <% } else { %>
+                    </td>
+                <% } else { %>
+                    <td data-sort-value="1">
                         <% const date = contract.date.end.getDate() + "/" + (contract.date.end.getMonth() + 1) + "/" + contract.date.end.getFullYear() %>
                         <em>Ongoing : end the <%= date %></em>
-                    <% } %>
-                </td>
+                    </td>
+                <% } %>
             </tr>
         <% }); %>
     </tbody>
 </table>
+
+<script type="text/javascript">
+    $('table').tablesort();
+</script>
 
 <% include ../partials/footer %>

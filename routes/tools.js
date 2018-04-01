@@ -37,9 +37,14 @@ module.exports = {
         return errorsStr.slice(0, -1);
     },
 
-    // Return the date of the next delivery (Contract MUST NOT be finished !)
+    // Return the date of the next delivery, return 'null' if the contract is ended
     computeNextDelivery: function(contract) {
         const date = new Date(Date.now());
+
+        // Check if the contract is ended
+        if (date > contract.date.end) {
+            return null;
+        }
 
         while (!checkContractValidity(contract, date)) {
             date.setTime(date.getTime() + weekTime);
@@ -65,23 +70,23 @@ module.exports = {
         return date;
     },
 
-    // Compute delivery planned for 'contracts' for 'nb' week(s)
-    // nb = 1 --> Compute for this week
-    // Else 'nb' must be odd and will compute for (nb/2) previous and following weeks + actual week
-    computeDelivery: function(contracts, nb) {
+    // Compute delivery planned for 'contracts' for 'nbWeek'
+    // nbWeek = 1 --> Compute for this week
+    // Else 'nbWeek' must be odd and will compute for (nbWeek/2) previous and following weeks + actual week
+    computeDelivery: function(contracts, nbWeek) {
         // All the weeks that will be displayed
         const weeks = [];
 
         let weekIndex;
-        let middle = Math.floor(nb / 2);
-        if (nb === 1) {
+        let middle = Math.floor(nbWeek / 2);
+        if (nbWeek === 1) {
             weekIndex = 0;
         }
-        else if (nb % 2 === 1) {
+        else if (nbWeek % 2 === 1) {
             weekIndex = -1 * middle;
         }
         else {
-            throw "Input Error --> 'nb' must be odd !";
+            throw "Input Error --> 'nbWeek' must be odd !";
         }
 
         for (weekIndex; weekIndex < middle + 1; weekIndex++) {

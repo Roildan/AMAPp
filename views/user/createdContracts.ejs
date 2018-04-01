@@ -1,4 +1,5 @@
 <% include ../partials/headerDoctype %>
+<script type="text/javascript" src="/js/tableSort.js"></script>
 <% include ../partials/headerNavbar %>
 
 <script type="text/javascript">
@@ -10,7 +11,7 @@
 
 <h1 class="ui center aligned block inverted olive header">Created Contract(s)</h1>
 
-<table class="ui celled olive center aligned large table">
+<table class="ui sortable celled olive center aligned large table">
     <thead>
         <tr>
             <th>
@@ -25,7 +26,7 @@
             <th>
                 Next Delivery
             </th>
-            <th>
+            <th class="no-sort">
                 Attendance Sheet
             </th>
         </tr>
@@ -33,32 +34,55 @@
     
     <tbody>
         <% contracts.forEach( function( contract ) { %>
-            <% const date = contract.nextDelivery.getDate() %>
-            <% const month = contract.nextDelivery.getMonth() + 1 %>
-            <% const year = contract.nextDelivery.getFullYear() %>
+            <% let date, month, year; %>
+            <% if (contract.nextDelivery) { %>
+                <% date = contract.nextDelivery.getDate() %>
+                <% month = contract.nextDelivery.getMonth() + 1 %>
+                <% year = contract.nextDelivery.getFullYear() %>
+            <% } %>
+            
             <tr>
+                <!-- NAME -->
                 <td>
                     <a href="/contracts/<%= contract._id %>"><%= contract.name %></a>
                 </td>
+                <!-- SUBSCRIBER(S) -->
                 <td>
                     <%= contract.subscribedUsers.length %>
                 </td>
+                <!-- QUANTITY -->
                 <td>
                     <%= contract.subscribedUsers.reduce(reducer, 0); %>
                 </td>
+                <!-- NEXT DELIVERY -->
+                <% if (contract.nextDelivery) { %>
+                    <td data-sort-value="<%= (new Date(year, month - 1, contract.nextDelivery.getDay())).getTime() %>">
+                            <%= date %>/<%= month %>/<%= year %>
+                    </td>
+                <% } else { %>
+                    <td data-sort-value="0">
+                        Contract Ended
+                    </td>
+                <% } %>
+                <!-- ATTENDANCE SHEET -->
                 <td>
-                    <%= date %>/<%= month %>/<%= year %>
-                </td>
-                <td>
-                    <a class="ui tiny button"
-                    href="/contracts/<%= contract._id %>/download/attendance/<%= date %>/<%= month %>/<%= year %>">
-                        <i class="download icon"></i>
-                        Download
-                    </a>
+                    <% if (contract.nextDelivery) { %>
+                        <a class="ui tiny button"
+                        href="/contracts/<%= contract._id %>/download/attendance/<%= date %>/<%= month %>/<%= year %>">
+                            <i class="download icon"></i>
+                            Download
+                        </a>
+                    <% } else { %>
+                        /
+                    <% } %>
                 </td>
             </tr>
         <% }); %>
     </tbody>
 </table>
+
+<script type="text/javascript">
+    $('table').tablesort();
+</script>
 
 <% include ../partials/footer %>
